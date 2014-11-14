@@ -2,18 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent" >
-    
-    
+   
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
-
-        <View
-            android:id="@+id/myRectangleView"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:background="@drawable/rext" />
         
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -28,7 +22,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="250dp"
                 android:layout_alignBottom="@+id/textView1"
-                android:layout_alignParentTop="true"
                 android:background="@drawable/rext" />
 
             <ImageView
@@ -45,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_below="@+id/imageView1"
                 android:text="CompSciTutor"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
