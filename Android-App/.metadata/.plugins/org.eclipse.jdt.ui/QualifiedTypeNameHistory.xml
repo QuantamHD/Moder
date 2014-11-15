@@ -3,4 +3,5 @@
 <fullyQualifiedTypeName name="android.view.View.OnLongClickListener"/>
 <fullyQualifiedTypeName name="android.content.ClipData"/>
 <fullyQualifiedTypeName name="android.content.ClipData.Item"/>
+<fullyQualifiedTypeName name="android.view.View.DragShadowBuilder"/>
 </qualifiedTypeNameHistroy>
