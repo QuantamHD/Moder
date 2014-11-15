@@ -41,8 +41,7 @@ public class MainActivity extends ActionBarActivity {
 				ClipData.Item item = new ClipData.Item( (CharSequence) v.getTag());
 				String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
 				ClipData dragData = new ClipData((CharSequence)v.getTag(), mimeTypes, item);
-				View.DragShadowBuilder myShadow = new MyDragShadowBuilder(imageView); //uses private class
-				v.startDrag(dragData, myShadow, null, 0); //Actually creates the drag
+				View.DragShadowBuilder myShadow = new MyDragShadowBuilder(imageView);
 				return false; 
 			}
 		});
@@ -68,11 +67,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     
-    
-    /* Private class that describes the drag shaodw for the drag and drop
-     * Honestly, I just ripped this from the official anndroid tutorials. I'll
-     * probably edit it in a bit.
-     */
     private static class MyDragShadowBuilder extends View.DragShadowBuilder {
 
         // The drag shadow image, defined as a drawable thing
