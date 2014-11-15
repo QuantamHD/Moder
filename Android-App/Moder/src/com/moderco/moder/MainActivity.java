@@ -1,17 +1,41 @@
 package com.moderco.moder;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.ClipData;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+
+/*
+ * A drag and drop requires a "drag shadow" that represents
+ * the object the user is dragging. After that's done and over with
+ * The users object will be moved to wherever it's needed.
+ */
 
 public class MainActivity extends ActionBarActivity {
+	
+	//Create a label
+	private static final String IMAGEVIEW_TAG = "icon bitmap";
+	ImageView imageView; //Needed for the drag shadow
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        imageView = new ImageView(this); 
+        imageView.setTag(IMAGEVIEW_TAG);
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Actually write the long click code
+				ClipData.Item item = new ClipData.Item((CharSequence) v.getTag());
+				return false; 
+			}
+		});
     }
 
 

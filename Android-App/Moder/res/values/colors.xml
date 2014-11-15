@@ -3,4 +3,7 @@
     <color
         name = "background_color_login_page"
         ></color>
+    <color name="LightAmber">#FFECB3</color>
+    <color name="Bar">#fd8b72</color>
+    <color name="DarkAmber">#FFA000</color>
 </resources>
