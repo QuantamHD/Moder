@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color
-        name = "background_color_login_page"
-        ></color>
-    <color name="LightAmber">#FFECB3</color>
-    <color name="Amber">#FFC107</color>
-    <color name="DarkAmber">#FFA000</color>
-</resources>
