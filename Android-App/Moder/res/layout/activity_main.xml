@@ -81,30 +81,27 @@
             <View
                 android:id="@+id/rect"
                 android:layout_width="fill_parent"
-                android:layout_height="250dp"
+                android:layout_height="500dp"
                 android:layout_alignBottom="@+id/textView1"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/rext" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/photoProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
                 android:src="@drawable/test" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView1"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp"
-                android:text="CompSciTutor"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/yesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
 
 </LinearLayout>
 
