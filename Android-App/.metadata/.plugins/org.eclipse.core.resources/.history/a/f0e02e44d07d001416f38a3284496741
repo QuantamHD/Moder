@@ -94,7 +94,7 @@
             android:layout_marginLeft="50dp" >
         
         	<Button
-            	android:id="@+id/noButton"
+            	android:id="@+id/button1"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"
             	android:text="Ugly AF" />

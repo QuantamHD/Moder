@@ -1660,7 +1660,6 @@ containing a value of this type.
         public static final int bar=0x7f050041;
         public static final int beginning=0x7f050012;
         public static final int bottom=0x7f050016;
-        public static final int button1=0x7f05004a;
         public static final int camera=0x7f050045;
         public static final int checkbox=0x7f05002b;
         public static final int collapseActionView=0x7f05000f;
@@ -1685,6 +1684,7 @@ containing a value of this type.
         public static final int listview_background_shape=0x7f05004c;
         public static final int middle=0x7f050013;
         public static final int never=0x7f05000b;
+        public static final int noButton=0x7f05004a;
         public static final int none=0x7f050004;
         public static final int normal=0x7f050001;
         public static final int photoProfile=0x7f050049;

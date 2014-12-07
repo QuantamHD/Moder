@@ -358,7 +358,6 @@ int id always 0x7f05000d
 int id bar 0x7f050041
 int id beginning 0x7f050012
 int id bottom 0x7f050016
-int id button1 0x7f05004a
 int id camera 0x7f050045
 int id checkbox 0x7f05002b
 int id collapseActionView 0x7f05000f
@@ -383,6 +382,7 @@ int id list_item 0x7f050027
 int id listview_background_shape 0x7f05004c
 int id middle 0x7f050013
 int id never 0x7f05000b
+int id noButton 0x7f05004a
 int id none 0x7f050004
 int id normal 0x7f050001
 int id photoProfile 0x7f050049

@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
 
 	
 	ImageView photoProfile;
-	Button yesButton, noButton;
+	Button yesButton;
 	View photoBorder;
 	
     @Override
@@ -24,7 +24,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
-        noButton = (Button) findViewById(R.id.noButton);
         photoProfile= (ImageView) findViewById(R.id.photoProfile);
         photoBorder = (View) findViewById(R.id.rect);
         
@@ -32,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
         photoBorder.getLayoutParams().height = photoProfile.getDrawable().getIntrinsicHeight() + 20;
 		photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
         
-		//Yes Button
         yesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -43,19 +41,6 @@ public class MainActivity extends ActionBarActivity {
 				photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
 			}
 		}); 
-        
-      //No Button
-        noButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				photoProfile.setImageResource(R.drawable.test2);
-				
-				//reset border
-				photoBorder.getLayoutParams().height = photoProfile.getDrawable().getIntrinsicHeight() + 20;
-				photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
-			}
-		}); 
-        
     }
 
 
