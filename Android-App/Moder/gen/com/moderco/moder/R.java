@@ -1654,12 +1654,13 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f050030;
         public static final int action_mode_bar_stub=0x7f05002f;
         public static final int action_mode_close_button=0x7f050022;
-        public static final int action_settings=0x7f05004c;
+        public static final int action_settings=0x7f05004d;
         public static final int activity_chooser_view_content=0x7f050023;
         public static final int always=0x7f05000d;
         public static final int bar=0x7f050041;
         public static final int beginning=0x7f050012;
         public static final int bottom=0x7f050016;
+        public static final int button1=0x7f05004a;
         public static final int camera=0x7f050045;
         public static final int checkbox=0x7f05002b;
         public static final int collapseActionView=0x7f05000f;
@@ -1681,7 +1682,7 @@ containing a value of this type.
         public static final int linearLayout1=0x7f050043;
         public static final int listMode=0x7f050002;
         public static final int list_item=0x7f050027;
-        public static final int listview_background_shape=0x7f05004b;
+        public static final int listview_background_shape=0x7f05004c;
         public static final int middle=0x7f050013;
         public static final int never=0x7f05000b;
         public static final int none=0x7f050004;
@@ -1717,7 +1718,7 @@ containing a value of this type.
         public static final int useLogo=0x7f050005;
         public static final int withText=0x7f05000e;
         public static final int wrap_content=0x7f050000;
-        public static final int yesButton=0x7f05004a;
+        public static final int yesButton=0x7f05004b;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within
