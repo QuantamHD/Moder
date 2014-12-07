@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="com.android.ide.eclipse.adt.debug.LaunchConfigType">
 <intAttribute key="com.android.ide.eclipse.adt.action" value="1"/>
-<stringAttribute key="com.android.ide.eclipse.adt.activity" value="com.moderco.moder.MainActivity"/>
-<stringAttribute key="com.android.ide.eclipse.adt.avd" value="SadPotato"/>
+<stringAttribute key="com.android.ide.eclipse.adt.activity" value="com.moderco.moder.LoginActivity"/>
 <stringAttribute key="com.android.ide.eclipse.adt.commandline" value=""/>
 <intAttribute key="com.android.ide.eclipse.adt.delay" value="0"/>
 <stringAttribute key="com.android.ide.eclipse.adt.last.used.device" value="D0FBA0A03473047C"/>
