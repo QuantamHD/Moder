@@ -7,7 +7,16 @@
     
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+         >
+        
+        <!--  View	
+            android:id="@+id/background"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:backgroud ="#d8dada"
+            /> -->
+            
         
         <View
             android:id="@+id/bar"
@@ -36,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
          		android:layout_alignParentRight="true"
-                android:src="@android:drawable/ic_menu_manage" />
+                android:src="@drawable/menu" />
             
             
 
@@ -44,7 +53,7 @@
                 android:id="@+id/camera"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_camera" />
+                android:src="@drawable/camera" />
             
             
 
@@ -53,12 +62,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
             	android:layout_alignParentLeft="true"
-                android:src="@android:drawable/ic_menu_search" />
+                android:src="@drawable/search" />
         </RelativeLayout>
        
     </RelativeLayout>
 
-        <RelativeLayout
+      	<RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -67,21 +76,14 @@
             android:layout_marginTop="50dp"
              >
 
-            <View
-                android:id="@+id/rect"
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:layout_alignBottom="@+id/textView1"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/rext" />
-
-            <ImageView
-                android:id="@+id/photoProfile"
+         	<com.moderco.views.PhotoProfile
+         	    android:id="@+id/photoProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:padding="5dp"
-                android:src="@drawable/test" />
+                android:src="@drawable/test"/>
+            
 
             
         </RelativeLayout >

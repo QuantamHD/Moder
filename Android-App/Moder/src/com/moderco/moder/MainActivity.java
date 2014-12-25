@@ -14,14 +14,14 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
+import com.moderco.views.PhotoProfile;
 
 
 public class MainActivity extends Activity {
 
-	ImageView photoProfile;
+	PhotoProfile photoProfile;
 	Button yesButton, noButton;
-	View photoBorder;
 	Intent intent;
 	
     @Override
@@ -33,34 +33,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
-        photoProfile= (ImageView) findViewById(R.id.photoProfile);
-        photoBorder = (View) findViewById(R.id.rect);
+        photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
         
         intent = getIntent(); //Used for the intent getting
-        
-        
-        //Set border originally
-        photoBorder.getLayoutParams().height = photoProfile.getDrawable().getIntrinsicHeight() + 20;
-		photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
         
 		//Yes Button
         yesButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Bitmap bitmap = null;
-				try {
-					bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://env-7765194.whelastic.net/image").getContent());
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			
-				photoProfile.setImageBitmap(bitmap);
-				
-				//reset border
-				photoBorder.getLayoutParams().height = photoProfile.getDrawable().getIntrinsicHeight() + 20;
-				photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
+				photoProfile.changePhoto();
 			}
 		}); 
         
@@ -70,9 +51,6 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				photoProfile.setImageResource(R.drawable.test2);
 				
-				//reset border
-				photoBorder.getLayoutParams().height = photoProfile.getDrawable().getIntrinsicHeight() + 20;
-				photoBorder.getLayoutParams().width = photoProfile.getDrawable().getIntrinsicWidth() + 20;
 			}
 		}); 
         

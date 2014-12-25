@@ -1,0 +1,72 @@
+package com.moderco.moder;
+
+import android.animation.Animator;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class LoginActivity extends Activity{
+	
+	EditText username;
+	EditText password;
+	Button submitButton;
+	Button registerButton;
+	View paper;
+	public final static String EXTRA_MESSAGE = "com.moderco.moder.MESSAGE";
+
+	public void onCreate(Bundle savedInstanceState) {
+		 super.onCreate(savedInstanceState);
+	     setContentView(R.layout.activity_login);
+	     Log.v("General", "Login Started"); //Todo Remove
+	     
+	     paper = findViewById(R.id.paper);
+	     username = (EditText) findViewById(R.id.username);
+	     password = (EditText) findViewById(R.id.password);
+	     submitButton = (Button) findViewById(R.id.submitButton);
+	     submitButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				login(v);
+			}
+		});
+	     registerButton = (Button) findViewById(R.id.button2);
+	     registerButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//Find center for clipping circle
+				int centerX = (paper.getLeft() + paper.getRight()) / 2;
+				int centerY = (paper.getTop() + paper.getBottom()) /2;
+				
+				//Get the radius for clipping circle
+				int finalRadius = Math.max(paper.getWidth(), paper.getHeight());
+				
+				Animator revealAnimation
+					= ViewAnimationUtils.createCircularReveal(paper, centerX, centerY, 0, finalRadius);
+				
+				//Start the animation
+				paper.setVisibility(View.VISIBLE);
+				revealAnimation.start();
+			}
+		});
+	}
+	
+	public void login(View view){
+		//Replace admin with other stuff
+		if(username.getText().toString().equals("") && 
+		password.getText().toString().equals("")){
+			Intent intent = new Intent(this, MainActivity.class);
+		    EditText editText = (EditText) findViewById(R.id.username);
+		    String message = editText.getText().toString();
+		    intent.putExtra(EXTRA_MESSAGE, message);
+		    startActivity(intent);
+		}else{
+			
+		}	
+	}
+}
