@@ -1,0 +1,20 @@
+package com.moderco.network;
+
+
+import android.os.AsyncTask;
+
+public class RegistrationTask extends AsyncTask<Void, Void, Void>{
+	
+	
+	public RegistrationTask(String... params) {
+		
+	}
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		//Upload shit.
+		return null;
+	}
+
+	
+}

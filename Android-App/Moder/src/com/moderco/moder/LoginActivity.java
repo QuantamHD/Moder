@@ -1,19 +1,5 @@
 package com.moderco.moder;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.moderco.network.RegistrationTask;
 
 public class LoginActivity extends Activity {
 
@@ -45,6 +33,7 @@ public class LoginActivity extends Activity {
 	private final int PASSWORDS_NOT_IDENTICAL = 1;
 	private final int PASSWORD_TOO_SHORT = 2;
 
+	
 	public final static String EXTRA_MESSAGE = "com.moderco.moder.MESSAGE";
 
 	
@@ -75,9 +64,10 @@ public class LoginActivity extends Activity {
 
 						// Run Password check
 						if (passCheck == PASSWORD_FINE) {
-							sendRegistrationPost(usernameRegistration,
-									passwordRegistration,
-									passwordCheckRegistration); //TODO: I should probs store the response
+							RegistrationTask task = new RegistrationTask(usernameRegistration.getText().toString(),
+									passwordRegistration.getText().toString(), passwordCheckRegistration.getText().toString());
+							task.execute(); //Uploads it. 
+							paper.setVisibility(View.GONE); // Remove the screen, go back to
 						}
 						// TODO: Login and change the screen to main feed
 					}
@@ -127,51 +117,12 @@ public class LoginActivity extends Activity {
 		String pwd1Text = pwd1.getText().toString();
 		String pwd2Text = pwd2.getText().toString();
 
-		if (pwd1Text != pwd2Text)
+		/*if (pwd1Text != pwd2Text)
 			return PASSWORDS_NOT_IDENTICAL;
-		else if (pwd1.length() < requiredPasswordLength)
+		else if (pwd1.length() > requiredPasswordLength)
 			return PASSWORD_TOO_SHORT;
-		else
+		else */
 			return PASSWORD_FINE;
-	}
-
-	/**
-	 * Sends http post to server who then sends back a response (hopefully).
-	 * @param email - The editText version
-	 * @param pwd1 - The editText version
-	 * @param pwd2 - The editText version
-	 * @return response from server
-	 */
-	public HttpResponse sendRegistrationPost(EditText email, EditText pwd1,
-			EditText pwd2) {
-
-		// Setup
-		HttpResponse response = null; // Hopefully this shouldn't happen.
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost post = new HttpPost("URL GOES HERE"); // TODO: add url
-
-		try {
-			// fill in parameters email, pwd1, pwd2
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("email", email.getText()
-					.toString()));
-			nameValuePairs.add(new BasicNameValuePair("pwd1", pwd1.getText()
-					.toString()));
-			nameValuePairs.add(new BasicNameValuePair("pwd2", pwd2.getText()
-					.toString()));
-			post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-			// send data
-			response = httpClient.execute(post);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return response;
 	}
 
 	
