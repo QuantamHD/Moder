@@ -1,0 +1,73 @@
+package com.moderco.network;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+public class LoginTask extends AsyncTask<Integer, Void, HttpResponse>{
+	
+	String email, pwd;
+	public static final int LOGIN_SUCCESS_CODE = 300;
+	public static final int UNKNOWN_ERROR_CODE = 200;
+	public static final int INFO_MISSING_CODE = 100;
+	
+	int code = -1;
+
+	public LoginTask(String email, String pwd) {
+		this.email = email;
+		this.pwd = pwd;
+	}
+	
+	public HttpResponse getResult(){
+		return result;
+	}
+
+	@Override
+	protected HttpResponse doInBackground(Integer... code) {
+		this.code = code[0];
+		// Setup
+		HttpResponse response = null; // Hopefully this shouldn't happen.
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost post = new HttpPost(URLS.LOGIN_URL_STRING); // TODO: add url
+
+		try {
+			// fill in parameters email, pwd1
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			nameValuePairs.add(new BasicNameValuePair("email", email));
+			nameValuePairs.add(new BasicNameValuePair("pwd", pwd));
+			post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			// send data
+			response = httpClient.execute(post);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return response; // Return the response
+	}
+	
+	protected void onPostExecute(HttpResponse result) {
+	    
+	}
+
+}

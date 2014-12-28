@@ -1665,7 +1665,7 @@ containing a value of this type.
         public static final int beginning=0x7f050012;
         public static final int bottom=0x7f050016;
         public static final int button2=0x7f050046;
-        public static final int camera=0x7f050053;
+        public static final int camera=0x7f050054;
         public static final int cancelRegistrationButton=0x7f05004f;
         public static final int checkbox=0x7f05002b;
         public static final int collapseActionView=0x7f05000f;
@@ -1707,7 +1707,7 @@ containing a value of this type.
         public static final int radio=0x7f05002d;
         public static final int registrationLabel=0x7f05004a;
         public static final int relativeLayout1=0x7f050041;
-        public static final int search=0x7f050054;
+        public static final int search=0x7f050053;
         public static final int search_badge=0x7f050037;
         public static final int search_bar=0x7f050036;
         public static final int search_button=0x7f050038;

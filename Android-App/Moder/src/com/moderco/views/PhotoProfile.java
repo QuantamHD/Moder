@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.moderco.network.GetPhotosTask;
+import com.moderco.network.URLS;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -62,14 +65,9 @@ public class PhotoProfile extends ImageView{
 	 */
 	public void changePhoto() {
 		Bitmap bitmap = null;
-		try {
-			//Call from the server, which is currently just test pics
-			bitmap = BitmapFactory.decodeStream((InputStream)new URL("http://env-7765194.whelastic.net/image").getContent());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		GetPhotosTask task = new GetPhotosTask();
+		task.execute(URLS.MAIN_FEED_URL_STRING);
+		bitmap = task.getBitmap();
 		setImageBitmap(bitmap);
 	}
 	

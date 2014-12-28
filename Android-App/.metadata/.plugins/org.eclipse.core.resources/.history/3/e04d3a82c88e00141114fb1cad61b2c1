@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    >
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         >
+        
+        <View
+            android:id="@+id/bar"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bar" />
+        <View
+            android:id="@+id/shadow"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/bar"
+            android:background="#D3D3D3" />
+
+        <RelativeLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+    		android:paddingRight="16dp" >
+
+            <ImageButton
+                android:id="@+id/gears"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+         		android:layout_alignParentRight="true"
+         		
+                android:src="@drawable/menu"
+                style="?android:attr/borderlessButtonStyle"
+                 />
+            
+
+            <ImageButton
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+            	android:layout_alignParentLeft="true"
+                android:src="@drawable/search"
+                style="?android:attr/borderlessButtonStyle"
+                />
+
+            <ImageButton
+                android:id="@+id/camera"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/camera"
+                 />
+
+        </RelativeLayout>
+       
+    </RelativeLayout>
+
+      	<RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center"
+             >
+
+         	<com.moderco.views.PhotoProfile
+         	    android:id="@+id/photoProfile"
+         	    android:layout_width="wrap_content"
+         	    android:layout_height="wrap_content"
+         	    android:layout_alignParentLeft="true"
+         	    android:layout_alignParentTop="true"
+         	    android:adjustViewBounds="true"
+         	    android:src="@drawable/test" />
+            
+        </RelativeLayout >
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp" >
+        
+        	<Button
+            	android:id="@+id/noButton"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="Ugly AF" />
+
+        	<Button
+            	android:id="@+id/yesButton"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_alignParentRight="true"
+           		android:text="Damn Fine" />
+        
+        </RelativeLayout>
+
+</LinearLayout>
+

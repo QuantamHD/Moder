@@ -10,14 +10,6 @@
         android:layout_height="wrap_content"
          >
         
-        <!--  View	
-            android:id="@+id/background"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:backgroud ="#d8dada"
-            /> -->
-            
-        
         <View
             android:id="@+id/bar"
             android:layout_width="fill_parent"
@@ -33,36 +25,43 @@
         <RelativeLayout
             android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
     		android:paddingRight="16dp" >
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/gears"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
          		android:layout_alignParentRight="true"
-                android:src="@drawable/menu" />
-            
-            
-
-            <ImageView
-                android:id="@+id/camera"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/camera" />
-            
+                android:src="@drawable/menu"
+                style="?android:attr/borderlessButtonStyle"
+                 />
             
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
             	android:layout_alignParentLeft="true"
-                android:src="@drawable/search" />
+                android:src="@drawable/search"
+                style="?android:attr/borderlessButtonStyle"
+                />
+
+            <ImageButton
+                android:id="@+id/camera"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/camera"
+                 />
+
         </RelativeLayout>
        
     </RelativeLayout>
@@ -70,27 +69,31 @@
       	<RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
              >
 
          	<com.moderco.views.PhotoProfile
          	    android:id="@+id/photoProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:padding="5dp"
-                android:src="@drawable/test"/>
-            
-
+         	    android:layout_width="wrap_content"
+         	    android:layout_height="wrap_content"
+         	    android:layout_alignParentLeft="true"
+         	    android:layout_alignParentTop="true"
+         	    android:adjustViewBounds="true"
+         	    android:src="@drawable/test" />
             
         </RelativeLayout >
 
+      	<RelativeLayout
+      	    android:layout_width="match_parent"
+      	    android:layout_height="50dp"
+      	    android:background="#FFFFFF"
+      	    android:gravity="top"
+      	    android:layout_marginBottom="20dp" >
+      	</RelativeLayout>
+
         <RelativeLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp" >

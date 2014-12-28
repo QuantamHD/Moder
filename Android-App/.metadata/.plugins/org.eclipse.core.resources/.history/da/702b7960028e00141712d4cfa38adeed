@@ -1,0 +1,22 @@
+package com.moderco.network;
+
+import org.apache.http.HttpResponse;
+
+import android.os.AsyncTask;
+
+public class LoginTask extends AsyncTask<Void, Void, HttpResponse>{
+	
+	String email, pwd;
+
+	public LoginTask(String email, String pwd) {
+		this.email = email;
+		this.pwd = pwd;
+	}
+	
+	@Override
+	protected HttpResponse doInBackground(Void... params) {
+		
+		return null;
+	}
+
+}

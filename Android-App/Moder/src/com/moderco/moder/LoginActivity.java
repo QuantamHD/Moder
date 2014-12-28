@@ -1,13 +1,30 @@
 package com.moderco.moder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ExecutionException;
+
+import org.apache.http.HttpResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
 
 public class LoginActivity extends Activity {
@@ -32,11 +49,9 @@ public class LoginActivity extends Activity {
 	private final int PASSWORD_FINE = 0;
 	private final int PASSWORDS_NOT_IDENTICAL = 1;
 	private final int PASSWORD_TOO_SHORT = 2;
-
 	
 	public final static String EXTRA_MESSAGE = "com.moderco.moder.MESSAGE";
 
-	
 	/**
 	 * Sets up essentially the whole page.
 	 */
@@ -89,7 +104,17 @@ public class LoginActivity extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				login(v);
+				LoginTask task = new LoginTask(username.getText().toString(), password.getText().toString());
+				int code = -1;
+				try {
+					code = task.execute().get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				Log.v("LoginActivity", "Login Code: " + code);
+				login(v, code);
 			}
 		});
 
@@ -128,20 +153,21 @@ public class LoginActivity extends Activity {
 	
 	/**
  	* Switches the activity to main activity from the login page.
- 	* 
  	* @param view
  	*/
-	public void login(View view) {
-		// Replace admin with other stuff
-		if (username.getText().toString().equals("")
-				&& password.getText().toString().equals("")) {
+	public void login(View view, int code) {
+		if (code == LoginTask.LOGIN_SUCCESS_CODE) {
 			Intent intent = new Intent(this, MainActivity.class);
 			EditText editText = (EditText) findViewById(R.id.username);
 			String message = editText.getText().toString();
 			intent.putExtra(EXTRA_MESSAGE, message);
-			startActivity(intent);
+			startActivity(intent); 
+		} else if (code == LoginTask.INFO_MISSING_CODE) {
+			Log.v("LoginActivity", "Incorrect info.");
+		} else if (code == LoginTask.CONNECTION_FAILED_CODE) {
+			Log.v("LoginActivity", "Connection failed on login attempt");
 		} else {
-
+			Log.v("LoginActivity", "Unknown Error Code -1; Check LoginTask.java or LoginActivity.java in Moder Client");
 		}
 	}
 }

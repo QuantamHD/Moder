@@ -1,0 +1,15 @@
+package com.moderco.network;
+
+import org.apache.http.HttpResponse;
+
+import android.os.AsyncTask;
+
+public class GetPhotosTask extends AsyncTask<String, Void, HttpResponse>{
+
+	@Override
+	protected HttpResponse doInBackground(String... params) {
+		
+		return null;
+	}
+
+}

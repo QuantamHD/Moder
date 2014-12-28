@@ -1,7 +1,9 @@
 package com.moderco.network;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
 
@@ -37,6 +40,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
 		HttpResponse response = null; // Hopefully this shouldn't happen.
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost post = new HttpPost(URLS.REGISTRATION_URL_STRING); // TODO: add url
+		
 
 		try {
 			// fill in parameters email, pwd1, pwd2
@@ -55,8 +59,26 @@ public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-		return response;
+		
+		//Log response
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+			StringBuilder builder = new StringBuilder();
+			for (String line = null; (line = reader.readLine()) != null;) {
+			    builder.append(line).append("\n");
+			}
+			Log.d("RegistrationResponse", builder.toString());
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return response; //Return the response
 	}
+	
+	
+	
 	
 
 	
