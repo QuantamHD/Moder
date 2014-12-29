@@ -16,13 +16,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
+public class RegistrationTask extends AsyncTask<Void, Void, Integer>{
 
 	String email, pwd1, pwd2;
+	
+	public static final int SUCCESS_CODE = 300;
+	
 	
 	public RegistrationTask(String email, String pwd1, String pwd2) {
 		this.email = email;
@@ -34,7 +39,8 @@ public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
 	/**
 	 * Sends http post to server who then sends back a response (hopefully).
 	 */
-	protected HttpResponse doInBackground(Void... params) { //We ignore the params because it's an upload
+	protected Integer doInBackground(Void... params) { //We ignore the params because it's an upload
+		int code = -1;
 
 		// Setup
 		HttpResponse response = null; // Hopefully this shouldn't happen.
@@ -62,19 +68,28 @@ public class RegistrationTask extends AsyncTask<Void, Void, HttpResponse>{
 		
 		//Log response
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent(), "UTF-8"));
 			StringBuilder builder = new StringBuilder();
 			for (String line = null; (line = reader.readLine()) != null;) {
-			    builder.append(line).append("\n");
+				builder.append(line).append("\n");
 			}
 			Log.d("RegistrationResponse", builder.toString());
+			//Now let's parse some JSON! 
+			try {
+				JSONObject jObject = new JSONObject(builder.toString());
+				code = jObject.getInt("ResponseCode"); //Assigns code
+				return code; //Codes defined above 
+			} catch (JSONException e) { // Catch all the things
+				e.printStackTrace();
+			}
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return response; //Return the response
+		return code; //Return the response
 	}
 	
 	

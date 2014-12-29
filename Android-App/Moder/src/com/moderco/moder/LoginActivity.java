@@ -1,28 +1,19 @@
 package com.moderco.moder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.http.cookie.Cookie;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
@@ -30,13 +21,20 @@ import com.moderco.network.RegistrationTask;
 public class LoginActivity extends Activity {
 
 	/* login page */
+	boolean loginPageShown = false;
+	Button loginExpansionButton;
+	RelativeLayout loginExpansionLayout;
 	EditText username;
 	EditText password;
 	Button submitButton; // Logs in
 	Button registerButton; // Brings up register page
 	private int requiredPasswordLength = 8;
+	private final String USERNAME_HINT = "Enter Email";
+	private final String PASSWORD_HINT = "Enter Password";
+	Context context; // For keeping track and stuff
 
 	/* registration page */
+	boolean registrationPageShown = false;
 	View paper; // Background to registration page
 	EditText usernameRegistration;
 	EditText passwordRegistration;
@@ -49,8 +47,8 @@ public class LoginActivity extends Activity {
 	private final int PASSWORD_FINE = 0;
 	private final int PASSWORDS_NOT_IDENTICAL = 1;
 	private final int PASSWORD_TOO_SHORT = 2;
-	
-	public final static String EXTRA_MESSAGE = "com.moderco.moder.MESSAGE";
+
+	public final static String COOKIE = "com.moderco.moder.MESSAGE";
 
 	/**
 	 * Sets up essentially the whole page.
@@ -61,8 +59,51 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		Log.v("General", "Login Started"); // Todo Remove
 
-		/* Registration Popup */
-		paper = findViewById(R.id.paperLayout);
+		
+
+		/* Login Expansion */
+		username = (EditText) findViewById(R.id.username);
+		password = (EditText) findViewById(R.id.password);
+		submitButton = (Button) findViewById(R.id.submitButton);
+		loginExpansionLayout = (RelativeLayout) findViewById(R.id.loginExpandLayout);
+		loginExpansionButton = (Button) findViewById(R.id.loginExpandButton);
+		context = this; // find context right before for use
+		loginExpansionButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (loginPageShown) {
+					username.setVisibility(View.GONE);
+					password.setVisibility(View.GONE);
+					submitButton.setVisibility(View.GONE);
+				} else {
+					username.setVisibility(View.VISIBLE);
+					password.setVisibility(View.VISIBLE);
+					submitButton.setVisibility(View.VISIBLE);
+				}
+				loginPageShown = !loginPageShown;
+			}
+		});
+
+		submitButton = (Button) findViewById(R.id.submitButton);
+		submitButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LoginTask task = new LoginTask(username.getText().toString(),
+						password.getText().toString());
+				int code = -1;
+				try {
+					code = task.execute().get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				Log.v("LoginActivity", "Login Code: " + code);
+				login(v, code, task.cookie);
+			}
+		});
+		
+		/* Registration Expansion */
 		usernameRegistration = (EditText) findViewById(R.id.emailRegistration);
 		passwordRegistration = (EditText) findViewById(R.id.passwordRegistration);
 		passwordCheckRegistration = (EditText) findViewById(R.id.passwordRegistrationVerification);
@@ -79,44 +120,39 @@ public class LoginActivity extends Activity {
 
 						// Run Password check
 						if (passCheck == PASSWORD_FINE) {
-							RegistrationTask task = new RegistrationTask(usernameRegistration.getText().toString(),
-									passwordRegistration.getText().toString(), passwordCheckRegistration.getText().toString());
-							task.execute(); //Uploads it. 
-							paper.setVisibility(View.GONE); // Remove the screen, go back to
+							RegistrationTask task = new RegistrationTask(
+									usernameRegistration.getText().toString(),
+									passwordRegistration.getText().toString(),
+									passwordCheckRegistration.getText()
+											.toString());
+							try {
+								int code = task.execute().get();// Uploads it.
+								if (code == RegistrationTask.SUCCESS_CODE) {
+									//Now we log the user in with their new account
+									LoginTask loginTask = new LoginTask(usernameRegistration.getText().toString(),
+											passwordRegistration.getText().toString());
+									int loginCode = -1;
+									try {
+										loginCode = loginTask.execute().get();
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									} catch (ExecutionException e) {
+										e.printStackTrace();
+									}
+									Log.v("LoginActivity", "Login Code: " + loginCode);
+									login(v, loginCode, loginTask.cookie);
+								}
+								
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							} catch (ExecutionException e) {
+								e.printStackTrace();
+							} 
+							
+							
 						}
-						// TODO: Login and change the screen to main feed
 					}
 				});
-
-		cancelRegistrationButton = (Button) findViewById(R.id.cancelRegistrationButton);
-		cancelRegistrationButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				paper.setVisibility(View.GONE); // Remove the screen, go back to
-												// login
-			}
-		});
-
-		/* Login page */
-		username = (EditText) findViewById(R.id.username);
-		password = (EditText) findViewById(R.id.password);
-		submitButton = (Button) findViewById(R.id.submitButton);
-		submitButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				LoginTask task = new LoginTask(username.getText().toString(), password.getText().toString());
-				int code = -1;
-				try {
-					code = task.execute().get();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
-				}
-				Log.v("LoginActivity", "Login Code: " + code);
-				login(v, code);
-			}
-		});
 
 		registerButton = (Button) findViewById(R.id.button2);
 		registerButton.setOnClickListener(new View.OnClickListener() {
@@ -124,50 +160,74 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Start the animation
-				paper.setVisibility(View.VISIBLE);
+				if (!registrationPageShown) {
+					usernameRegistration.setVisibility(View.VISIBLE);
+					passwordRegistration.setVisibility(View.VISIBLE);
+					passwordCheckRegistration.setVisibility(View.VISIBLE);
+					confirmRegistrationButton.setVisibility(View.VISIBLE);
+				} else {
+					usernameRegistration.setVisibility(View.GONE);
+					passwordRegistration.setVisibility(View.GONE);
+					passwordCheckRegistration.setVisibility(View.GONE);
+					confirmRegistrationButton.setVisibility(View.GONE);
+				}
+				registrationPageShown = !registrationPageShown;
 			}
 		});
 	}
 
 	/**
-	 * Executes a client side check to see if the passwords
-	 * work. Basically making sure they put a password in
-	 * and that their password and their retyped passwords
-	 * are the same. 
-	 * @param pwd1 - The editText version
-	 * @param pwd2 - The editText version
+	 * Executes a client side check to see if the passwords work. Basically
+	 * making sure they put a password in and that their password and their
+	 * retyped passwords are the same.
+	 * 
+	 * @param pwd1
+	 *            - The editText version
+	 * @param pwd2
+	 *            - The editText version
 	 * @return error codes defined above
 	 */
 	public int passwordCheck(EditText pwd1, EditText pwd2) {
 		String pwd1Text = pwd1.getText().toString();
 		String pwd2Text = pwd2.getText().toString();
 
-		/*if (pwd1Text != pwd2Text)
-			return PASSWORDS_NOT_IDENTICAL;
-		else if (pwd1.length() > requiredPasswordLength)
-			return PASSWORD_TOO_SHORT;
-		else */
-			return PASSWORD_FINE;
+		/* TODO: Check passwords
+		 * if (pwd1Text != pwd2Text) return PASSWORDS_NOT_IDENTICAL; else if
+		 * (pwd1.length() > requiredPasswordLength) return PASSWORD_TOO_SHORT;
+		 * else
+		 */
+		return PASSWORD_FINE;
 	}
 
-	
 	/**
- 	* Switches the activity to main activity from the login page.
- 	* @param view
- 	*/
-	public void login(View view, int code) {
-		if (code == LoginTask.LOGIN_SUCCESS_CODE) {
-			Intent intent = new Intent(this, MainActivity.class);
-			EditText editText = (EditText) findViewById(R.id.username);
-			String message = editText.getText().toString();
-			intent.putExtra(EXTRA_MESSAGE, message);
-			startActivity(intent); 
+	 * Handles codes and calls switchScreen if code correct
+	 * 
+	 * @param view
+	 */
+	public void login(View view, int code, Cookie cookie) {
+		if (code == LoginTask.SUCCESS_CODE) {
+			switchScreen(cookie.toString());
 		} else if (code == LoginTask.INFO_MISSING_CODE) {
 			Log.v("LoginActivity", "Incorrect info.");
 		} else if (code == LoginTask.CONNECTION_FAILED_CODE) {
 			Log.v("LoginActivity", "Connection failed on login attempt");
 		} else {
-			Log.v("LoginActivity", "Unknown Error Code -1; Check LoginTask.java or LoginActivity.java in Moder Client");
+			Log.v("LoginActivity",
+					"Unknown Error Code: "
+							+ Integer.toString(code)
+							+ "Check LoginTask.java or LoginActivity.java in Moder Client");
 		}
 	}
+
+	/**
+	 * Switches the activity to main activity from the login page.
+	 * 
+	 * @param cookie
+	 */
+	private void switchScreen(String cookie) {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.putExtra(COOKIE, cookie);
+		startActivity(intent);
+	}
+
 }

@@ -6,11 +6,13 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,6 +41,13 @@ public class MainActivity extends Activity {
         searchButton = (ImageButton) findViewById(R.id.search);
         menuButton = (ImageButton) findViewById(R.id.gears);
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
+        
+        //Set max photoProfile height
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size); //Because we can't use return for some reason?
+        int height = size.y;
+        photoProfile.setMaxHeight((height/3)*2); // 2 thirds of the height of the screen
         
         intent = getIntent(); //Used for the intent getting
         

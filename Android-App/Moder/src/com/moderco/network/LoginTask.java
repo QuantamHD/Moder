@@ -26,11 +26,11 @@ import android.util.Log;
 public class LoginTask extends AsyncTask<Void, Void, Integer>{
 	
 	String email, pwd;
-	public static final int LOGIN_SUCCESS_CODE = 300;
+	public static final int SUCCESS_CODE = 300;
 	public static final int UNKNOWN_ERROR_CODE = 200;
 	public static final int INFO_MISSING_CODE = 100;
 	public static final int CONNECTION_FAILED_CODE = 140;
-	
+	public Cookie cookie = null;
 
 	public LoginTask(String email, String pwd) {
 		this.email = email;
@@ -60,7 +60,7 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 			//Cookie time
 			CookieStore store = ((DefaultHttpClient) httpClient).getCookieStore();
 			List<Cookie> cookies = store.getCookies();
-			Cookie cookie = cookies.get(0); //There should only be one.
+			cookie = cookies.get(0); //There should only be one.
 			Log.v("Cookie Time", "Received cookie: " + cookie.getName());
 			
 			try {
@@ -75,8 +75,8 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 				try {
 					JSONObject jObject = new JSONObject(builder.toString());
 					code = jObject.getInt("ResponseCode"); //Assigns code
-					return code; //sees if this works
-				} catch (JSONException e) {
+					return code; //Codes defined above 
+				} catch (JSONException e) { // Catch all the things
 					e.printStackTrace();
 				}
 			} catch (UnsupportedEncodingException e1) {
@@ -94,9 +94,7 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 			e.printStackTrace();
 		}
 		
-		
-		 
-		return code; // Return the response
+		return code; // Code = -1 here. That's kinda bad. it should crash b4 it gets here
 	}
 
 	
