@@ -23,11 +23,13 @@ import com.moderco.views.PhotoProfile;
 public class MainActivity extends Activity {
 
 	PhotoProfile photoProfile;
-	Button yesButton, noButton;
-	ImageButton cameraButton, searchButton, menuButton;
+	Button yesButton;
+	ImageButton cameraButton, searchButton, menuButton, noButton;
 	Intent intent;
 	
+	
 	//For camera stuff
+	Uri fileUri;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	
@@ -36,7 +38,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
-        noButton = (Button) findViewById(R.id.noButton);
+        noButton = (ImageButton) findViewById(R.id.noButton);
         cameraButton = (ImageButton) findViewById(R.id.camera);
         searchButton = (ImageButton) findViewById(R.id.search);
         menuButton = (ImageButton) findViewById(R.id.gears);
@@ -54,10 +56,13 @@ public class MainActivity extends Activity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				Uri fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); //Storage for the image they take
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-				startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+				 // create Intent to take a picture and return control to the calling application
+			    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+			    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+
+			    // start the image capture Intent
+			    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 			}
 		});
         
@@ -74,7 +79,6 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				photoProfile.setImageResource(R.drawable.test2);
-				
 			}
 		}); 
         
@@ -82,15 +86,23 @@ public class MainActivity extends Activity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	Log.v("Camera", "Received Camera activity");
+    	
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+            	Log.v("Camera", "Photo taken, Stored at :\n" + fileUri.toString());
+            	
+            	
                 //Image working
-            	data.getData();
             } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
+            	Log.v("Camera", "Photo canceled");
             } else {
-                // Image capture failed, advise user
+                // Camera fucked up.
+            	Log.v("Camera", "Camera failed!");
             }
+        } else {
+        	Log.v("Camera", "Well something else happened");
         }
     }
     
@@ -106,13 +118,14 @@ public class MainActivity extends Activity {
         // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                  Environment.DIRECTORY_PICTURES), "Moder"); 
+                  Environment.DIRECTORY_PICTURES), "ModerPhotos"); 
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        	boolean works = mediaStorageDir.mkdirs();
+            if (!works){
                 Log.d("ModerCamera", "failed to create directory");
                 return null;
             }

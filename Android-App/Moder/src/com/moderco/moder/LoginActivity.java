@@ -14,11 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
 
 public class LoginActivity extends Activity {
+	
+	
 
 	/* login page */
 	boolean loginPageShown = false;
@@ -28,7 +31,7 @@ public class LoginActivity extends Activity {
 	EditText password;
 	Button submitButton; // Logs in
 	Button registerButton; // Brings up register page
-	private int requiredPasswordLength = 8;
+	private static int requiredPasswordLength = 8;
 	private final String USERNAME_HINT = "Enter Email";
 	private final String PASSWORD_HINT = "Enter Password";
 	Context context; // For keeping track and stuff
@@ -49,6 +52,14 @@ public class LoginActivity extends Activity {
 	private final int PASSWORD_TOO_SHORT = 2;
 
 	public final static String COOKIE = "com.moderco.moder.MESSAGE";
+	
+	/* Toasts */
+	private static final String ACCOUNT_CREATED = "Welcome to Moder!";
+	private static final String ERROR = "Something went wrong! We're working on it!";
+	private static final String PASSWORDS_NOT_SAME = "Your passwords do not match!";
+	private static final String PASSWORD_TOO_SHORT_TOAST = "Your password needs to be " + Integer.toString(requiredPasswordLength) + " or longer!";
+	private static final String LOGIN_INFO_INCORRECT = "Either your password or your email is incorrect!";
+	private static final String LOST_CONNECTION = "It appears you lost connection";
 
 	/**
 	 * Sets up essentially the whole page.
@@ -88,18 +99,24 @@ public class LoginActivity extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LoginTask task = new LoginTask(username.getText().toString(),
-						password.getText().toString());
-				int code = -1;
-				try {
-					code = task.execute().get();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
+				if ((username.getText().toString().length() > 0)
+						&& (password.getText().toString().length() > 0)) {
+					submitButton = (Button) findViewById(R.id.submitButton);
+					submitButton.setText("Connecting..."); //Show that it's doing something
+					LoginTask task = new LoginTask(username.getText()
+							.toString(), password.getText().toString());
+					int code = -1;
+					try {
+						
+						code = task.execute().get();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						e.printStackTrace();
+					}
+					Log.v("LoginActivity", "Login Code: " + code);
+					login(v, code, task);
 				}
-				Log.v("LoginActivity", "Login Code: " + code);
-				login(v, code, task.cookie);
 			}
 		});
 		
@@ -119,7 +136,11 @@ public class LoginActivity extends Activity {
 								passwordCheckRegistration);
 
 						// Run Password check
-						if (passCheck == PASSWORD_FINE) {
+						if (passCheck == PASSWORD_TOO_SHORT) {
+							Toast.makeText(getApplicationContext(), PASSWORDS_NOT_SAME, Toast.LENGTH_SHORT).show();;
+						} else if (passCheck == PASSWORDS_NOT_IDENTICAL) {
+							Toast.makeText(getApplicationContext(), PASSWORD_TOO_SHORT_TOAST, Toast.LENGTH_SHORT).show();
+						} else if (passCheck == PASSWORD_FINE) {
 							RegistrationTask task = new RegistrationTask(
 									usernameRegistration.getText().toString(),
 									passwordRegistration.getText().toString(),
@@ -128,11 +149,15 @@ public class LoginActivity extends Activity {
 							try {
 								int code = task.execute().get();// Uploads it.
 								if (code == RegistrationTask.SUCCESS_CODE) {
+									//Tell the user all's good.
+									Toast.makeText(getApplicationContext(), ACCOUNT_CREATED, Toast.LENGTH_SHORT).show();
+									
 									//Now we log the user in with their new account
 									LoginTask loginTask = new LoginTask(usernameRegistration.getText().toString(),
 											passwordRegistration.getText().toString());
 									int loginCode = -1;
 									try {
+										
 										loginCode = loginTask.execute().get();
 									} catch (InterruptedException e) {
 										e.printStackTrace();
@@ -140,7 +165,7 @@ public class LoginActivity extends Activity {
 										e.printStackTrace();
 									}
 									Log.v("LoginActivity", "Login Code: " + loginCode);
-									login(v, loginCode, loginTask.cookie);
+									login(v, loginCode, loginTask);
 								}
 								
 							} catch (InterruptedException e) {
@@ -148,8 +173,8 @@ public class LoginActivity extends Activity {
 							} catch (ExecutionException e) {
 								e.printStackTrace();
 							} 
-							
-							
+						} else {
+							Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
 						}
 					}
 				});
@@ -191,12 +216,13 @@ public class LoginActivity extends Activity {
 		String pwd1Text = pwd1.getText().toString();
 		String pwd2Text = pwd2.getText().toString();
 
-		/* TODO: Check passwords
-		 * if (pwd1Text != pwd2Text) return PASSWORDS_NOT_IDENTICAL; else if
-		 * (pwd1.length() > requiredPasswordLength) return PASSWORD_TOO_SHORT;
-		 * else
-		 */
-		return PASSWORD_FINE;
+		
+		 if (pwd1Text != pwd2Text) 
+			 return PASSWORDS_NOT_IDENTICAL; 
+		 else if (pwd1.length() > requiredPasswordLength) 
+			 return PASSWORD_TOO_SHORT;
+		 else
+			 return PASSWORD_FINE;
 	}
 
 	/**
@@ -204,19 +230,24 @@ public class LoginActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void login(View view, int code, Cookie cookie) {
+	public void login(View view, int code, LoginTask task) {
+		
 		if (code == LoginTask.SUCCESS_CODE) {
-			switchScreen(cookie.toString());
+			switchScreen(task.cookie.toString()); //Only gets the cookie if successful
 		} else if (code == LoginTask.INFO_MISSING_CODE) {
 			Log.v("LoginActivity", "Incorrect info.");
+			Toast.makeText(getApplicationContext(), LOGIN_INFO_INCORRECT, Toast.LENGTH_SHORT).show();
 		} else if (code == LoginTask.CONNECTION_FAILED_CODE) {
 			Log.v("LoginActivity", "Connection failed on login attempt");
+			Toast.makeText(getApplicationContext(), LOST_CONNECTION, Toast.LENGTH_SHORT).show();
 		} else {
 			Log.v("LoginActivity",
 					"Unknown Error Code: "
 							+ Integer.toString(code)
 							+ "Check LoginTask.java or LoginActivity.java in Moder Client");
+			Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
 		}
+		submitButton.setText("Let's Go!"); //Reset it back
 	}
 
 	/**

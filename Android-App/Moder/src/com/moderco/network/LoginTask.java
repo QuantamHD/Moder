@@ -57,11 +57,6 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 			// send data
 			response = httpClient.execute(post);
 			
-			//Cookie time
-			CookieStore store = ((DefaultHttpClient) httpClient).getCookieStore();
-			List<Cookie> cookies = store.getCookies();
-			cookie = cookies.get(0); //There should only be one.
-			Log.v("Cookie Time", "Received cookie: " + cookie.getName());
 			
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -70,13 +65,26 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 				for (String line = null; (line = reader.readLine()) != null;) {
 					builder.append(line).append("\n");
 				}
+				
 				Log.d("LoginResponse", builder.toString());
 				//Now let's parse some JSON! 
 				try {
 					JSONObject jObject = new JSONObject(builder.toString());
 					code = jObject.getInt("ResponseCode"); //Assigns code
-					return code; //Codes defined above 
-				} catch (JSONException e) { // Catch all the things
+					
+					//Only get a cookie if all goes well (other wise it causes a nasty crash) 
+					if (code == SUCCESS_CODE) {
+						//Cookie time
+						CookieStore store = ((DefaultHttpClient) httpClient).getCookieStore();
+						List<Cookie> cookies = store.getCookies();
+						cookie = cookies.get(0); //There should only be one.
+						Log.v("Cookie Time", "Received cookie: " + cookie.getName());
+					}
+					
+					return code; //Codes defined above
+					
+				/* Catch all the things! */
+				} catch (JSONException e) { 
 					e.printStackTrace();
 				}
 			} catch (UnsupportedEncodingException e1) {

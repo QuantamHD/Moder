@@ -1,10 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
 
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center" >
@@ -19,55 +21,20 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/test" />
-
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="#FFFFFF"
-        android:gravity="top" >
-    </RelativeLayout>
-
-    <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/noButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ugly AF" />
-
-        <Button
-            android:id="@+id/yesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Damn Fine" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
 
         <View
             android:id="@+id/bar"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:background="@drawable/bar" />
-
-        <View
-            android:id="@+id/shadow"
-            android:layout_width="fill_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/bar"
-            android:background="#D3D3D3" />
 
         <RelativeLayout
             android:id="@+id/linearLayout1"
@@ -107,4 +74,30 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="84dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/yesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Yes" />
+
+        <ImageButton
+            android:id="@+id/noButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="68dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/cross" />
+    </RelativeLayout>
+
+</RelativeLayout>

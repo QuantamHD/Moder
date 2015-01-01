@@ -12,8 +12,6 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="android.view.animation.AnimationUtils"/>
-<fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
-<fullyQualifiedTypeName name="org.apache.http.cookie.Cookie"/>
 <fullyQualifiedTypeName name="android.webkit.CookieManager"/>
 <fullyQualifiedTypeName name="org.apache.http.client.CookieStore"/>
 <fullyQualifiedTypeName name="android.widget.RelativeLayout.LayoutParams"/>
@@ -23,4 +21,8 @@
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="com.moderco.moder.R.id"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="org.apache.http.cookie.Cookie"/>
+<fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
+<fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
 </qualifiedTypeNameHistroy>

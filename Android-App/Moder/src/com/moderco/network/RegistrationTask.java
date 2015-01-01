@@ -92,9 +92,4 @@ public class RegistrationTask extends AsyncTask<Void, Void, Integer>{
 		return code; //Return the response
 	}
 	
-	
-	
-	
-
-	
 }

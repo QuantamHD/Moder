@@ -1,0 +1,14 @@
+package com.moderco.network;
+
+import android.os.AsyncTask;
+
+public class SendPhotosTask extends AsyncTask<Void, Void, Integer>{
+	
+	@Override
+	protected Integer doInBackground(Void... params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}
