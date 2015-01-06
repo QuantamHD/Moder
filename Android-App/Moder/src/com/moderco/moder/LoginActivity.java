@@ -2,20 +2,22 @@ package com.moderco.moder;
 
 import java.util.concurrent.ExecutionException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.cookie.Cookie;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moderco.network.CookieHandler;
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
 
@@ -35,6 +37,12 @@ public class LoginActivity extends Activity {
 	private final String USERNAME_HINT = "Enter Email";
 	private final String PASSWORD_HINT = "Enter Password";
 	Context context; // For keeping track and stuff
+	TextView moderLogo;
+	ImageView ribbonOne;
+	ImageView ribbonTwo;
+	Animation twirl;
+	Animation hover;
+	
 
 	/* registration page */
 	boolean registrationPageShown = false;
@@ -51,7 +59,7 @@ public class LoginActivity extends Activity {
 	private final int PASSWORDS_NOT_IDENTICAL = 1;
 	private final int PASSWORD_TOO_SHORT = 2;
 
-	public final static String COOKIE = "com.moderco.moder.MESSAGE";
+	
 	
 	/* Toasts */
 	private static final String ACCOUNT_CREATED = "Welcome to Moder!";
@@ -70,7 +78,11 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		Log.v("General", "Login Started"); // Todo Remove
 
-		
+		moderLogo = (TextView) findViewById(R.id.textView1); //For animation practice
+		ribbonOne = (ImageView) findViewById(R.id.ribbon1);
+		ribbonTwo = (ImageView) findViewById(R.id.ribbon2);
+		twirl = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.twirl);
+		hover = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hover);
 
 		/* Login Expansion */
 		username = (EditText) findViewById(R.id.username);
@@ -99,13 +111,14 @@ public class LoginActivity extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				submitButton.startAnimation(twirl);
 				if ((username.getText().toString().length() > 0)
 						&& (password.getText().toString().length() > 0)) {
-					submitButton = (Button) findViewById(R.id.submitButton);
 					submitButton.setText("Connecting..."); //Show that it's doing something
 					LoginTask task = new LoginTask(username.getText()
 							.toString(), password.getText().toString());
 					int code = -1;
+					
 					try {
 						
 						code = task.execute().get();
@@ -113,7 +126,7 @@ public class LoginActivity extends Activity {
 						e.printStackTrace();
 					} catch (ExecutionException e) {
 						e.printStackTrace();
-					}
+					} 
 					Log.v("LoginActivity", "Login Code: " + code);
 					login(v, code, task);
 				}
@@ -199,6 +212,17 @@ public class LoginActivity extends Activity {
 				registrationPageShown = !registrationPageShown;
 			}
 		});
+		
+		//For shits and giggles
+		moderLogo.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				
+				moderLogo.startAnimation(twirl);
+				ribbonOne.startAnimation(hover);
+				ribbonTwo.startAnimation(hover);
+			}
+		});
 	}
 
 	/**
@@ -233,7 +257,7 @@ public class LoginActivity extends Activity {
 	public void login(View view, int code, LoginTask task) {
 		
 		if (code == LoginTask.SUCCESS_CODE) {
-			switchScreen(task.cookie.toString()); //Only gets the cookie if successful
+			switchScreen(CookieHandler.formatCookie(task.cookie)); //Only gets the cookie if successful
 		} else if (code == LoginTask.INFO_MISSING_CODE) {
 			Log.v("LoginActivity", "Incorrect info.");
 			Toast.makeText(getApplicationContext(), LOGIN_INFO_INCORRECT, Toast.LENGTH_SHORT).show();
@@ -257,7 +281,7 @@ public class LoginActivity extends Activity {
 	 */
 	private void switchScreen(String cookie) {
 		Intent intent = new Intent(this, MainActivity.class);
-		intent.putExtra(COOKIE, cookie);
+		intent.putExtra(CookieHandler.COOKIE, cookie);
 		startActivity(intent);
 	}
 

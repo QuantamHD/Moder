@@ -15,6 +15,8 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040003;
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
+        public static final int hover=0x7f040006;
+        public static final int twirl=0x7f040007;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1637,16 +1639,18 @@ containing a value of this type.
         public static final int abc_textfield_search_material=0x7f020032;
         public static final int bar=0x7f020033;
         public static final int camera=0x7f020034;
-        public static final int cross=0x7f020035;
-        public static final int cross_drawable=0x7f020036;
-        public static final int ic_launcher=0x7f020037;
-        public static final int menu=0x7f020038;
-        public static final int moder_logo=0x7f020039;
-        public static final int ribbon=0x7f02003a;
-        public static final int search=0x7f02003b;
-        public static final int shadow=0x7f02003c;
-        public static final int test=0x7f02003d;
-        public static final int test2=0x7f02003e;
+        public static final int circular_button=0x7f020035;
+        public static final int circular_no_button=0x7f020036;
+        public static final int cross=0x7f020037;
+        public static final int cross_drawable=0x7f020038;
+        public static final int ic_launcher=0x7f020039;
+        public static final int menu=0x7f02003a;
+        public static final int moder_logo=0x7f02003b;
+        public static final int ribbon=0x7f02003c;
+        public static final int search=0x7f02003d;
+        public static final int shadow=0x7f02003e;
+        public static final int test=0x7f02003f;
+        public static final int test2=0x7f020040;
     }
     public static final class id {
         public static final int action_bar=0x7f050033;
@@ -1662,7 +1666,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f050030;
         public static final int action_mode_bar_stub=0x7f05002f;
         public static final int action_mode_close_button=0x7f050022;
-        public static final int action_settings=0x7f05005b;
+        public static final int action_settings=0x7f05005c;
         public static final int activity_chooser_view_content=0x7f050023;
         public static final int always=0x7f05000d;
         public static final int bar=0x7f050053;
@@ -1692,7 +1696,7 @@ containing a value of this type.
         public static final int linearLayout1=0x7f050054;
         public static final int listMode=0x7f050002;
         public static final int list_item=0x7f050027;
-        public static final int listview_background_shape=0x7f05005a;
+        public static final int listview_background_shape=0x7f05005b;
         public static final int loginExpandButton=0x7f050043;
         public static final int loginExpandLayout=0x7f050042;
         public static final int middle=0x7f050013;
@@ -1710,6 +1714,7 @@ containing a value of this type.
         public static final int registerExpandLayout=0x7f050047;
         public static final int relativeLayout1=0x7f050041;
         public static final int relativeLayout2=0x7f050052;
+        public static final int relativeLayout3=0x7f050058;
         public static final int ribbon1=0x7f05004e;
         public static final int ribbon2=0x7f05004f;
         public static final int search=0x7f050056;
@@ -1740,7 +1745,7 @@ containing a value of this type.
         public static final int username=0x7f050044;
         public static final int withText=0x7f05000e;
         public static final int wrap_content=0x7f050000;
-        public static final int yesButton=0x7f050058;
+        public static final int yesButton=0x7f05005a;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within

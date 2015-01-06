@@ -3,6 +3,7 @@ package com.moderco.moder;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,17 +17,21 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.moderco.network.CookieHandler;
+import com.moderco.network.SendPhotosTask;
 import com.moderco.views.PhotoProfile;
 
 
 public class MainActivity extends Activity {
 
 	PhotoProfile photoProfile;
-	Button yesButton;
-	ImageButton cameraButton, searchButton, menuButton, noButton;
+	Button yesButton, noButton;
+	ImageButton cameraButton, searchButton, menuButton;
 	Intent intent;
 	
+	private String cookie;
 	
 	//For camera stuff
 	Uri fileUri;
@@ -38,7 +43,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
-        noButton = (ImageButton) findViewById(R.id.noButton);
+        noButton = (Button) findViewById(R.id.noButton);
         cameraButton = (ImageButton) findViewById(R.id.camera);
         searchButton = (ImageButton) findViewById(R.id.search);
         menuButton = (ImageButton) findViewById(R.id.gears);
@@ -51,7 +56,9 @@ public class MainActivity extends Activity {
         int height = size.y;
         photoProfile.setMaxHeight((height/3)*2); // 2 thirds of the height of the screen
         
-        intent = getIntent(); //Used for the intent getting
+        intent = getIntent(); //Used for the cookie and stuff
+        cookie = intent.getStringExtra(CookieHandler.COOKIE);
+        
         
         cameraButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -92,7 +99,7 @@ public class MainActivity extends Activity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
             	Log.v("Camera", "Photo taken, Stored at :\n" + fileUri.toString());
-            	
+            	uploadPhoto(fileUri);
             	
                 //Image working
             } else if (resultCode == RESULT_CANCELED) {
@@ -104,6 +111,25 @@ public class MainActivity extends Activity {
         } else {
         	Log.v("Camera", "Well something else happened");
         }
+    }
+    
+    private void uploadPhoto(Uri uri) {
+    	SendPhotosTask task = new SendPhotosTask(new File(uri.getPath()), cookie);
+    	try {
+			int code = task.execute().get();
+			if (code == SendPhotosTask.SUCCESS) {
+				Log.v("PhotoActivity", "Photo Success");
+				Toast.makeText(getApplicationContext(), "Photo Uploaded", Toast.LENGTH_SHORT).show();
+			} else {
+				Log.v("PhotoActivity", "Something went wrong uploading photo! Code: " + Integer.toString(code));
+				Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+    	
     }
     
     /** Create a file Uri for saving an image or video */

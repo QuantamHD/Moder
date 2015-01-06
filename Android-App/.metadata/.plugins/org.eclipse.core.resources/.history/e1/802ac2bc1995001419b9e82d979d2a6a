@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="#FFFFFF" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/loginExpandLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#5EB480" >
+
+            <Button
+                android:id="@+id/loginExpandButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:background="#5EB480"
+                android:text="Login"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loginExpandButton"
+                android:layout_centerHorizontal="true"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#E6EBEB"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:layout_centerHorizontal="true"
+                android:hint="Passw*rd"
+                android:inputType="textPassword"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#E6EBEB"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/submitButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password"
+                android:layout_centerHorizontal="true"
+                android:text="Let&apos;s Go!"
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/registerExpandLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginExpandLayout"
+            android:background="#606262" >
+
+            <Button
+                android:id="@+id/button2"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:background="#606262"
+                android:text="Register"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp" />
+            
+
+            <EditText
+                android:id="@+id/emailRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button2"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="Enter Email"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#E6EBEB"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/passwordRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/emailRegistration"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="Enter Password"
+                android:inputType="textEmailAddress"
+                android:paddingTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#E6EBEB"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/passwordRegistrationVerification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passwordRegistration"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="Renter Password"
+                android:inputType="textEmailAddress"
+                android:paddingTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#E6EBEB"
+                android:textStyle="normal"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/confirmRegistrationButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/passwordRegistrationVerification"
+                android:layout_centerHorizontal="true"
+                android:text="Let&apos;s Go!"
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/moderLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:paddingBottom="10dp"
+        android:text="Moder"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#606262"
+        android:textSize="48sp" />
+
+    <ImageView
+        android:id="@+id/ribbon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_toLeftOf="@+id/textView1"
+        android:src="@drawable/ribbon" />
+
+    <ImageView
+        android:id="@+id/ribbon2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_toRightOf="@+id/textView1"
+        android:src="@drawable/ribbon" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="Ready to get started? Tap to register or login!"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#D7DBDB" />
+
+</RelativeLayout>

@@ -1,9 +1,0 @@
-package com.moderco.network;
-
-import org.apache.http.HttpResponse;
-
-import android.os.AsyncTask;
-
-public class GetPhotosTask extends AsyncTask<String, Void, HttpResponse>{
-
-}

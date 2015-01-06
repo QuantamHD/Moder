@@ -1,0 +1,5 @@
+package com.moderco.network;
+
+public class CookieHandler {
+
+}

@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF" >
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -14,13 +14,15 @@
         <com.moderco.views.PhotoProfile
             android:id="@+id/photoProfile"
             android:layout_width="wrap_content"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/test" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -75,29 +77,39 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="84dp"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginTop="11dp"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/yesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Yes" />
-
-        <ImageButton
             android:id="@+id/noButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="68dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/cross" />
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circular_no_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="NO!"
+            android:textColor="#fff"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/yesButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/circular_button"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="YES!"
+            android:textColor="#fff"
+            android:textSize="24sp" />
     </RelativeLayout>
 
 </RelativeLayout>
