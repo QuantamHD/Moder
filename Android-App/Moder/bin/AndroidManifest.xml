@@ -19,8 +19,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="Moder"
-        android:theme="@style/Theme.AppCompat">
-        
+        android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
         <activity
             android:name=".LoginActivity"
             android:label="Moder"

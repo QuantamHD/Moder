@@ -42,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:onClick="showPopupMenu"
                 android:src="@drawable/menu" />
 
             <ImageButton
