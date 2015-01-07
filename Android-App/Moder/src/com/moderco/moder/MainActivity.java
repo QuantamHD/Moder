@@ -3,7 +3,6 @@ package com.moderco.moder;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,10 +16,11 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
+import com.loopj.android.http.PersistentCookieStore;
 import com.moderco.network.CookieHandler;
-import com.moderco.network.SendPhotosTask;
+import com.moderco.network.PostPhotosTask;
 import com.moderco.views.PhotoProfile;
 
 
@@ -29,18 +29,22 @@ public class MainActivity extends Activity {
 	PhotoProfile photoProfile;
 	Button yesButton, noButton;
 	ImageButton cameraButton, searchButton, menuButton;
+	RelativeLayout menu;
 	Intent intent;
 	
 	private String cookie;
+	PersistentCookieStore cookieStore;
 	
 	//For camera stuff
 	Uri fileUri;
+	File photo;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
@@ -48,17 +52,18 @@ public class MainActivity extends Activity {
         searchButton = (ImageButton) findViewById(R.id.search);
         menuButton = (ImageButton) findViewById(R.id.gears);
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
+        menu = (RelativeLayout) findViewById(R.id.menuBarLayout);
         
         //Set max photoProfile height
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size); //Because we can't use return for some reason?
-        int height = size.y;
-        photoProfile.setMaxHeight((height/3)*2); // 2 thirds of the height of the screen
+        photoProfile.setMaxHeight((size.y/3)*2); // two thirds of the height of the screen
         
+       //cookies
         intent = getIntent(); //Used for the cookie and stuff
         cookie = intent.getStringExtra(CookieHandler.COOKIE);
-        
+       
         
         cameraButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -66,6 +71,7 @@ public class MainActivity extends Activity {
 				 // create Intent to take a picture and return control to the calling application
 			    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+			    photo = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 			    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 
 			    // start the image capture Intent
@@ -89,7 +95,17 @@ public class MainActivity extends Activity {
 			}
 		}); 
         
+        //Menu Button
+        menuButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+			}
+		});
     }
+    
+    
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -98,8 +114,7 @@ public class MainActivity extends Activity {
     	
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-            	Log.v("Camera", "Photo taken, Stored at :\n" + fileUri.toString());
-            	uploadPhoto(fileUri);
+            	uploadPhoto(new File(data.getData().toString()));
             	
                 //Image working
             } else if (resultCode == RESULT_CANCELED) {
@@ -113,23 +128,13 @@ public class MainActivity extends Activity {
         }
     }
     
-    private void uploadPhoto(Uri uri) {
-    	SendPhotosTask task = new SendPhotosTask(new File(uri.getPath()), cookie);
-    	try {
-			int code = task.execute().get();
-			if (code == SendPhotosTask.SUCCESS) {
-				Log.v("PhotoActivity", "Photo Success");
-				Toast.makeText(getApplicationContext(), "Photo Uploaded", Toast.LENGTH_SHORT).show();
-			} else {
-				Log.v("PhotoActivity", "Something went wrong uploading photo! Code: " + Integer.toString(code));
-				Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-    	
+    private void uploadPhoto(File file) {
+    	if (file == null) {
+    		Log.v("MOPROBLEMS", "FILE IS NULL AGAIN DAMMIT");
+    	} else { 
+    		PostPhotosTask task = new PostPhotosTask(photo, cookie);
+    		task.post(); //That simple bitch.
+    	}
     }
     
     /** Create a file Uri for saving an image or video */
@@ -163,16 +168,13 @@ public class MainActivity extends Activity {
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
             "IMG_"+ timeStamp + ".jpg");
+           
         } else {
+        	Log.v("ModerCamera", "No video allowed!");
             return null; //We shouldn't have to worry bout video
         }
 
         return mediaFile;
     }
-    
-    
-    
-    
-    
    
 }

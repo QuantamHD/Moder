@@ -1,0 +1,60 @@
+package com.moderco.network;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.apache.http.Header;
+import org.apache.http.impl.cookie.BasicClientCookie;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.loopj.android.http.*;
+
+public class PostPhotosTask {
+	
+	private RequestParams params;
+	private AsyncHttpClient client;
+	
+	public PostPhotosTask(File file, PersistentCookieStore cookieStore) {
+		
+		//File
+		params = new RequestParams();
+		client = new AsyncHttpClient();
+		client.setTimeout(5000000);
+		try{
+			params.put("file", file);
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		//Cookie
+		/*
+		PersistentCookieStore cookieStore = new PersistentCookieStore(context);
+		BasicClientCookie newCookie = new BasicClientCookie("Unique_ID", cookieString);
+		Log.v("Cookie", newCookie.getValue());
+		newCookie.setVersion(1);
+		newCookie.setDomain(URLS.DOMAIN);
+		newCookie.setPath("/");
+		cookieStore.addCookie(newCookie);
+		*/
+		client.setCookieStore(cookieStore);
+	}
+	
+	public void post() {
+		client.post(URLS.SUBMIT_PHOTO_URL_STRING, params,  new AsyncHttpResponseHandler() {
+
+			@Override
+			public void onFailure(int code, Header[] arg1, byte[] arg2,
+					Throwable arg3) {
+				Log.e("PostPhotosTask", "Post Failure code: " + Integer.toString(code));
+			}
+
+			@Override
+			public void onSuccess(int code, Header[] arg1, byte[] message) {
+				Log.v("PostPhotosTask", "Post success! message: " + new String(message));
+			}
+			
+		});
+	}
+}
