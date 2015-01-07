@@ -24,9 +24,7 @@
 <fullyQualifiedTypeName name="com.moderco.network.CookieHandler"/>
 <fullyQualifiedTypeName name="android.view.animation.AnimationUtils"/>
 <fullyQualifiedTypeName name="android.view.animation.Animation"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="com.moderco.moder.R.anim"/>
-<fullyQualifiedTypeName name="com.moderco.moder.R.id"/>
 <fullyQualifiedTypeName name="org.apache.http.Header"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
@@ -35,4 +33,8 @@
 <fullyQualifiedTypeName name="org.apache.http.client.protocol.ClientContext"/>
 <fullyQualifiedTypeName name="org.apache.http.client.CookieStore"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.moderco.moder.R.id"/>
+<fullyQualifiedTypeName name="android.support.v7.widget.PopupMenu"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap.CompressFormat"/>
 </qualifiedTypeNameHistroy>
