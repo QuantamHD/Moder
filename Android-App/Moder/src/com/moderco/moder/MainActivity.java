@@ -1,18 +1,25 @@
 package com.moderco.moder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Display;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,6 +41,7 @@ public class MainActivity extends Activity {
 	
 	private String cookie;
 	PersistentCookieStore cookieStore;
+	private String currentPhotoString = "ModerPhoto23508432j093jfew";
 	
 	//For camera stuff
 	Uri fileUri;
@@ -70,8 +78,6 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				 // create Intent to take a picture and return control to the calling application
 			    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-			    photo = getOutputMediaFile(MEDIA_TYPE_IMAGE);
 			    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 
 			    // start the image capture Intent
@@ -95,16 +101,15 @@ public class MainActivity extends Activity {
 			}
 		}); 
         
-        //Menu Button
-        menuButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
+        
     }
     
+    public void showPopupMenu(View v){
+    	PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, popup.getMenu());
+        popup.show();
+    }
     
     
     @Override
@@ -112,9 +117,35 @@ public class MainActivity extends Activity {
     	super.onActivityResult(requestCode, resultCode, data);
     	Log.v("Camera", "Received Camera activity");
     	
+    	
+    	
+    	
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-            	uploadPhoto(new File(data.getData().toString()));
+            	if (data != null) {
+            		Bitmap photoBitmap = (Bitmap) data.getExtras().get("data");
+            		File file = new File(currentPhotoString + ".png");
+            		if (file.exists()) {
+            			file.delete();
+            			file = new File(currentPhotoString + ".png"); //Recreate File
+            		}
+            		
+            		try {
+						OutputStream out = new FileOutputStream(file);
+						photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); //I'm even compressing it!
+						out.flush();
+						out.close();
+						
+						uploadPhoto(file);
+						
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+            	} else {
+            		Log.e("MainActivity", "Camera onActivityResult error! Intent data is null!");
+            	}
             	
                 //Image working
             } else if (resultCode == RESULT_CANCELED) {

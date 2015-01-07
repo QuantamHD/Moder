@@ -1696,6 +1696,7 @@ containing a value of this type.
         public static final int listMode=0x7f050002;
         public static final int list_item=0x7f050027;
         public static final int listview_background_shape=0x7f050059;
+        public static final int log_out=0x7f05005b;
         public static final int loginExpandButton=0x7f050043;
         public static final int loginExpandLayout=0x7f050042;
         public static final int menuBarLayout=0x7f050052;
@@ -1708,6 +1709,7 @@ containing a value of this type.
         public static final int passwordRegistration=0x7f05004a;
         public static final int passwordRegistrationVerification=0x7f05004b;
         public static final int photoProfile=0x7f050051;
+        public static final int profile=0x7f05005c;
         public static final int progress_circular=0x7f05001e;
         public static final int progress_horizontal=0x7f05001f;
         public static final int radio=0x7f05002d;
@@ -1800,6 +1802,7 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
+        public static final int main_activity_menu=0x7f0c0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
