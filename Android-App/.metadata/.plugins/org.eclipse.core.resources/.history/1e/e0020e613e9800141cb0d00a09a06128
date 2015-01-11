@@ -1,0 +1,20 @@
+package com.moderco.moder;
+
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+
+public class PhotoEditorActivity extends Activity{
+	
+	Bitmap photo;
+	String cookie;
+
+	protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        //Decode the photo
+        byte[] byteArray = getIntent().getByteArrayExtra("photo");
+        photo = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+	}
+}

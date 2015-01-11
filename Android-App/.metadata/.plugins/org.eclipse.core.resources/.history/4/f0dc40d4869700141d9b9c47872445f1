@@ -1,0 +1,11 @@
+package com.moderco.moder;
+
+public class ModerCameraHandler {
+
+	public ModerCamera() {
+		
+	}
+	
+	
+	
+}

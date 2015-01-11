@@ -33,8 +33,6 @@ public class PostPhotosTask {
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 	public void post() {

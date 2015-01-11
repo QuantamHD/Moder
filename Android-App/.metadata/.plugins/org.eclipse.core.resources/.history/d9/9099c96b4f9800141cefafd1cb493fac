@@ -1,0 +1,105 @@
+package com.moderco.moder.photoEditor;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.moderco.moder.R;
+
+public class PhotoFragment extends Fragment{
+	
+	 Bitmap photo; // The photo to show
+	 ImageView photoView;
+	 
+	 // ----- All methods in this section are in chronological order ----- //
+	 
+	 @Override
+	 public void onAttach(Activity activity) {
+		 super.onAttach(activity);
+		 Log.v("PhotoFragment", "Attached."); //Log it
+		 
+		//Decode the photo
+	    byte[] byteArray = activity.getIntent().getByteArrayExtra("photo");
+	    photo = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+	 }
+
+	 @Override
+	 public View onCreateView(LayoutInflater inflater, ViewGroup container, 
+			 Bundle savedInstanceState) {
+		View fragmentContentView = inflater.inflate(R.layout.fragment_photo, container, false);
+		return fragmentContentView;
+	 }
+
+	 @Override
+	 public void onStart() {
+	     super.onStart();
+	     photoView = (ImageView) getView().findViewById(R.id.imageToCrop);
+	     getView().setOnTouchListener(new OnTouchListener() {
+
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					int action = event.getActionMasked();
+					
+					switch(action) {
+						case MotionEvent.ACTION_SCROLL:
+							
+					}
+					
+					return false;
+				}
+			});
+	 }
+	 
+	 
+	 // ----- Chronological order section end ----- //
+	 
+	
+	 
+	 // ----- Private Classes ----- //
+	 
+	 /**
+	  * This basically just lets us tell gestures for the editor
+	  * @author Evan
+	  */
+	 private class FragmentGestureListener extends GestureDetector.SimpleOnGestureListener {
+		 
+		 public float distanceY;
+		 
+		 public FragmentGestureListener() {
+			 distanceY = 0;
+		 }
+		 
+		 @Override
+		 public boolean onScroll (MotionEvent e1, MotionEvent e2, float distanceX, float distanceY){
+			// scrollBy(0, (int) distanceY);
+			 return true;
+		 }
+	 }
+	 
+	 private class FragmentGestureDetector extends GestureDetector {
+		 
+		public float distanceY;
+
+		public FragmentGestureDetector(Context context,
+				FragmentGestureListener listener) {
+			super(context, listener);
+			
+			this.distanceY = listener.distanceY;
+		}
+		 
+	 }
+	 
+	 
+	 
+}

@@ -1653,6 +1653,7 @@ containing a value of this type.
         public static final int test2=0x7f020040;
     }
     public static final class id {
+        public static final int Logo=0x7f05005a;
         public static final int action_bar=0x7f050033;
         public static final int action_bar_activity_content=0x7f05001a;
         public static final int action_bar_container=0x7f050032;
@@ -1666,7 +1667,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f050030;
         public static final int action_mode_bar_stub=0x7f05002f;
         public static final int action_mode_close_button=0x7f050022;
-        public static final int action_settings=0x7f05005a;
+        public static final int action_settings=0x7f05005d;
         public static final int activity_chooser_view_content=0x7f050023;
         public static final int always=0x7f05000d;
         public static final int beginning=0x7f050012;
@@ -1693,11 +1694,13 @@ containing a value of this type.
         public static final int icon=0x7f050028;
         public static final int ifRoom=0x7f05000c;
         public static final int image=0x7f050025;
+        public static final int imageToCrop=0x7f05005b;
         public static final int listMode=0x7f050002;
         public static final int list_item=0x7f050027;
-        public static final int listview_background_shape=0x7f050059;
+        public static final int listview_background_shape=0x7f05005c;
         public static final int loginExpandButton=0x7f050043;
         public static final int loginExpandLayout=0x7f050042;
+        public static final int logout=0x7f05005e;
         public static final int menuBarLayout=0x7f050052;
         public static final int middle=0x7f050013;
         public static final int never=0x7f05000b;
@@ -1708,6 +1711,8 @@ containing a value of this type.
         public static final int passwordRegistration=0x7f05004a;
         public static final int passwordRegistrationVerification=0x7f05004b;
         public static final int photoProfile=0x7f050051;
+        public static final int photo_fragment=0x7f050059;
+        public static final int profile=0x7f05005f;
         public static final int progress_circular=0x7f05001e;
         public static final int progress_horizontal=0x7f05001f;
         public static final int radio=0x7f05002d;
@@ -1796,10 +1801,14 @@ containing a value of this type.
         public static final int abc_simple_dropdown_hint=0x7f030016;
         public static final int activity_login=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int support_simple_spinner_dropdown_item=0x7f030019;
+        public static final int activity_photo_editor=0x7f030019;
+        public static final int activity_profile=0x7f03001a;
+        public static final int fragment_photo=0x7f03001b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
+        public static final int popup=0x7f0c0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
