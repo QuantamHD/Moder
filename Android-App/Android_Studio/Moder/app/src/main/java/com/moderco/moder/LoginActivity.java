@@ -1,15 +1,14 @@
 package com.moderco.moder;
 
-import java.util.concurrent.ExecutionException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +20,8 @@ import android.widget.Toast;
 import com.moderco.network.CookieHandler;
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
+
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends Activity {
 	
@@ -60,11 +61,15 @@ public class LoginActivity extends Activity {
 	private final int PASSWORDS_NOT_IDENTICAL = 1;
 	private final int PASSWORD_TOO_SHORT = 2;
 
-	
+	/* Prefs */
+    private static final String USER_PREF = "com.moderco.moder.user";
+    private static final String PASS_PREF = "com.moderco.moder.pass";
+    public static final String AUTO_LOGIN_PREF = "com.moderco.moder.autologin";
+
 	
 	/* Toasts */
 	private static final String ACCOUNT_CREATED = "Welcome to Moder!";
-	private static final String ERROR = "Something went wrong! We're working on it!";
+	private static final String ERROR = "Oops! We're not sure what went wrong. Try using a different network connection.";
 	private static final String PASSWORDS_NOT_SAME = "Your passwords do not match!";
 	private static final String PASSWORD_TOO_SHORT_TOAST = "Your password needs to be " + Integer.toString(requiredPasswordLength) + " or longer!";
 	private static final String LOGIN_INFO_INCORRECT = "Either your password or your email is incorrect!";
@@ -76,14 +81,32 @@ public class LoginActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        //Check preferences to see if the user wants to autologin
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean(AUTO_LOGIN_PREF, false)) { //if that pref is true
+            loginCheck(); //Autologin
+        }
+
+        //otherwise, let's just continue on to set up the page.
 		setContentView(R.layout.activity_login);
 		Log.v("General", "Login Started"); // Todo Remove
 
-		moderLogo = (TextView) findViewById(R.id.textView1); //For animation practice
+        /* Logo Animation! (mostly for shits and giggles) */
+		moderLogo = (TextView) findViewById(R.id.textView1);
 		ribbonOne = (ImageView) findViewById(R.id.ribbon1);
 		ribbonTwo = (ImageView) findViewById(R.id.ribbon2);
 		twirl = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.twirl);
 		hover = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hover);
+        moderLogo.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                moderLogo.startAnimation(twirl);
+                ribbonOne.startAnimation(hover);
+                ribbonTwo.startAnimation(hover);
+            }
+        });
+
 
 		/* Login Expansion */
 		username = (EditText) findViewById(R.id.username);
@@ -130,6 +153,12 @@ public class LoginActivity extends Activity {
 						e.printStackTrace();
 					} 
 					Log.v("LoginActivity", "Login Code: " + code);
+
+                    if (code == LoginTask.SUCCESS_CODE) {
+                        setLoginCreds(username.getText().toString(), password.getText().toString());
+                    }
+
+
 					login(v, code, task);
 				}
 			}
@@ -151,9 +180,9 @@ public class LoginActivity extends Activity {
 								passwordCheckRegistration);
 
 						// Run Password check
-						if (passCheck == PASSWORD_TOO_SHORT) {
+						if (passCheck == PASSWORDS_NOT_IDENTICAL) {
 							Toast.makeText(getApplicationContext(), PASSWORDS_NOT_SAME, Toast.LENGTH_SHORT).show();;
-						} else if (passCheck == PASSWORDS_NOT_IDENTICAL) {
+						} else if (passCheck == PASSWORD_TOO_SHORT) {
 							Toast.makeText(getApplicationContext(), PASSWORD_TOO_SHORT_TOAST, Toast.LENGTH_SHORT).show();
 						} else if (passCheck == PASSWORD_FINE) {
 							RegistrationTask task = new RegistrationTask(
@@ -165,14 +194,16 @@ public class LoginActivity extends Activity {
 								int code = task.execute().get();// Uploads it.
 								if (code == RegistrationTask.SUCCESS_CODE) {
 									//Tell the user all's good.
-									Toast.makeText(getApplicationContext(), ACCOUNT_CREATED, Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(), ACCOUNT_CREATED,
+                                            Toast.LENGTH_SHORT).show(); //Note: This very rarely gets shown
+                                                                        //Server game too fast
 									
 									//Now we log the user in with their new account
-									LoginTask loginTask = new LoginTask(usernameRegistration.getText().toString(),
+									LoginTask loginTask =
+                                            new LoginTask(usernameRegistration.getText().toString(),
 											passwordRegistration.getText().toString());
-									int loginCode = -1;
+									int loginCode = -1; //Default value.
 									try {
-										
 										loginCode = loginTask.execute().get();
 									} catch (InterruptedException e) {
 										e.printStackTrace();
@@ -180,6 +211,14 @@ public class LoginActivity extends Activity {
 										e.printStackTrace();
 									}
 									Log.v("LoginActivity", "Login Code: " + loginCode);
+
+                                    /* Bad code starts here */
+                                    if (loginCode == LoginTask.SUCCESS_CODE) {
+                                       setLoginCreds(usernameRegistration.getText().toString(),
+                                               passwordRegistration.getText().toString());
+                                    }
+                                    /*Bad code ends here */
+
 									login(v, loginCode, loginTask);
 								}
 								
@@ -214,17 +253,6 @@ public class LoginActivity extends Activity {
 				registrationPageShown = !registrationPageShown;
 			}
 		});
-		
-		//For shits and giggles
-		moderLogo.setOnClickListener(new View.OnClickListener() {
-			
-			public void onClick(View v) {
-				
-				moderLogo.startAnimation(twirl);
-				ribbonOne.startAnimation(hover);
-				ribbonTwo.startAnimation(hover);
-			}
-		});
 	}
 
 	/**
@@ -243,9 +271,9 @@ public class LoginActivity extends Activity {
 		String pwd2Text = pwd2.getText().toString();
 
 		
-		 if (pwd1Text != pwd2Text) 
+		 if (!pwd1Text.equals(pwd2Text))
 			 return PASSWORDS_NOT_IDENTICAL; 
-		 else if (pwd1.length() > requiredPasswordLength) 
+		 else if (pwd1Text.length() < requiredPasswordLength)
 			 return PASSWORD_TOO_SHORT;
 		 else
 			 return PASSWORD_FINE;
@@ -273,7 +301,7 @@ public class LoginActivity extends Activity {
 							+ "Check LoginTask.java or LoginActivity.java in Moder Client");
 			Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
 		}
-		submitButton.setText("Let's Go!"); //Reset it back
+
 	}
 
 	/**
@@ -286,5 +314,38 @@ public class LoginActivity extends Activity {
 		intent.putExtra(CookieHandler.COOKIE, cookie);
 		startActivity(intent);
 	}
+
+    private void setLoginCreds(String user, String pass) {
+        //Save info
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor=prefs.edit();
+        editor.putString(USER_PREF, user);
+        editor.putString(PASS_PREF, pass);
+        editor.putBoolean(AUTO_LOGIN_PREF, true);
+        editor.apply();
+        editor.commit();
+    }
+
+    private void loginCheck() {
+        Log.v("LoginActivity", "Starting preactivity check");
+        SharedPreferences prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
+        if (prefs.contains(USER_PREF) && prefs.contains(PASS_PREF)) {
+            Log.v("LoginActivity", "Previous login info found, starting login...");
+            String user = prefs.getString(USER_PREF, "-1");
+            String pass = prefs.getString(PASS_PREF, "-1");
+
+            LoginTask loginTask = new LoginTask(user, pass);
+            int code = -1;
+            try {
+                code = loginTask.execute().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            login(null, code, loginTask);
+        }
+    }
 
 }

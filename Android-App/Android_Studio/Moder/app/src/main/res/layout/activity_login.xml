@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#FFFFFF" >
+    android:background="@color/background" >
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -14,16 +14,16 @@
             android:id="@+id/loginExpandLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#5EB480" >
+            android:background="@color/mainColor" >
 
             <Button
                 android:id="@+id/loginExpandButton"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"
-                android:background="#5EB480"
+                android:background="@color/mainColor"
                 android:text="Login"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/background"
                 android:textSize="34sp" />
 
             <EditText
@@ -34,8 +34,8 @@
                 android:layout_centerHorizontal="true"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#E6EBEB"
+                android:textColor="@color/background"
+                android:textColorHint="@color/background"
                 android:visibility="gone" />
 
             <EditText
@@ -46,8 +46,8 @@
                 android:layout_centerHorizontal="true"
                 android:hint="Passw*rd"
                 android:inputType="textPassword"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#E6EBEB"
+                android:textColor="@color/background"
+                android:textColorHint="@color/background"
                 android:visibility="gone" />
 
             <Button
@@ -58,7 +58,7 @@
                 android:layout_below="@+id/password"
                 android:layout_centerHorizontal="true"
                 android:text="Let&apos;s Go!"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/background"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loginExpandLayout"
-            android:background="#606262" >
+            android:background="@color/accentColor" >
 
             <Button
                 android:id="@+id/button2"
@@ -103,7 +103,7 @@
                 android:layout_centerHorizontal="true"
                 android:ems="10"
                 android:hint="Enter Password"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:paddingTop="20dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#E6EBEB"
@@ -118,7 +118,7 @@
                 android:layout_centerHorizontal="true"
                 android:ems="10"
                 android:hint="Renter Password"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:paddingTop="20dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#E6EBEB"
@@ -157,7 +157,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView1"
         android:layout_toLeftOf="@+id/textView1"
-        android:src="@drawable/ribbon" />
+        android:src="@drawable/ribbon"
+        android:layout_alignBottom="@+id/textView1" />
 
     <ImageView
         android:id="@+id/ribbon2"
@@ -165,7 +166,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView1"
         android:layout_toRightOf="@+id/textView1"
-        android:src="@drawable/ribbon" />
+        android:src="@drawable/ribbon"
+        android:layout_alignBottom="@+id/textView1" />
 
     <TextView
         android:id="@+id/textView2"
@@ -176,6 +178,6 @@
         android:layout_margin="10dp"
         android:text="Ready to get started? Tap to register or login!"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#D7DBDB" />
+        android:textColor="@color/softHighLight" />
 
 </RelativeLayout>

@@ -1,11 +1,7 @@
 package com.moderco.network;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -20,8 +16,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginTask extends AsyncTask<Void, Void, Integer>{
 	
@@ -43,9 +43,8 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 		// Setup
 		HttpResponse response = null; // Hopefully this shouldn't happen.
 		HttpClient httpClient = new DefaultHttpClient();
-		//Cookie time
-		
-		HttpPost post = new HttpPost(URLS.LOGIN_URL_STRING); // TODO: add url
+        HttpPost post = new HttpPost(URLS.LOGIN_URL_STRING);
+
 
 		try {
 			// fill in parameters email, pwd1
@@ -79,6 +78,8 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 						List<Cookie> cookies = store.getCookies();
 						cookie = cookies.get(0); //There should only be one.
 						Log.v("Cookie Time", "Received cookie: " + cookie.getName());
+
+
 					}
 					
 					return code; //Codes defined above

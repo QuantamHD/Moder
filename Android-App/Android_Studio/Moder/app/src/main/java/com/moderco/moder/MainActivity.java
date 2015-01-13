@@ -1,18 +1,15 @@
 package com.moderco.moder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -29,6 +26,12 @@ import com.loopj.android.http.PersistentCookieStore;
 import com.moderco.network.CookieHandler;
 import com.moderco.network.PostPhotosTask;
 import com.moderco.views.PhotoProfile;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends Activity {
@@ -71,6 +74,7 @@ public class MainActivity extends Activity {
        //cookies
         intent = getIntent(); //Used for the cookie and stuff
         cookie = intent.getStringExtra(CookieHandler.COOKIE);
+        Log.v("MainActivity", cookie);
        
         final Context context = getApplicationContext();
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +122,9 @@ public class MainActivity extends Activity {
         	Log.v("Camera", "Received Camera activity");
             if (resultCode == RESULT_OK) {
             		
-            	//Crop photo
-            	performCrop(fileUri);
-            	
-            	//uploadPhoto(new File(fileUri.getPath()));
+            	//Switch to crop screen
+            	performCrop(fileUri, getApplicationContext());
+
             	
                 //Image working
             } else if (resultCode == RESULT_CANCELED) {
@@ -134,30 +137,57 @@ public class MainActivity extends Activity {
         	Log.v("MainActivity", "Well something else happened");
         }
     }
-    
-    private void performCrop(Uri uri) {
-    	Intent cropIntent = new Intent("com.android.camera.action.CROP");
-    	cropIntent.setDataAndType(uri, "image/*");
-    	cropIntent.putExtra("crop", "true");
-    	cropIntent.putExtra("aspectX", 1);
-    	cropIntent.putExtra("aspectY", 1);
-    	cropIntent.putExtra("outputX", 256);
-    	cropIntent.putExtra("outputY", 256);
-    	cropIntent.putExtra("return-data", true);
-    	
-    	//Start
-    	startActivityForResult(cropIntent, PIC_CROP);
+
+    /**
+     * Starts a new PhotoEditActivity to crop the photo
+     * @param uri
+     * @param context
+     */
+    private void performCrop(Uri uri, Context context) {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            bitmap = scaleDownBitmap(bitmap, 500, context);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            Log.v("MainActivity", "Compressed image");
+            Intent intent = new Intent(context, PhotoEditActivity.class);
+            intent.putExtra("photo", byteArray);
+            intent.putExtra(CookieHandler.COOKIE, cookie);
+            Log.v("MainActivity", "Got here!");
+            startActivity(intent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    private Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
+
+        final float densityMultiplier = context.getResources().getDisplayMetrics().density;
+
+        int h= (int) (newHeight*densityMultiplier);
+        int w= (int) (h * photo.getWidth()/((double) photo.getHeight()));
+
+        photo=Bitmap.createScaledBitmap(photo, w, h, true);
+
+        return photo;
+    }
+
     private void uploadPhoto(File file) {
     	if (file == null) {
-    		Log.v("MOPROBLEMS", "FILE IS NULL AGAIN DAMMIT");
+    		Log.v("MainActivityNullCheck", "FILE IS NULL AGAIN DAMMIT");
     	} else { 
     		PostPhotosTask task = new PostPhotosTask(photo, cookie);
     		task.post(); //That simple bitch.
     	}
     }
-    
+
+    /**
+     * Handles the popup menu for the corner button
+     * @param v
+     */
     public void showPopup(View v) {
     	PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
@@ -167,10 +197,20 @@ public class MainActivity extends Activity {
         	    public boolean onMenuItemClick(MenuItem item) {
         	        switch (item.getItemId()) {
         	            case R.id.logout:
+                            /* Turn off auto login */
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                            SharedPreferences.Editor editor=prefs.edit();
+                            editor.clear(); //Wipe the user and pass from the user
+                            editor.putBoolean(LoginActivity.AUTO_LOGIN_PREF, false);
+                            editor.commit();
+
+                            /* Start new Activity */
         	            	Intent intent = new Intent(context, LoginActivity.class);
-        	        		startActivity(intent);
+                            startActivity(intent);
         	                return true;
         	            case R.id.profile:
+                            Intent intentProfile = new Intent(context, ProfileActivity.class);
+                            startActivity(intentProfile);
         	                return true;
         	            default:
         	                return false;

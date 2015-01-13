@@ -1,15 +1,17 @@
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
+    android:background="@color/background"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" >
+        android:layout_gravity="center">
 
         <com.moderco.views.PhotoProfile
             android:id="@+id/photoProfile"
@@ -18,20 +20,17 @@
             android:minHeight="300dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/test" />
-
-    </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/menuBarLayout"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:background="#5bb57e"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp" >
@@ -50,8 +49,11 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:src="@drawable/search"
+                android:alpha="0.9"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/search" />
+                android:layout_alignParentStart="true" />
 
             <ImageButton
                 android:id="@+id/camera"
@@ -61,45 +63,52 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/camera" />
+                android:src="@drawable/camera"
+                android:alpha="0.9"/>
         </RelativeLayout>
 
-        <RelativeLayout
+    </RelativeLayout>
+
+    <RelativeLayout
             android:id="@+id/buttonLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/menuBarLayout"
+            android:layout_below="@+id/relativeLayout1"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="14dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+        android:layout_gravity="top">
 
             <Button
                 android:id="@+id/noButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
                 android:background="@drawable/circular_no_button"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="NO!"
-                android:textColor="#fff"
-                android:textSize="24sp" />
+                android:textColor="@color/background"
+                android:textSize="24sp"
+                android:layout_alignTop="@+id/yesButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp" />
 
             <Button
                 android:id="@+id/yesButton"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="10dp"
                 android:background="@drawable/circular_button"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="YES!"
-                android:textColor="#fff"
-                android:textSize="24sp" />
+                android:textColor="@color/background"
+                android:textSize="24sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp" />
         </RelativeLayout>
-        
-    
+
 
 </RelativeLayout>
