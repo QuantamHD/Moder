@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         yesButton = (Button) findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
         cameraButton = (ImageButton) findViewById(R.id.camera);
-        searchButton = (ImageButton) findViewById(R.id.search);
+        searchButton = (ImageButton) findViewById(R.id.profileIcon);
         menuButton = (ImageButton) findViewById(R.id.gears);
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
         menu = (RelativeLayout) findViewById(R.id.menuBarLayout);

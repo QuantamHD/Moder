@@ -28,19 +28,23 @@
         <RelativeLayout
             android:id="@+id/menuBarLayout"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp" >
+            android:paddingRight="16dp"
+            android:background="@drawable/gradient"
+            >
 
             <ImageButton
                 android:id="@+id/gears"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
                 android:onClick="showPopup"
                 android:src="@drawable/menu" />
 
@@ -48,7 +52,8 @@
                 android:id="@+id/profileIcon"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:src="@drawable/profile"
                 android:alpha="0.9"
                 android:layout_alignParentTop="true"
@@ -59,9 +64,8 @@
                 android:id="@+id/camera"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/camera"
                 android:alpha="0.9"/>
