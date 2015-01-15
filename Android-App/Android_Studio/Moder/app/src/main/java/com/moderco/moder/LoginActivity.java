@@ -65,6 +65,7 @@ public class LoginActivity extends Activity {
     private static final String USER_PREF = "com.moderco.moder.user";
     private static final String PASS_PREF = "com.moderco.moder.pass";
     public static final String AUTO_LOGIN_PREF = "com.moderco.moder.autologin";
+    public static final String FIRST_TIME_USER = "com.moderco.moder.firsttimer";
 
 	
 	/* Toasts */
@@ -86,6 +87,18 @@ public class LoginActivity extends Activity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(AUTO_LOGIN_PREF, false)) { //if that pref is true
             loginCheck(); //Autologin
+        }
+
+        //Check to see if first time user
+        if (prefs.getBoolean(FIRST_TIME_USER, true)) {
+            //Do first time user tutorial stuff
+
+            //Set first time user to false
+            SharedPreferences.Editor editor=prefs.edit();
+            editor.putBoolean(FIRST_TIME_USER, false);
+            editor.commit();
+        } else {
+            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
         }
 
         //otherwise, let's just continue on to set up the page.

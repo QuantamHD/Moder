@@ -9,6 +9,7 @@ public class ProfileActivity extends Activity{
 	 protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
         //Do other stuff
 	}
 	

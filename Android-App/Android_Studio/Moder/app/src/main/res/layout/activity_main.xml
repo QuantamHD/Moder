@@ -45,8 +45,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:paddingTop="10dp"
-                android:onClick="showPopup"
-                android:src="@drawable/menu" />
+                android:alpha="0.9"
+                android:onClick="startLoginActivity"
+                android:src="@drawable/logout" />
 
             <ImageButton
                 android:id="@+id/profileIcon"
@@ -58,7 +59,8 @@
                 android:alpha="0.9"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:onClick="startProfileActivity"/>
 
             <ImageButton
                 android:id="@+id/camera"
@@ -80,35 +82,40 @@
             android:layout_below="@+id/relativeLayout1"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true"
-        android:background="@color/softHighLight"
+        android:background="@color/background"
         android:layout_gravity="top">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp">
 
             <Button
                 android:id="@+id/noButton"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="125dp"
+                android:layout_height="100dp"
                 android:background="@drawable/rect_button"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="NO!"
-                android:textColor="@color/accentColor"
+                android:textColor="@color/background"
                 android:textSize="24sp"
-                android:layout_alignTop="@+id/yesButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_margin="10dp"
+               />
 
             <Button
                 android:id="@+id/yesButton"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="125dp"
+                android:layout_height="100dp"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="YES!"
                 android:background="@drawable/rect_button"
-                android:textColor="@color/accentColor"
+                android:textColor="@color/background"
                 android:textSize="24sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_toRightOf="@+id/noButton"
+                android:layout_margin="10dp"
+                />
+        </RelativeLayout>
         </RelativeLayout>
 
 

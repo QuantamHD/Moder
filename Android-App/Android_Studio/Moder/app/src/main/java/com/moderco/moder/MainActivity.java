@@ -13,13 +13,9 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 
 import com.loopj.android.http.PersistentCookieStore;
@@ -124,7 +120,6 @@ public class MainActivity extends Activity {
             		
             	//Switch to crop screen
             	performCrop(fileUri, getApplicationContext());
-
             	
                 //Image working
             } else if (resultCode == RESULT_CANCELED) {
@@ -184,43 +179,23 @@ public class MainActivity extends Activity {
     	}
     }
 
-    /**
-     * Handles the popup menu for the corner button
-     * @param v
-     */
-    public void showPopup(View v) {
-    	PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        final Context context = this.getApplicationContext();
-        popup.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-        	 @Override
-        	    public boolean onMenuItemClick(MenuItem item) {
-        	        switch (item.getItemId()) {
-        	            case R.id.logout:
-                            /* Turn off auto login */
-                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                            SharedPreferences.Editor editor=prefs.edit();
-                            editor.clear(); //Wipe the user and pass from the user
-                            editor.putBoolean(LoginActivity.AUTO_LOGIN_PREF, false);
-                            editor.commit();
 
-                            /* Start new Activity */
-        	            	Intent intent = new Intent(context, LoginActivity.class);
-                            startActivity(intent);
-        	                return true;
-        	            case R.id.profile:
-                            Intent intentProfile = new Intent(context, ProfileActivity.class);
-                            startActivity(intentProfile);
-        	                return true;
-        	            default:
-        	                return false;
-        	        }
-        	    }
-        });
-        inflater.inflate(R.menu.popup, popup.getMenu());
-        popup.show();
+    public void startLoginActivity(View v) {
+        Intent intentProfile = new Intent(getApplicationContext(), LoginActivity.class);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor=prefs.edit();
+        editor.clear();
+        editor.putBoolean(LoginActivity.AUTO_LOGIN_PREF, false);
+        editor.commit();
+        startActivity(intentProfile);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
-    
+
+    public void startProfileActivity(View v) {
+        Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(intentProfile);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+    }
    
     
     /** Create a file Uri for saving an image or video */

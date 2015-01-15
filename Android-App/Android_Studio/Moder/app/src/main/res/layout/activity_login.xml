@@ -75,7 +75,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:background="#606262"
+                android:background="@color/accentColor"
                 android:text="Register"
                 android:textColor="#FFFFFF"
                 android:textSize="34sp" />
