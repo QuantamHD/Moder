@@ -20,7 +20,18 @@
             android:text="Profile"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/background" />
-        
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="21dp"
+            android:onClick="backToMain"
+            />
+
     </RelativeLayout>
 
     <TextView

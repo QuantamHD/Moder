@@ -1,6 +1,5 @@
 package com.moderco.moder;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -30,13 +30,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 	PhotoProfile photoProfile;
 	Button yesButton, noButton;
 	ImageButton cameraButton, searchButton, menuButton;
 	RelativeLayout menu;
 	Intent intent;
+    Button infoButton;
 	
 	private String cookie;
 	PersistentCookieStore cookieStore;
@@ -60,6 +61,7 @@ public class MainActivity extends Activity {
         menuButton = (ImageButton) findViewById(R.id.gears);
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
         menu = (RelativeLayout) findViewById(R.id.menuBarLayout);
+        infoButton = (Button) findViewById(R.id.infoButton);
         
         //Set max photoProfile height
         Display display = getWindowManager().getDefaultDisplay();
@@ -106,6 +108,15 @@ public class MainActivity extends Activity {
 		}); 
         
     }
+
+    public void addInfo(View v) {
+        InfoFragment frag = new InfoFragment();
+        frag.setArguments(getIntent().getExtras());
+        //getSupportFragmentManager().beginTransaction()
+              //  .add(R.id.fragmentContainer, frag).commit();
+    }
+
+
     
     
     @Override
@@ -193,6 +204,7 @@ public class MainActivity extends Activity {
 
     public void startProfileActivity(View v) {
         Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
+        intentProfile.putExtra(CookieHandler.COOKIE, cookie);
         startActivity(intentProfile);
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }

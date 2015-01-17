@@ -2,7 +2,9 @@
 <resources>
     <color name="background">#FFFFFF</color>
     <color name="mainColor">#5EB480</color>
+    <color name="mainShadowColor">#356649</color>
     <color name="accentColor">#606060</color>
     <color name="softHighLight">#D7DBDB</color>
+    <color name="red">#B4655E</color>
 
 </resources>

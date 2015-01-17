@@ -128,15 +128,19 @@ public class LoginActivity extends Activity {
 		loginExpansionLayout = (RelativeLayout) findViewById(R.id.loginExpandLayout);
 		loginExpansionButton = (Button) findViewById(R.id.loginExpandButton);
 		context = this; // find context right before for use
+
+
 		loginExpansionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				
 				if (loginPageShown) {
+
 					username.setVisibility(View.GONE);
 					password.setVisibility(View.GONE);
 					submitButton.setVisibility(View.GONE);
 				} else {
+
 					username.setVisibility(View.VISIBLE);
 					password.setVisibility(View.VISIBLE);
 					submitButton.setVisibility(View.VISIBLE);
@@ -267,6 +271,8 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
+
+
 
 	/**
 	 * Executes a client side check to see if the passwords work. Basically
