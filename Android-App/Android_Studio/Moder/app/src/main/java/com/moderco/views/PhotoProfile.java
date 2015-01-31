@@ -9,18 +9,9 @@
 
 package com.moderco.views;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import com.moderco.network.GetPhotosTask;
-import com.moderco.network.URLS;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -63,11 +54,7 @@ public class PhotoProfile extends ImageView{
 	/**
 	 * Loads the photo from the server and assigns it to the photo TODO: Finish this
 	 */
-	public void changePhoto() {
-		Bitmap bitmap = null;
-		GetPhotosTask task = new GetPhotosTask();
-		task.execute(URLS.MAIN_FEED_URL_STRING);
-		bitmap = task.getBitmap();
+	public void changePhoto(Bitmap bitmap) {
 		setImageBitmap(bitmap);
 	}
 	

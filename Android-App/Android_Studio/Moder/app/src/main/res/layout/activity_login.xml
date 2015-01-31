@@ -61,6 +61,14 @@
                 android:text="Let&apos;s Go!"
                 android:textColor="@color/background"
                 android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/submitSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout

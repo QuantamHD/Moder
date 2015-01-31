@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class LoginActivity extends Activity {
 	Button confirmRegistrationButton; // Sends registration info to server
 	Button cancelRegistrationButton; // Destroys register page, goes back to
 										// login
+    ProgressBar submitSpinner;
 
 	/* Possible error codes */
 	private final int PASSWORD_FINE = 0;
@@ -83,13 +85,14 @@ public class LoginActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+
         //Check preferences to see if the user wants to autologin
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (prefs.getBoolean(AUTO_LOGIN_PREF, false)) { //if that pref is true
             loginCheck(); //Autologin
         }
 
-        //Check to see if first time user
+        // Check to see if first time user
         if (prefs.getBoolean(FIRST_TIME_USER, true)) {
             //Do first time user tutorial stuff
 
@@ -100,6 +103,7 @@ public class LoginActivity extends Activity {
         } else {
             overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
         }
+
 
         //otherwise, let's just continue on to set up the page.
 		setContentView(R.layout.activity_login);
@@ -125,6 +129,7 @@ public class LoginActivity extends Activity {
 		username = (EditText) findViewById(R.id.username);
 		password = (EditText) findViewById(R.id.password);
 		submitButton = (Button) findViewById(R.id.submitButton);
+        submitSpinner = (ProgressBar) findViewById(R.id.submitSpinner);
 		loginExpansionLayout = (RelativeLayout) findViewById(R.id.loginExpandLayout);
 		loginExpansionButton = (Button) findViewById(R.id.loginExpandButton);
 		context = this; // find context right before for use
@@ -153,10 +158,13 @@ public class LoginActivity extends Activity {
 		submitButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				submitButton.startAnimation(twirl);
 				if ((username.getText().toString().length() > 0)
 						&& (password.getText().toString().length() > 0)) {
-					submitButton.setText("Connecting..."); //Show that it's doing something
+
+                    submitSpinner.setVisibility(View.VISIBLE);
+					submitButton.setVisibility(View.GONE);
+
+
 					LoginTask task = new LoginTask(username.getText()
 							.toString(), password.getText().toString());
 					int code = -1;
@@ -175,8 +183,8 @@ public class LoginActivity extends Activity {
                         setLoginCreds(username.getText().toString(), password.getText().toString());
                     }
 
+                    login(v, code, task);
 
-					login(v, code, task);
 				}
 			}
 		});
@@ -306,6 +314,7 @@ public class LoginActivity extends Activity {
 	public void login(View view, int code, LoginTask task) {
 		
 		if (code == LoginTask.SUCCESS_CODE) {
+            Log.v("LoginCookieRaw", task.cookie.getValue());
 			switchScreen(CookieHandler.formatCookie(task.cookie)); //Only gets the cookie if successful
 		} else if (code == LoginTask.INFO_MISSING_CODE) {
 			Log.v("LoginActivity", "Incorrect info.");
@@ -324,11 +333,15 @@ public class LoginActivity extends Activity {
 	}
 
 	/**
-	 * Switches the activity to main activity from the login page.
+	 * Switches the activity to main activity from the log // TEST
+     GetUrlsTask task = new GetUrlsTask(this, cookie);
+     task.execute();
+     // TESTin page.
 	 * 
 	 * @param cookie
 	 */
 	private void switchScreen(String cookie) {
+        Log.v("LoginCookieAFTER", cookie);
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra(CookieHandler.COOKIE, cookie);
 		startActivity(intent);

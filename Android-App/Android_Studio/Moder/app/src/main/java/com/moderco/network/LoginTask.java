@@ -45,7 +45,6 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 		HttpClient httpClient = new DefaultHttpClient();
         HttpPost post = new HttpPost(URLS.LOGIN_URL_STRING);
 
-
 		try {
 			// fill in parameters email, pwd1
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -76,10 +75,8 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 						//Cookie time
 						CookieStore store = ((DefaultHttpClient) httpClient).getCookieStore();
 						List<Cookie> cookies = store.getCookies();
-						cookie = cookies.get(0); //There should only be one.
-						Log.v("Cookie Time", "Received cookie: " + cookie.getName());
-
-
+						cookie = cookies.get(1); //There should only be one.
+						Log.v("Cookie Time", "Received cookie: " + cookie.getValue());
 					}
 					
 					return code; //Codes defined above

@@ -17,10 +17,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.loopj.android.http.PersistentCookieStore;
 import com.moderco.network.CookieHandler;
+import com.moderco.network.FindPhotoTask;
+import com.moderco.network.GetUrlsTask;
 import com.moderco.network.PostPhotosTask;
+import com.moderco.utility.PhotoProfileDataSet;
 import com.moderco.views.PhotoProfile;
 
 import java.io.ByteArrayOutputStream;
@@ -28,6 +32,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class MainActivity extends FragmentActivity {
@@ -45,6 +51,8 @@ public class MainActivity extends FragmentActivity {
 	//For camera stuff
 	Uri fileUri;
 	File photo;
+    Queue<PhotoProfileDataSet> photoBuffer;
+    public static final int MAX_PHOTOS_STORED_ON_DEVICE = 8;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private final int PIC_CROP = 2;
@@ -52,7 +60,24 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
+
+        //cookies
+        intent = getIntent(); //Used for the cookie and stuff
+        cookie = intent.getStringExtra(CookieHandler.COOKIE);
+        Log.v("MainActivity1", cookie);
+        // TEST
+        GetUrlsTask task = new GetUrlsTask(this, cookie);
+        task.execute();
+        // TEST
+
+        //Deal with excess photos
+        photoBuffer = new LinkedList<PhotoProfileDataSet>();
+        updatePhotoBuffer(10); //Load some photos
+
+
+
+        //Build window
         setContentView(R.layout.activity_main);
         yesButton = (Button) findViewById(R.id.yesButton);
         noButton = (Button) findViewById(R.id.noButton);
@@ -62,23 +87,19 @@ public class MainActivity extends FragmentActivity {
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
         menu = (RelativeLayout) findViewById(R.id.menuBarLayout);
         infoButton = (Button) findViewById(R.id.infoButton);
-        
+
         //Set max photoProfile height
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size); //Because we can't use return for some reason?
         photoProfile.setMaxHeight((size.y/3)*2); // two thirds of the height of the screen
-        
-       //cookies
-        intent = getIntent(); //Used for the cookie and stuff
-        cookie = intent.getStringExtra(CookieHandler.COOKIE);
-        Log.v("MainActivity", cookie);
+
+        changePhoto(null); //Add first photo
        
         final Context context = getApplicationContext();
         cameraButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
 				 // create Intent to take a picture and return control to the calling application
 			    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
@@ -87,26 +108,32 @@ public class MainActivity extends FragmentActivity {
 
 			    // start the image capture Intent
 			    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-			    
 			}
 		});
-        
-		//Yes Button
-        yesButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				photoProfile.changePhoto();
-			}
-		}); 
-        
-      //No Button
-        noButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				photoProfile.setImageResource(R.drawable.test2);
-			}
-		}); 
-        
+    }
+
+    public void ratePhotoYes(View v) {
+
+    }
+
+    public void changePhoto(View v) {
+        if (photoBuffer.peek() != null) {
+            Log.v("MainActivity", "Changing photo");
+            photoProfile.changePhoto(photoBuffer.peek().bitmap);
+            photoBuffer.remove();
+        } else {
+            Toast.makeText(getApplicationContext(), "No more photos!", Toast.LENGTH_LONG).show();
+        }
+        updatePhotoBuffer(MAX_PHOTOS_STORED_ON_DEVICE);
+    }
+
+    public void updatePhotoBuffer(int photos) {
+        if (photoBuffer.size() < MAX_PHOTOS_STORED_ON_DEVICE) {
+            FindPhotoTask task = new FindPhotoTask(this, cookie, photos);
+            task.execute(photoBuffer);
+        } else {
+            Log.v("MainActivity", "Photo Request denied; too many photos cached");
+        }
     }
 
     public void addInfo(View v) {
@@ -116,9 +143,6 @@ public class MainActivity extends FragmentActivity {
               //  .add(R.id.fragmentContainer, frag).commit();
     }
 
-
-    
-    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);

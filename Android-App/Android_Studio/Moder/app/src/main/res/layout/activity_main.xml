@@ -102,6 +102,7 @@
                 android:textColor="@color/accentColor"
                 android:textSize="24sp"
                 android:layout_margin="10dp"
+                android:onClick="changePhoto"
                />
 
             <Button
@@ -115,6 +116,7 @@
                 android:textSize="24sp"
                 android:layout_toRightOf="@+id/noButton"
                 android:layout_margin="10dp"
+                android:onClick="changePhoto"
 
                 />
         </RelativeLayout>
