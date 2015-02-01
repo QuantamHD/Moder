@@ -16,14 +16,15 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.loopj.android.http.PersistentCookieStore;
 import com.moderco.network.CookieHandler;
 import com.moderco.network.FindPhotoTask;
 import com.moderco.network.GetUrlsTask;
 import com.moderco.network.PostPhotosTask;
+import com.moderco.network.SendRateTask;
 import com.moderco.utility.PhotoProfileDataSet;
 import com.moderco.views.PhotoProfile;
 
@@ -40,6 +41,7 @@ public class MainActivity extends FragmentActivity {
 
 	PhotoProfile photoProfile;
 	Button yesButton, noButton;
+    ProgressBar progress;
 	ImageButton cameraButton, searchButton, menuButton;
 	RelativeLayout menu;
 	Intent intent;
@@ -60,6 +62,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         //cookies
@@ -85,6 +88,7 @@ public class MainActivity extends FragmentActivity {
         searchButton = (ImageButton) findViewById(R.id.profileIcon);
         menuButton = (ImageButton) findViewById(R.id.gears);
         photoProfile= (PhotoProfile) findViewById(R.id.photoProfile);
+        progress = (ProgressBar) findViewById(R.id.progress);
         menu = (RelativeLayout) findViewById(R.id.menuBarLayout);
         infoButton = (Button) findViewById(R.id.infoButton);
 
@@ -93,8 +97,6 @@ public class MainActivity extends FragmentActivity {
         Point size = new Point();
         display.getSize(size); //Because we can't use return for some reason?
         photoProfile.setMaxHeight((size.y/3)*2); // two thirds of the height of the screen
-
-        changePhoto(null); //Add first photo
        
         final Context context = getApplicationContext();
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -110,22 +112,64 @@ public class MainActivity extends FragmentActivity {
 			    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 			}
 		});
+
+
+                int meinStruggle = 10; // try ten times bitch
+                for (int i = 0; i < meinStruggle; i++) {
+                    try {
+                        Thread.sleep(300);
+                        boolean works = changePhoto(photoProfile);
+                        if (works) break;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
     }
 
     public void ratePhotoYes(View v) {
-
+        if (photoBuffer.peek() != null) {
+            String id = "BIG SHIT PROBS";
+            id = photoBuffer.peek().ID;
+            SendRateTask task = new SendRateTask(id, cookie);
+            Log.v("Photo", id);
+            task.execute(true);
+            changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
+            photoBuffer.remove();
+        } else
+          Log.v("Photo", "NULL");
     }
 
-    public void changePhoto(View v) {
+    public void ratePhotoNo(View v) {
+        if (photoBuffer.peek() != null) {
+            String id = "BIG SHIT PROBS";
+            id = photoBuffer.peek().ID;
+            SendRateTask task = new SendRateTask(id, cookie);
+            Log.v("Photo", id);
+            task.execute(false);
+
+            changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
+            photoBuffer.remove();
+        } else
+            Log.v("Photo", "NULL");
+    }
+
+    public boolean changePhoto(PhotoProfile photoProf) {
         if (photoBuffer.peek() != null) {
             Log.v("MainActivity", "Changing photo");
-            photoProfile.changePhoto(photoBuffer.peek().bitmap);
-            photoBuffer.remove();
+            if (photoProf.getVisibility() != View.VISIBLE) {
+                photoProf.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.GONE);
+            }
+            photoProf.changePhoto(photoBuffer.peek().bitmap);
         } else {
-            Toast.makeText(getApplicationContext(), "No more photos!", Toast.LENGTH_LONG).show();
+            return false;
         }
-        updatePhotoBuffer(MAX_PHOTOS_STORED_ON_DEVICE);
+        return true;
     }
+
+
 
     public void updatePhotoBuffer(int photos) {
         if (photoBuffer.size() < MAX_PHOTOS_STORED_ON_DEVICE) {
@@ -214,7 +258,6 @@ public class MainActivity extends FragmentActivity {
     	}
     }
 
-
     public void startLoginActivity(View v) {
         Intent intentProfile = new Intent(getApplicationContext(), LoginActivity.class);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -232,8 +275,7 @@ public class MainActivity extends FragmentActivity {
         startActivity(intentProfile);
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
-   
-    
+
     /** Create a file Uri for saving an image or video */
     private static Uri getOutputMediaFileUri(int type){
           return Uri.fromFile(getOutputMediaFile(type));

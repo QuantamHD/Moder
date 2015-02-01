@@ -12,8 +12,8 @@ public class PhotoProfileDataSet {
     public String description;
 
     public PhotoProfileDataSet(Bitmap bit, String id) {
-        bitmap = bit;
-        id = ID;
+        this.bitmap = bit;
+        this.ID = id;
     }
 
     PhotoProfileDataSet(Bitmap bit, String id, String description) {

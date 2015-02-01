@@ -43,6 +43,7 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 		// Setup
 		HttpResponse response = null; // Hopefully this shouldn't happen.
 		HttpClient httpClient = new DefaultHttpClient();
+
         HttpPost post = new HttpPost(URLS.LOGIN_URL_STRING);
 
 		try {
@@ -55,7 +56,7 @@ public class LoginTask extends AsyncTask<Void, Void, Integer>{
 			// send data
 			response = httpClient.execute(post);
 			
-			
+
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(
 						response.getEntity().getContent(), "UTF-8"));

@@ -83,8 +83,6 @@ public class GetUrlsTask extends AsyncTask <Void, Void, Integer> {
                         Log.v("GetURlsTask", "PhotoIDs:" + strings[c]);
                     }
 
-
-
                 } else if (code == NO_MORE_PHOTOS_CODE) {
                     return code;
                 }

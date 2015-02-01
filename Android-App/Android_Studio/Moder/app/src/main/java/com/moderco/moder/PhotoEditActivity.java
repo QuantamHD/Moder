@@ -44,12 +44,17 @@ public class PhotoEditActivity extends Activity {
         cropImageView = (CropImageView) findViewById(R.id.CropImageView);
         cropImageView.setAspectRatio(1, 1);
         cropImageView.setFixedAspectRatio(true);
+
+
         cropImageView.setImageBitmap(photo); //Set the photo
     }
 
     public void submit(View v) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        cropImageView.getCroppedImage().compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+        Bitmap result = Bitmap.createBitmap(cropImageView.getCroppedImage(), 1,
+                1, cropImageView.getCroppedImage().getWidth()-2, cropImageView.getCroppedImage().getHeight()-2);
+        result.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bitmapdata = stream.toByteArray();
 
 
