@@ -18,7 +18,6 @@ import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,9 +28,9 @@ import java.util.Queue;
  */
 public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, Void>{
 
-    String cookie;
-    Context context;
-    int maxPhotos;
+    private String cookie;
+    private Context context;
+    private int maxPhotos;
 
     public FindPhotoTask(Context context, String cookie, int num) {
         this.cookie = cookie;
@@ -42,7 +41,7 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
     protected Void doInBackground(Queue<PhotoProfileDataSet>... params) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        ArrayList<String> urls = new ArrayList<String>(Arrays.asList(prefs.getString(GetUrlsTask.urlPrefCode, "ERROR")
+        ArrayList<String> urls = new ArrayList<>(Arrays.asList(prefs.getString(GetUrlsTask.urlPrefCode, "ERROR")
                 .split(GetUrlsTask.urlRegex)));
 
 
@@ -56,7 +55,7 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
                     Log.v("GETPHOTOSTASK", URLS.MAIN_FEED_URL_STRING + urls.get(i));
                     HttpClient httpclient = new DefaultHttpClient();
                     httpRequest.addHeader("Cookie", cookie);
-                    HttpResponse resp = (HttpResponse) httpclient.execute(httpRequest);
+                    HttpResponse resp = httpclient.execute(httpRequest);
                     HttpEntity entity = resp.getEntity();
                     BufferedHttpEntity bufHttpEntity = new BufferedHttpEntity(entity);
                     bitmap = BitmapFactory.decodeStream(bufHttpEntity.getContent());
@@ -71,8 +70,6 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
                     urls.remove(0);
 
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

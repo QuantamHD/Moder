@@ -19,7 +19,7 @@ import android.widget.ImageView;
 @SuppressLint("NewApi")
 public class PhotoProfile extends ImageView{
 	
-	Drawable photo; //TODO: Find a way to get the photo without taking it in as a parameter
+	private Drawable photo; //TODO: Find a way to get the photo without taking it in as a parameter
 
 	public PhotoProfile(Context context) {
 		super(context);

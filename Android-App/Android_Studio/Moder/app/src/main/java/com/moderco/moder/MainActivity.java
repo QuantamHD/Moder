@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.loopj.android.http.PersistentCookieStore;
-import com.moderco.network.CookieHandler;
+import com.moderco.utility.CookieHandler;
 import com.moderco.network.FindPhotoTask;
 import com.moderco.network.GetUrlsTask;
 import com.moderco.network.PostPhotosTask;
@@ -39,22 +39,25 @@ import java.util.Queue;
 
 public class MainActivity extends FragmentActivity {
 
-	PhotoProfile photoProfile;
-	Button yesButton, noButton;
-    ProgressBar progress;
-	ImageButton cameraButton, searchButton, menuButton;
-	RelativeLayout menu;
-	Intent intent;
-    Button infoButton;
+	private PhotoProfile photoProfile;
+	private Button yesButton;
+    private Button noButton;
+    private ProgressBar progress;
+	private ImageButton cameraButton;
+    private ImageButton searchButton;
+    private ImageButton menuButton;
+	private RelativeLayout menu;
+	private Intent intent;
+    private Button infoButton;
 	
 	private String cookie;
 	PersistentCookieStore cookieStore;
 	
 	//For camera stuff
-	Uri fileUri;
-	File photo;
-    Queue<PhotoProfileDataSet> photoBuffer;
-    public static final int MAX_PHOTOS_STORED_ON_DEVICE = 8;
+    private Uri fileUri;
+	private File photo;
+    private Queue<PhotoProfileDataSet> photoBuffer;
+    private static final int MAX_PHOTOS_STORED_ON_DEVICE = 8;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private final int PIC_CROP = 2;
@@ -75,7 +78,7 @@ public class MainActivity extends FragmentActivity {
         // TEST
 
         //Deal with excess photos
-        photoBuffer = new LinkedList<PhotoProfileDataSet>();
+        photoBuffer = new LinkedList<>();
         updatePhotoBuffer(10); //Load some photos
 
 
@@ -114,24 +117,23 @@ public class MainActivity extends FragmentActivity {
 		});
 
 
-                int meinStruggle = 10; // try ten times bitch
-                for (int i = 0; i < meinStruggle; i++) {
-                    try {
-                        Thread.sleep(300);
-                        boolean works = changePhoto(photoProfile);
-                        if (works) break;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+    int meinStruggle = 10; // try ten times bitch
+    for (int i = 0; i < meinStruggle; i++) {
+        try {
+            Thread.sleep(300);
+            boolean works = changePhoto(photoProfile);
+            if (works) break;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     }
 
     public void ratePhotoYes(View v) {
         if (photoBuffer.peek() != null) {
-            String id = "BIG SHIT PROBS";
-            id = photoBuffer.peek().ID;
+            String id = photoBuffer.peek().getID();
             SendRateTask task = new SendRateTask(id, cookie);
             Log.v("Photo", id);
             task.execute(true);
@@ -143,8 +145,7 @@ public class MainActivity extends FragmentActivity {
 
     public void ratePhotoNo(View v) {
         if (photoBuffer.peek() != null) {
-            String id = "BIG SHIT PROBS";
-            id = photoBuffer.peek().ID;
+            String id = photoBuffer.peek().getID();
             SendRateTask task = new SendRateTask(id, cookie);
             Log.v("Photo", id);
             task.execute(false);
@@ -155,14 +156,14 @@ public class MainActivity extends FragmentActivity {
             Log.v("Photo", "NULL");
     }
 
-    public boolean changePhoto(PhotoProfile photoProf) {
+    boolean changePhoto(PhotoProfile photoProf) {
         if (photoBuffer.peek() != null) {
             Log.v("MainActivity", "Changing photo");
             if (photoProf.getVisibility() != View.VISIBLE) {
                 photoProf.setVisibility(View.VISIBLE);
                 progress.setVisibility(View.GONE);
             }
-            photoProf.changePhoto(photoBuffer.peek().bitmap);
+            photoProf.changePhoto(photoBuffer.peek().getBitmap());
         } else {
             return false;
         }
@@ -171,7 +172,7 @@ public class MainActivity extends FragmentActivity {
 
 
 
-    public void updatePhotoBuffer(int photos) {
+    void updatePhotoBuffer(int photos) {
         if (photoBuffer.size() < MAX_PHOTOS_STORED_ON_DEVICE) {
             FindPhotoTask task = new FindPhotoTask(this, cookie, photos);
             task.execute(photoBuffer);

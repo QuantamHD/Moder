@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.moderco.network.CookieHandler;
+import com.moderco.utility.CookieHandler;
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
 
@@ -29,34 +29,32 @@ public class LoginActivity extends Activity {
 	
 
 	/* login page */
-	boolean loginPageShown = false;
-	Button loginExpansionButton;
-	RelativeLayout loginExpansionLayout;
-	EditText username;
-	EditText password;
-	Button submitButton; // Logs in
-	Button registerButton; // Brings up register page
+	private boolean loginPageShown = false;
+	private Button loginExpansionButton;
+	private RelativeLayout loginExpansionLayout;
+	private EditText username;
+	private EditText password;
+	private Button submitButton; // Logs in
+	private Button registerButton; // Brings up register page
 	private static int requiredPasswordLength = 8;
-	private final String USERNAME_HINT = "Enter Email";
-	private final String PASSWORD_HINT = "Enter Password";
-	Context context; // For keeping track and stuff
-	TextView moderLogo;
-	ImageView ribbonOne;
-	ImageView ribbonTwo;
-	Animation twirl;
-	Animation hover;
+	private Context context; // For keeping track and stuff
+	private TextView moderLogo;
+	private ImageView ribbonOne;
+	private ImageView ribbonTwo;
+	private Animation twirl;
+	private Animation hover;
 	
 
 	/* registration page */
-	boolean registrationPageShown = false;
+    private boolean registrationPageShown = false;
 	View paper; // Background to registration page
-	EditText usernameRegistration;
-	EditText passwordRegistration;
-	EditText passwordCheckRegistration; // Should match passwordRegistration
-	Button confirmRegistrationButton; // Sends registration info to server
+	private EditText usernameRegistration;
+	private EditText passwordRegistration;
+	private EditText passwordCheckRegistration; // Should match passwordRegistration
+	private Button confirmRegistrationButton; // Sends registration info to server
 	Button cancelRegistrationButton; // Destroys register page, goes back to
 										// login
-    ProgressBar submitSpinner;
+                                        private ProgressBar submitSpinner;
 
 	/* Possible error codes */
 	private final int PASSWORD_FINE = 0;
@@ -67,7 +65,7 @@ public class LoginActivity extends Activity {
     private static final String USER_PREF = "com.moderco.moder.user";
     private static final String PASS_PREF = "com.moderco.moder.pass";
     public static final String AUTO_LOGIN_PREF = "com.moderco.moder.autologin";
-    public static final String FIRST_TIME_USER = "com.moderco.moder.firsttimer";
+    private static final String FIRST_TIME_USER = "com.moderco.moder.firsttimer";
 
 	
 	/* Toasts */
@@ -172,12 +170,10 @@ public class LoginActivity extends Activity {
 					try {
 						
 						code = task.execute().get();
-					} catch (InterruptedException e) {
+					} catch (InterruptedException | ExecutionException e) {
 						e.printStackTrace();
-					} catch (ExecutionException e) {
-						e.printStackTrace();
-					} 
-					Log.v("LoginActivity", "Login Code: " + code);
+					}
+                    Log.v("LoginActivity", "Login Code: " + code);
 
                     if (code == LoginTask.SUCCESS_CODE) {
                         setLoginCreds(username.getText().toString(), password.getText().toString());
@@ -206,7 +202,7 @@ public class LoginActivity extends Activity {
 
 						// Run Password check
 						if (passCheck == PASSWORDS_NOT_IDENTICAL) {
-							Toast.makeText(getApplicationContext(), PASSWORDS_NOT_SAME, Toast.LENGTH_SHORT).show();;
+							Toast.makeText(getApplicationContext(), PASSWORDS_NOT_SAME, Toast.LENGTH_SHORT).show();
 						} else if (passCheck == PASSWORD_TOO_SHORT) {
 							Toast.makeText(getApplicationContext(), PASSWORD_TOO_SHORT_TOAST, Toast.LENGTH_SHORT).show();
 						} else if (passCheck == PASSWORD_FINE) {
@@ -230,12 +226,10 @@ public class LoginActivity extends Activity {
 									int loginCode = -1; //Default value.
 									try {
 										loginCode = loginTask.execute().get();
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									} catch (ExecutionException e) {
+									} catch (InterruptedException | ExecutionException e) {
 										e.printStackTrace();
 									}
-									Log.v("LoginActivity", "Login Code: " + loginCode);
+                                    Log.v("LoginActivity", "Login Code: " + loginCode);
 
                                     /* Bad code starts here */
                                     if (loginCode == LoginTask.SUCCESS_CODE) {
@@ -247,12 +241,10 @@ public class LoginActivity extends Activity {
 									login(v, loginCode, loginTask);
 								}
 								
-							} catch (InterruptedException e) {
+							} catch (InterruptedException | ExecutionException e) {
 								e.printStackTrace();
-							} catch (ExecutionException e) {
-								e.printStackTrace();
-							} 
-						} else {
+							}
+                        } else {
 							Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
 						}
 					}
@@ -293,7 +285,7 @@ public class LoginActivity extends Activity {
 	 *            - The editText version
 	 * @return error codes defined above
 	 */
-	public int passwordCheck(EditText pwd1, EditText pwd2) {
+    int passwordCheck(EditText pwd1, EditText pwd2) {
 		String pwd1Text = pwd1.getText().toString();
 		String pwd2Text = pwd2.getText().toString();
 
@@ -311,7 +303,7 @@ public class LoginActivity extends Activity {
 	 * 
 	 * @param view
 	 */
-	public void login(View view, int code, LoginTask task) {
+    void login(View view, int code, LoginTask task) {
 		
 		if (code == LoginTask.SUCCESS_CODE) {
             Log.v("LoginCookieRaw", task.cookie.getValue());
@@ -370,9 +362,7 @@ public class LoginActivity extends Activity {
             int code = -1;
             try {
                 code = loginTask.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
 

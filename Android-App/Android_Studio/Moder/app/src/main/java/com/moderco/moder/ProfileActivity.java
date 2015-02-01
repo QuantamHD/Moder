@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.moderco.network.CookieHandler;
+import com.moderco.utility.CookieHandler;
 
 public class ProfileActivity extends Activity{
 

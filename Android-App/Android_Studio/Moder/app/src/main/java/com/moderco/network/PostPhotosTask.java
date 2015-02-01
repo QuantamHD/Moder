@@ -1,20 +1,15 @@
 package com.moderco.network;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import org.apache.http.Header;
-import org.apache.http.client.CookieStore;
-import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.protocol.HttpContext;
-
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class PostPhotosTask {
 	

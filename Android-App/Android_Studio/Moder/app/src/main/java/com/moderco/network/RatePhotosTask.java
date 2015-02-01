@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Evan on 1/26/15.
  */
-public class RatePhotosTask extends AsyncTask<Boolean, Void, Integer> {
+class RatePhotosTask extends AsyncTask<Boolean, Void, Integer> {
 
     private final int SUCCESS_CODE = 300;
     private String unique_id_string = "ERROR FROM EVAN";
@@ -44,7 +44,7 @@ public class RatePhotosTask extends AsyncTask<Boolean, Void, Integer> {
         try {
 
             //Attach parameters
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            List<NameValuePair> nameValuePairs = new ArrayList<>(2);
             nameValuePairs.add(new BasicNameValuePair("photoID", photoID));
             if (params[0])
                 nameValuePairs.add(new BasicNameValuePair("choice", "yes"));
@@ -72,9 +72,7 @@ public class RatePhotosTask extends AsyncTask<Boolean, Void, Integer> {
             code = jObject.getInt("ResponseCode"); //Assigns code
 
             return code;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 

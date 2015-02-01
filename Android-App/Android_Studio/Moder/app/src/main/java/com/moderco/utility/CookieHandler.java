@@ -1,4 +1,4 @@
-package com.moderco.network;
+package com.moderco.utility;
 
 import org.apache.http.cookie.Cookie;
 

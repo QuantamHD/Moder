@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.edmodo.cropper.CropImageView;
-import com.moderco.network.CookieHandler;
+import com.moderco.utility.CookieHandler;
 import com.moderco.network.PostPhotosTask;
 
 import java.io.ByteArrayOutputStream;
@@ -90,8 +90,8 @@ public class PhotoEditActivity extends Activity {
     private boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            for (String aChild : children) {
+                boolean success = deleteDir(new File(dir, aChild));
                 if (!success) {
                     return false;
                 }

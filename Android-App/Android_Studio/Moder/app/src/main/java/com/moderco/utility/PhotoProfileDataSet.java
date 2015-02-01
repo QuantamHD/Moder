@@ -7,19 +7,42 @@ import android.graphics.Bitmap;
  */
 public class PhotoProfileDataSet {
 
-    public Bitmap bitmap;
-    public String ID;
-    public String description;
+    private Bitmap bitmap;
+    private String ID;
+    private String description;
 
     public PhotoProfileDataSet(Bitmap bit, String id) {
-        this.bitmap = bit;
-        this.ID = id;
+        this.setBitmap(bit);
+        this.setID(id);
     }
 
     PhotoProfileDataSet(Bitmap bit, String id, String description) {
-        this.bitmap = bit;
-        this.ID = id;
-        this.description = description;
+        this.setBitmap(bit);
+        this.setID(id);
+        this.setDescription(description);
     }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

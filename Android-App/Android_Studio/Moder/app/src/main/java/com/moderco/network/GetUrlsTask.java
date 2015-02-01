@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.moderco.utility.JsonReader;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -14,9 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -35,6 +35,7 @@ public class GetUrlsTask extends AsyncTask <Void, Void, Integer> {
     public static final String urlPrefCode = "com.moderco.moder.urls";
     public static final String urlRegex = "~!";
 
+    //Constructor for access to multiple inputs
     public GetUrlsTask(Context context, String cookie) {
         this.context = context;
         this.cookie = cookie;
@@ -43,11 +44,9 @@ public class GetUrlsTask extends AsyncTask <Void, Void, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
         int code = -1;
-        HttpResponse response = null;
+        HttpResponse response;
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet();
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         //Get multiple Urls
         for (int i = 0; i < URL_CACHE_NUMBER; i++) {
@@ -55,49 +54,43 @@ public class GetUrlsTask extends AsyncTask <Void, Void, Integer> {
                 request.setURI(new URI(URLS.GET_PHOTO_RATE_STRING));
                 request.addHeader("Cookie", this.cookie);
                 response = client.execute(request);
-
-                //Parse the JSON
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        response.getEntity().getContent(), "UTF-8"));
-                StringBuilder builder = new StringBuilder();
-                for (String line = null; (line = reader.readLine()) != null; ) {
-                    builder.append(line).append("\n");
-                }
-                Log.v("GetUrlsTask", "Response: " + builder.toString()); //Log the response
-
-                JSONObject jObject = new JSONObject(builder.toString());
+                JSONObject jObject = JsonReader.parse(response, true);
                 code = jObject.getInt("ResponseCode"); //Assigns code
 
                 //Check for success!
-                if (code == SUCCESS_CODE) {
-                    //Add string to response list
-                    String current = prefs.getString(urlPrefCode, ""); //Default to nothing
-                    current += ( jObject.getString(photoID) + urlRegex ); //Add the new one
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(urlPrefCode, current);
-                    editor.commit();
+                if (code == SUCCESS_CODE) storeInfo(jObject);
+                else if (code == NO_MORE_PHOTOS_CODE) return code;
+                else return code;
 
-                    String[] strings = prefs.getString(urlPrefCode, "ERROR")
-                            .split(urlRegex);
-                    for (int c = 0; c < strings.length; c++ ) {
-                        Log.v("GetURlsTask", "PhotoIDs:" + strings[c]);
-                    }
-
-                } else if (code == NO_MORE_PHOTOS_CODE) {
-                    return code;
-                }
-
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
+            } catch (URISyntaxException | JSONException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
         return code;
+    }
+
+
+    //Helper method stores all the urls
+    private void storeInfo(JSONObject jObject) {
+        try {
+            //Add string to response list
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            String current = prefs.getString(urlPrefCode, ""); //Default to nothing
+            current += ( jObject.getString(photoID) + urlRegex ); //Add the new one
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(urlPrefCode, current);
+            editor.commit();
+
+            String[] strings = prefs.getString(urlPrefCode, "ERROR")
+                    .split(urlRegex);
+            for (String string : strings) {
+                Log.v("GetURlsTask", "PhotoIDs:" + string);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

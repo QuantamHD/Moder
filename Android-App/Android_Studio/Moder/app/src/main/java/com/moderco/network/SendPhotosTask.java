@@ -1,9 +1,7 @@
 package com.moderco.network;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -11,16 +9,17 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
-public class SendPhotosTask extends AsyncTask<File, Void, Integer>{
+class SendPhotosTask extends AsyncTask<File, Void, Integer>{
 	
 	//codes
 	public static final int FILE_DOES_NOT_EXIST = 100;
 	public static final int SUCCESS = 300;
-	String unique_id_string;
+	private String unique_id_string;
 	
 	public SendPhotosTask( String cookie) {
 		unique_id_string = cookie;

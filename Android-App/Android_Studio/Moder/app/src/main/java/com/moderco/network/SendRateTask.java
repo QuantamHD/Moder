@@ -44,7 +44,7 @@ public class SendRateTask extends AsyncTask<Boolean, Void, Integer> {
         HttpPost post = new HttpPost(URLS.SEND_RATE_PHOTO_STRING);
         post.addHeader("Cookie", cookie);
 
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(2);
         nameValuePairs.add(new BasicNameValuePair("photoID", photoID));
         if (params[0]) nameValuePairs.add(new BasicNameValuePair("choice", "yes"));
         else nameValuePairs.add(new BasicNameValuePair("choice", "no"));
@@ -68,13 +68,9 @@ public class SendRateTask extends AsyncTask<Boolean, Void, Integer> {
             //Check for success
             return code;
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
         return code;
