@@ -9,4 +9,5 @@ class URLS {
 	public static final String SUBMIT_PHOTO_URL_STRING = DOMAIN + "submitphoto";
     public static final String GET_PHOTO_RATE_STRING = DOMAIN + "getrate";
     public static final String SEND_RATE_PHOTO_STRING = DOMAIN + "SubmitRating";
+    public static final String GET_PROFILE_STRING = DOMAIN + "profile";
 }

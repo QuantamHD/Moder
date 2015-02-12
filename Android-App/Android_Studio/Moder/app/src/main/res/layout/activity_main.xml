@@ -110,6 +110,7 @@
                 android:textColor="@color/accentColor"
                 android:textSize="24sp"
                 android:layout_margin="10dp"
+                android:onClick="ratePhotoNo"
                />
 
             <Button

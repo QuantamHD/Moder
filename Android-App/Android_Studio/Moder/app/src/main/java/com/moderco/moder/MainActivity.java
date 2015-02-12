@@ -1,16 +1,20 @@
 package com.moderco.moder;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -20,11 +24,11 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.loopj.android.http.PersistentCookieStore;
-import com.moderco.utility.CookieHandler;
 import com.moderco.network.FindPhotoTask;
 import com.moderco.network.GetUrlsTask;
 import com.moderco.network.PostPhotosTask;
 import com.moderco.network.SendRateTask;
+import com.moderco.utility.CookieHandler;
 import com.moderco.utility.PhotoProfileDataSet;
 import com.moderco.views.PhotoProfile;
 
@@ -49,7 +53,6 @@ public class MainActivity extends FragmentActivity {
 	private RelativeLayout menu;
 	private Intent intent;
     private Button infoButton;
-	
 	private String cookie;
 	PersistentCookieStore cookieStore;
 	
@@ -57,31 +60,28 @@ public class MainActivity extends FragmentActivity {
     private Uri fileUri;
 	private File photo;
     private Queue<PhotoProfileDataSet> photoBuffer;
-    private static final int MAX_PHOTOS_STORED_ON_DEVICE = 8;
+    private static final int MAX_PHOTOS_STORED_ON_DEVICE = 15;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private final int PIC_CROP = 2;
-	
+
+    //Photo
+    private boolean firstPhotoShown = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        firstPhotoShown = false;
 
         //cookies
         intent = getIntent(); //Used for the cookie and stuff
         cookie = intent.getStringExtra(CookieHandler.COOKIE);
         Log.v("MainActivity1", cookie);
-        // TEST
-        GetUrlsTask task = new GetUrlsTask(this, cookie);
-        task.execute();
-        // TEST
 
         //Deal with excess photos
         photoBuffer = new LinkedList<>();
         updatePhotoBuffer(10); //Load some photos
-
-
 
         //Build window
         setContentView(R.layout.activity_main);
@@ -117,18 +117,40 @@ public class MainActivity extends FragmentActivity {
 		});
 
 
-    int meinStruggle = 10; // try ten times bitch
-    for (int i = 0; i < meinStruggle; i++) {
-        try {
-            Thread.sleep(300);
-            boolean works = changePhoto(photoProfile);
-            if (works) break;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BroadcastReceiver receiver = new FirstPhotoHandler(new Handler());
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter(FindPhotoTask.COPA_RESULT));
+    }
+
+    private class FirstPhotoHandler extends BroadcastReceiver {
+
+        private final Handler handler; // Handler used to execute code on the UI thread
+
+        public FirstPhotoHandler(Handler handler) {
+            this.handler = handler;
+        }
+
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            Log.v("Happening", "Receiveing!");
+            String s = intent.getStringExtra(FindPhotoTask.COPA_MESSAGE);
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (!firstPhotoShown) {
+                        changePhoto(photoProfile);
+                        firstPhotoShown = true;
+                    }
+                }
+            });
+        }
     }
 
     public void ratePhotoYes(View v) {
@@ -137,10 +159,18 @@ public class MainActivity extends FragmentActivity {
             SendRateTask task = new SendRateTask(id, cookie);
             Log.v("Photo", id);
             task.execute(true);
-            changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
             photoBuffer.remove();
-        } else
-          Log.v("Photo", "NULL");
+
+            if (photoBuffer.peek() != null)
+                changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
+            else {
+                setLoading(true);
+                updatePhotoBuffer(10);
+            }
+        } else {
+            Log.v("Photo", "NULL");
+            updatePhotoBuffer(10);
+        }
     }
 
     public void ratePhotoNo(View v) {
@@ -150,19 +180,38 @@ public class MainActivity extends FragmentActivity {
             Log.v("Photo", id);
             task.execute(false);
 
-            changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
             photoBuffer.remove();
-        } else
+
+            if (photoBuffer.peek() != null)
+                changePhoto(photoProfile); //MUST HAPPEN AFTER RATE
+            else {
+                setLoading(true);
+                updatePhotoBuffer(10);
+            }
+        } else {
             Log.v("Photo", "NULL");
+            updatePhotoBuffer(10);
+        }
+    }
+
+    private void setLoading(boolean load) {
+        if (!load) {
+            if (photoProfile.getVisibility() != View.VISIBLE) {
+                photoProfile.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.GONE);
+            }
+        } else {
+            if (photoProfile.getVisibility() == View.VISIBLE) {
+                photoProfile.setVisibility(View.GONE);
+                progress.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     boolean changePhoto(PhotoProfile photoProf) {
         if (photoBuffer.peek() != null) {
             Log.v("MainActivity", "Changing photo");
-            if (photoProf.getVisibility() != View.VISIBLE) {
-                photoProf.setVisibility(View.VISIBLE);
-                progress.setVisibility(View.GONE);
-            }
+            setLoading(false);
             photoProf.changePhoto(photoBuffer.peek().getBitmap());
         } else {
             return false;
@@ -179,6 +228,8 @@ public class MainActivity extends FragmentActivity {
         } else {
             Log.v("MainActivity", "Photo Request denied; too many photos cached");
         }
+        GetUrlsTask task = new GetUrlsTask(this, cookie);
+        task.execute();
     }
 
     public void addInfo(View v) {

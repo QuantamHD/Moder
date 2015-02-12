@@ -9,7 +9,6 @@ import android.util.Log;
 import com.moderco.utility.JsonReader;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -26,7 +25,7 @@ import java.net.URISyntaxException;
 public class GetUrlsTask extends AsyncTask <Void, Void, Integer> {
 
 
-    private final int URL_CACHE_NUMBER = 10;
+    private final int URL_CACHE_NUMBER = 3;
     public static final int SUCCESS_CODE = 300;
     public static final int NO_MORE_PHOTOS_CODE = 281;
     private final String photoID = "PhotoID";

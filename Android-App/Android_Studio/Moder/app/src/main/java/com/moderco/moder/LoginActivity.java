@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
 	private ImageView ribbonTwo;
 	private Animation twirl;
 	private Animation hover;
+    private final int MAX_LOGIN_TRYS = 5;
 	
 
 	/* registration page */
@@ -162,24 +163,7 @@ public class LoginActivity extends Activity {
                     submitSpinner.setVisibility(View.VISIBLE);
 					submitButton.setVisibility(View.GONE);
 
-
-					LoginTask task = new LoginTask(username.getText()
-							.toString(), password.getText().toString());
-					int code = -1;
-					
-					try {
-						
-						code = task.execute().get();
-					} catch (InterruptedException | ExecutionException e) {
-						e.printStackTrace();
-					}
-                    Log.v("LoginActivity", "Login Code: " + code);
-
-                    if (code == LoginTask.SUCCESS_CODE) {
-                        setLoginCreds(username.getText().toString(), password.getText().toString());
-                    }
-
-                    login(v, code, task);
+                    login(username.getText().toString(), password.getText().toString());
 
 				}
 			}
@@ -218,27 +202,9 @@ public class LoginActivity extends Activity {
 									Toast.makeText(getApplicationContext(), ACCOUNT_CREATED,
                                             Toast.LENGTH_SHORT).show(); //Note: This very rarely gets shown
                                                                         //Server game too fast
-									
-									//Now we log the user in with their new account
-									LoginTask loginTask =
-                                            new LoginTask(usernameRegistration.getText().toString(),
-											passwordRegistration.getText().toString());
-									int loginCode = -1; //Default value.
-									try {
-										loginCode = loginTask.execute().get();
-									} catch (InterruptedException | ExecutionException e) {
-										e.printStackTrace();
-									}
-                                    Log.v("LoginActivity", "Login Code: " + loginCode);
 
-                                    /* Bad code starts here */
-                                    if (loginCode == LoginTask.SUCCESS_CODE) {
-                                       setLoginCreds(usernameRegistration.getText().toString(),
-                                               passwordRegistration.getText().toString());
-                                    }
-                                    /*Bad code ends here */
 
-									login(v, loginCode, loginTask);
+									login(usernameRegistration.getText().toString(), passwordRegistration.getText().toString());
 								}
 								
 							} catch (InterruptedException | ExecutionException e) {
@@ -298,29 +264,46 @@ public class LoginActivity extends Activity {
 			 return PASSWORD_FINE;
 	}
 
+    int loginAttempts = 0;
 	/**
 	 * Handles codes and calls switchScreen if code correct
-	 * 
-	 * @param view
+	 *
 	 */
-    void login(View view, int code, LoginTask task) {
-		
-		if (code == LoginTask.SUCCESS_CODE) {
+    void login(String user, String pass) {
+        Log.v("LoginActivity", "Attempting Login...");
+
+        loginAttempts++;
+
+        LoginTask task = new LoginTask(user, pass);
+        int code = -1;
+        try {
+            code = task.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+		if (code == LoginTask.SUCCESS_CODE) { //Breaks the recursive loop
             Log.v("LoginCookieRaw", task.cookie.getValue());
 			switchScreen(CookieHandler.formatCookie(task.cookie)); //Only gets the cookie if successful
+            setLoginCreds(user, pass);
 		} else if (code == LoginTask.INFO_MISSING_CODE) {
 			Log.v("LoginActivity", "Incorrect info.");
+            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
 			Toast.makeText(getApplicationContext(), LOGIN_INFO_INCORRECT, Toast.LENGTH_SHORT).show();
 		} else if (code == LoginTask.CONNECTION_FAILED_CODE) {
 			Log.v("LoginActivity", "Connection failed on login attempt");
+            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
 			Toast.makeText(getApplicationContext(), LOST_CONNECTION, Toast.LENGTH_SHORT).show();
 		} else {
 			Log.v("LoginActivity",
 					"Unknown Error Code: "
 							+ Integer.toString(code)
 							+ "Check LoginTask.java or LoginActivity.java in Moder Client");
+            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
 			Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
 		}
+
+
 
 	}
 
@@ -358,15 +341,7 @@ public class LoginActivity extends Activity {
             String user = prefs.getString(USER_PREF, "-1");
             String pass = prefs.getString(PASS_PREF, "-1");
 
-            LoginTask loginTask = new LoginTask(user, pass);
-            int code = -1;
-            try {
-                code = loginTask.execute().get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            login(null, code, loginTask);
+            login(user, pass);
         }
     }
 

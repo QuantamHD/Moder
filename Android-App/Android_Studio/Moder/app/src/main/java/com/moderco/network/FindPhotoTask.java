@@ -1,11 +1,13 @@
 package com.moderco.network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.moderco.utility.PhotoProfileDataSet;
@@ -31,6 +33,8 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
     private String cookie;
     private Context context;
     private int maxPhotos;
+    static final public String COPA_RESULT = "com.controlj.copame.backend.COPAService.REQUEST_PROCESSED";
+    static final public String COPA_MESSAGE = "com.moderco.network.Message";
 
     public FindPhotoTask(Context context, String cookie, int num) {
         this.cookie = cookie;
@@ -52,7 +56,7 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
                     //currently just test pics
                     Bitmap bitmap;
                     HttpGet httpRequest = new HttpGet(URI.create(URLS.MAIN_FEED_URL_STRING + "/" + urls.get(i)));
-                    Log.v("GETPHOTOSTASK", URLS.MAIN_FEED_URL_STRING + urls.get(i));
+                    Log.v("FindPhotos", URLS.MAIN_FEED_URL_STRING + urls.get(i));
                     HttpClient httpclient = new DefaultHttpClient();
                     httpRequest.addHeader("Cookie", cookie);
                     HttpResponse resp = httpclient.execute(httpRequest);
@@ -63,7 +67,7 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
 
                     PhotoProfileDataSet photo = new PhotoProfileDataSet(bitmap, urls.get(i));
 
-                    if (bitmap == null) Log.v("GETPHOTOSTASK", "BITMAP DOESN'T EXIST");
+                    if (bitmap == null) Log.v("FindPhotos", "BITMAP DOESN'T EXIST");
                     else params[0].add(photo);
 
                     //Remove the first one.
@@ -85,6 +89,14 @@ public class FindPhotoTask extends AsyncTask<Queue<PhotoProfileDataSet>, Void, V
         editor.commit();
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+        Log.v("Something", "Happening");
+        LocalBroadcastManager broadcaster = LocalBroadcastManager.getInstance(this.context);
+        Intent intent = new Intent(COPA_RESULT);
+        broadcaster.sendBroadcast(intent);
     }
 
 
