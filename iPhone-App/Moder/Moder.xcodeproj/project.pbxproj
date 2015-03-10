@@ -13,6 +13,8 @@
 		251AA8B71A8D650400209907 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 251AA8B61A8D650400209907 /* Images.xcassets */; };
 		251AA8BA1A8D650400209907 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 251AA8B81A8D650400209907 /* LaunchScreen.xib */; };
 		251AA8C61A8D650400209907 /* ModerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AA8C51A8D650400209907 /* ModerTests.swift */; };
+		251EE3701A91987D005884D7 /* SendLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE36F1A91987D005884D7 /* SendLogin.swift */; };
+		25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81DBD1A8FF42A00B73E47 /* LoginController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		251AA8BF1A8D650400209907 /* ModerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		251AA8C41A8D650400209907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		251AA8C51A8D650400209907 /* ModerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerTests.swift; sourceTree = "<group>"; };
+		251EE36F1A91987D005884D7 /* SendLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendLogin.swift; sourceTree = "<group>"; };
+		25A81DBD1A8FF42A00B73E47 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +81,14 @@
 		251AA8AC1A8D650400209907 /* Moder */ = {
 			isa = PBXGroup;
 			children = (
+				251EE36E1A91984E005884D7 /* networking */,
 				251AA8AF1A8D650400209907 /* AppDelegate.swift */,
 				251AA8B11A8D650400209907 /* ViewController.swift */,
 				251AA8B31A8D650400209907 /* Main.storyboard */,
 				251AA8B61A8D650400209907 /* Images.xcassets */,
 				251AA8B81A8D650400209907 /* LaunchScreen.xib */,
 				251AA8AD1A8D650400209907 /* Supporting Files */,
+				25A81DBD1A8FF42A00B73E47 /* LoginController.swift */,
 			);
 			path = Moder;
 			sourceTree = "<group>";
@@ -110,6 +116,14 @@
 				251AA8C41A8D650400209907 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		251EE36E1A91984E005884D7 /* networking */ = {
+			isa = PBXGroup;
+			children = (
+				251EE36F1A91987D005884D7 /* SendLogin.swift */,
+			);
+			name = networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +227,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				251AA8B21A8D650400209907 /* ViewController.swift in Sources */,
+				251EE3701A91987D005884D7 /* SendLogin.swift in Sources */,
+				25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */,
 				251AA8B01A8D650400209907 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +423,7 @@
 				251AA8CB1A8D650400209907 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		251AA8CC1A8D650400209907 /* Build configuration list for PBXNativeTarget "ModerTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +432,7 @@
 				251AA8CE1A8D650400209907 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

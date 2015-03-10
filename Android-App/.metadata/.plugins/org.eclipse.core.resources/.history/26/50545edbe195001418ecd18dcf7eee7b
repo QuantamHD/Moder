@@ -1,8 +1,0 @@
-package com.moderco.network;
-
-import com.loopj.android.http.AsyncHttpClient;
-
-public class PostPhotosTask extends AsyncHttpClient{
-	
-	
-}
