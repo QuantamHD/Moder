@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moderco.network.ThreadedLogin;
 import com.moderco.utility.CookieHandler;
 import com.moderco.network.LoginTask;
 import com.moderco.network.RegistrationTask;
@@ -85,157 +88,38 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 
-        //Check preferences to see if the user wants to autologin
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (prefs.getBoolean(AUTO_LOGIN_PREF, false)) { //if that pref is true
-            loginCheck(); //Autologin
-        }
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        setContentView(R.layout.activity_login);
 
-        // Check to see if first time user
-        if (prefs.getBoolean(FIRST_TIME_USER, true)) {
-            //Do first time user tutorial stuff
+        Button loginButton = (Button) findViewById(R.id.LoginButton);
+        loginButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    vibrator.vibrate(28);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    goToProfile();
+                }
+                return false;
+            }
+        });
 
-            //Set first time user to false
-            SharedPreferences.Editor editor=prefs.edit();
-            editor.putBoolean(FIRST_TIME_USER, false);
-            editor.commit();
-        } else {
-            overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
-        }
-
-
-        //otherwise, let's just continue on to set up the page.
-		setContentView(R.layout.activity_login);
-		Log.v("General", "Login Started"); // Todo Remove
-
-        /* Logo Animation! (mostly for shits and giggles) */
-		moderLogo = (TextView) findViewById(R.id.textView1);
-		ribbonOne = (ImageView) findViewById(R.id.ribbon1);
-		ribbonTwo = (ImageView) findViewById(R.id.ribbon2);
-		twirl = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.twirl);
-		hover = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hover);
-        moderLogo.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                moderLogo.startAnimation(twirl);
-                ribbonOne.startAnimation(hover);
-                ribbonTwo.startAnimation(hover);
+        final Button registerButton = (Button) findViewById(R.id.register_button);
+        registerButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    registerButton.setText(R.string.register_now_u);
+                    vibrator.vibrate(28);
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    registerButton.setText(R.string.register_now);
+                    goToRegistration();
+                }
+                return false;
             }
         });
 
 
-		/* Login Expansion */
-		username = (EditText) findViewById(R.id.username);
-		password = (EditText) findViewById(R.id.password);
-		submitButton = (Button) findViewById(R.id.submitButton);
-        submitSpinner = (ProgressBar) findViewById(R.id.submitSpinner);
-		loginExpansionLayout = (RelativeLayout) findViewById(R.id.loginExpandLayout);
-		loginExpansionButton = (Button) findViewById(R.id.loginExpandButton);
-		context = this; // find context right before for use
-
-
-		loginExpansionButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				if (loginPageShown) {
-
-					username.setVisibility(View.GONE);
-					password.setVisibility(View.GONE);
-					submitButton.setVisibility(View.GONE);
-				} else {
-
-					username.setVisibility(View.VISIBLE);
-					password.setVisibility(View.VISIBLE);
-					submitButton.setVisibility(View.VISIBLE);
-				}
-				loginPageShown = !loginPageShown;
-			}
-		});
-
-		submitButton = (Button) findViewById(R.id.submitButton);
-		submitButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if ((username.getText().toString().length() > 0)
-						&& (password.getText().toString().length() > 0)) {
-
-                    submitSpinner.setVisibility(View.VISIBLE);
-					submitButton.setVisibility(View.GONE);
-
-                    login(username.getText().toString(), password.getText().toString());
-
-				}
-			}
-		});
-		
-		/* Registration Expansion */
-		usernameRegistration = (EditText) findViewById(R.id.emailRegistration);
-		passwordRegistration = (EditText) findViewById(R.id.passwordRegistration);
-		passwordCheckRegistration = (EditText) findViewById(R.id.passwordRegistrationVerification);
-
-		confirmRegistrationButton = (Button) findViewById(R.id.confirmRegistrationButton);
-		confirmRegistrationButton
-				.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-
-						// Make sure passwords are kosher
-						int passCheck = passwordCheck(passwordRegistration,
-								passwordCheckRegistration);
-
-						// Run Password check
-						if (passCheck == PASSWORDS_NOT_IDENTICAL) {
-							Toast.makeText(getApplicationContext(), PASSWORDS_NOT_SAME, Toast.LENGTH_SHORT).show();
-						} else if (passCheck == PASSWORD_TOO_SHORT) {
-							Toast.makeText(getApplicationContext(), PASSWORD_TOO_SHORT_TOAST, Toast.LENGTH_SHORT).show();
-						} else if (passCheck == PASSWORD_FINE) {
-							RegistrationTask task = new RegistrationTask(
-									usernameRegistration.getText().toString(),
-									passwordRegistration.getText().toString(),
-									passwordCheckRegistration.getText()
-											.toString());
-							try {
-								int code = task.execute().get();// Uploads it.
-								if (code == RegistrationTask.SUCCESS_CODE) {
-									//Tell the user all's good.
-									Toast.makeText(getApplicationContext(), ACCOUNT_CREATED,
-                                            Toast.LENGTH_SHORT).show(); //Note: This very rarely gets shown
-                                                                        //Server game too fast
-
-
-									login(usernameRegistration.getText().toString(), passwordRegistration.getText().toString());
-								}
-								
-							} catch (InterruptedException | ExecutionException e) {
-								e.printStackTrace();
-							}
-                        } else {
-							Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
-						}
-					}
-				});
-
-		registerButton = (Button) findViewById(R.id.button2);
-		registerButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// Start the animation
-				if (!registrationPageShown) {
-					usernameRegistration.setVisibility(View.VISIBLE);
-					passwordRegistration.setVisibility(View.VISIBLE);
-					passwordCheckRegistration.setVisibility(View.VISIBLE);
-					confirmRegistrationButton.setVisibility(View.VISIBLE);
-				} else {
-					usernameRegistration.setVisibility(View.GONE);
-					passwordRegistration.setVisibility(View.GONE);
-					passwordCheckRegistration.setVisibility(View.GONE);
-					confirmRegistrationButton.setVisibility(View.GONE);
-				}
-				registrationPageShown = !registrationPageShown;
-			}
-		});
 	}
 
 
@@ -276,8 +160,10 @@ public class LoginActivity extends Activity {
 
         LoginTask task = new LoginTask(user, pass);
         int code = -1;
+        new Thread(new ThreadedLogin(user,pass)).start();
         try {
             code = task.execute().get();
+
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -321,6 +207,17 @@ public class LoginActivity extends Activity {
 		intent.putExtra(CookieHandler.COOKIE, cookie);
 		startActivity(intent);
 	}
+
+    private void goToRegistration(){
+        Log.v("LoginActivity","Switching To Registration Page");
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        startActivity(intent);
+    }
+    private void goToProfile(){
+        Log.v("LoginActivity","Switching To Profile Page");
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
 
     private void setLoginCreds(String user, String pass) {
         //Save info
