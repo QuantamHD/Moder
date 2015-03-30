@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutionException;
 
-public class ProfileActivity extends FragmentActivity implements ActionBar.TabListener{
+public class ProfileActivity extends FragmentActivity{
 
     private String cookie;
     private ViewGroup group;
@@ -31,21 +31,6 @@ public class ProfileActivity extends FragmentActivity implements ActionBar.TabLi
     }
 
     private void addPhotoButton(String url) {
-
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 }
