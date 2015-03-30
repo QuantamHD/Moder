@@ -19,13 +19,14 @@ class ViewController: UIViewController {
     
     @IBAction func rateYes(sender : AnyObject) {
         movePhotoFrame(true)
+        println("Rated yes!")
         
         //Send info to server
     }
     
     @IBAction func rateNo(sender : AnyObject) {
         movePhotoFrame(false)
-        
+        println("Rated no!")
         //Send info to server
     }
     
