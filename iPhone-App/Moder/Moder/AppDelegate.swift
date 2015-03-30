@@ -12,6 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    struct cookie {
+        static var name = "UNINITALIZED-COOKIE-NAME"
+        static var value = "UNINITALIZED-COOKIE-VALUE"
+    }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

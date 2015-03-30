@@ -11,39 +11,89 @@ import Foundation
 class SendLogin{
     
     
-    func sendRequest() {
-        println("This is happening")
-        var url : NSURL! = NSURL(string: "http://moder.whelastic.net/login")
-        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-        var request = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 2.0)
-        var cookieID: String = "User_ID=123iojewijroewriow"
-        var cookieName: String = "Cookie"
+    
+    
+    //Lovely frakenstien code
+    func sendRequest(email : String, pwd : String) -> Dictionary<String, AnyObject>{
         
-        let boundaryConstant = "----------V2ymHFg03esomerandEthanAndInsertGirlHereSittingInATreeKISSINGfhbqgZCaKO6jy";
-        let contentType = "multipart/form-data; boundary=" + boundaryConstant
-        NSURLProtocol.setProperty(contentType, forKey: "Content-Type", inRequest: request)
-        request.HTTPMethod = "POST"
+        var code = -2 //Response code to check success, -2 is not found yet
+        var cookie = "BAD-COOKIE"
         
-        // set data
-        var email = "bob@gmail.com"
-        var pwd = "qwertyuiop"
-        var dataString = "email="
-        dataString += email
-        dataString += "&pwd="
-        dataString += pwd
-        let requestBodyData = (dataString as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-        request.HTTPBody = requestBodyData
+        let url = NSURL(string: "http://moderapp.com/login?email=" + email + "&pwd=" + pwd) //Where everything actually changes
+        var session = NSURLSession.sharedSession()
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST" //set http method as POST
         
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: config)
-        let dataTask = session.dataTaskWithRequest(request, completionHandler: {(data, response, error) in
-            var error: AutoreleasingUnsafeMutablePointer<NSError?> = nil
-            
-                let jsonResult: NSDictionary! =  NSJSONSerialization.JSONObjectWithData(data, options: nil, error: error) as? NSDictionary!
+        
+        var parameters = ["Satisfying": "Demands"] as Dictionary<String, String> //Not actually necessary. Dead code. Evil Code. Soulless code.
+        var err: NSError?
+        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(parameters, options: nil, error: &err) // pass dictionary to nsdata object and set it as request body
+        
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        
+        //create dataTask using the session object to send data to the server
+        var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             
             
-        });
-        dataTask.resume()
+            
+            var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+            
+            var err: NSError?
+            var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+            
+            
+            
+            // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
+            if(err != nil) {
+                println(err!.localizedDescription)
+                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                println("Error1 could not parse JSON: '\(jsonStr)'")
+                code = -1 //Set error code
+            }
+            else {
+                // The JSONObjectWithData constructor didn't return an error. But, we should still
+                // check and make sure that json has a value using optional binding.
+                if let parseJSON = json {
+                    // Okay, the parsedJSON is here, let's get the value for 'success' out of it
+                    code = parseJSON["ResponseCode"] as Int! //Set code for correct value
+                }
+                else {
+                    // Woa, okay the json object was nil, something went worng. Maybe the server isn't running?
+                    let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    println("Error3 could not parse JSON: \(jsonStr)")
+                    code = -1 //set another error code
+                }
+            }
+        })
+        task.resume() //Actually start the task
+        
+        
+        while (code == -2) {
+            //Wait for the code to be found/task to finish
+        }
+        
+        //Split until you isolate the name and cookie
+        let someResponse : NSHTTPURLResponse = task.response as NSHTTPURLResponse
+        let responseString : String = someResponse.allHeaderFields["Set-Cookie"] as String
+        var responseStringArr = split(responseString) {$0 == ","}
+        var secondStringArr = split(responseStringArr[1]) {$0 == ";"}
+        var nameAndValueCookie = split(secondStringArr[0]) {$0 == "="}
+        
+        nameAndValueCookie[0] = String(filter(nameAndValueCookie[0].generate()) { $0 != " "});
+        
+        var dictionary = [String: AnyObject]()
+        let name : String = nameAndValueCookie[0]
+        let value : String = nameAndValueCookie[1]
+        
+        dictionary["Name"] = name
+        dictionary["Value"] = value
+        dictionary["Code"] = code        
+        
+        return dictionary;
         
     }
+    
+
 }
