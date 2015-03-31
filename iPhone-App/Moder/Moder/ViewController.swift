@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var photo : UIImageView!
+    @IBOutlet var photoView : UIImageView!
     @IBOutlet var yesButton: UIButton!
     @IBOutlet var noButton: UIButton!
     
@@ -36,6 +36,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var photoTask : GetPhoto
+        photoTask = GetPhoto()
+        var photo = photoTask.getPhoto(AppDelegate.cookie.value)
+        
+        if (photo != nil) {
+            photoView.image = photo
+        }
     }
 
     //Called when phone is almost out of battery
@@ -51,13 +58,13 @@ class ViewController: UIViewController {
         //Animate after view appears
         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseOut, animations: {
             //Swipe it off to the right
-            var photoFrame = self.photo.frame; //Get the frame
+            var photoFrame = self.photoView.frame; //Get the frame
             if (toRight) {
                 photoFrame.origin.x += photoFrame.size.height
             } else {
                 photoFrame.origin.x -= photoFrame.size.height
             }
-            self.photo.frame = photoFrame //Reset the frame
+            self.photoView.frame = photoFrame //Reset the frame
             
             }, completion: { finished in
                 println("Animated!") //DEBUG only

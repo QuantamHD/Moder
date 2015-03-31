@@ -27,6 +27,9 @@ class LoginController: UIViewController {
         // .instantiatViewControllerWithIdentifier() returns AnyObject! this must be downcast to utilize it
         
         self.presentViewController(viewController, animated: true, completion: nil)
+        
+        
+        
     }
     
     
@@ -36,6 +39,8 @@ class LoginController: UIViewController {
     * success or fail. Recursion is used for a retry.
     */
     @IBAction func login(sender : AnyObject ) {
+        
+        
         var task : SendLogin
         task = SendLogin()
         var taskDict = task.sendRequest(loginTextField.text!, pwd: pwdTextField.text!);
