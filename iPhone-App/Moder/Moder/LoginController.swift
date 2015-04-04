@@ -22,14 +22,13 @@ class LoginController: UIViewController {
     
     
     func switchToMainScreen() {
-        //println("Attempting to switch screens...")
+        println("Attempting to switch screens...")
         let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("main") as UIViewController
         // .instantiatViewControllerWithIdentifier() returns AnyObject! this must be downcast to utilize it
         
+        
+        
         self.presentViewController(viewController, animated: true, completion: nil)
-        
-        
-        
     }
     
     
@@ -40,12 +39,9 @@ class LoginController: UIViewController {
     */
     @IBAction func login(sender : AnyObject ) {
         
-        
         var task : SendLogin
         task = SendLogin()
         var taskDict = task.sendRequest(loginTextField.text!, pwd: pwdTextField.text!);
-        //println("Here's the code: ")
-        //println(code)
         
         let code = taskDict["Code"] as? Int
         
@@ -53,16 +49,20 @@ class LoginController: UIViewController {
         if (code == SUCCESS_CODE) {
             //Save it to appdelegates cookie value
             
+            
             if let name = taskDict["Name"] as? String {
-                AppDelegate.cookie.name = name
+                //AppDelegate.cookie.name = name
             } else {
                 println("Cookie Name Nil!")
             }
             if let value = taskDict["Value"] as? String {
-                AppDelegate.cookie.value = value
+                //AppDelegate.cookie.value = value
             } else {
                 println("Cookie Value Nil!")
             }
+            
+            println("Forth")
+            
             switchToMainScreen()
             return //Recursive break
         } else if (code == MISSING_INFO_CODE) {
@@ -72,18 +72,22 @@ class LoginController: UIViewController {
             alert.message = "One or more pieces of information is missing!"
             alert.addButtonWithTitle("Dismiss")
             alert.show()
+            loginTextField.text = "" //Reset text
+            pwdTextField.text = ""
             return
         } else if (code == RETRY_CODE) {
             if (trys >= 3) {
                 println("140 Code hit; The server may have been inactive. Retrying connection...")
-                login(sender)
                 trys++
+                login(sender)
             } else {
                 let alert = UIAlertView()
                 alert.title = "Oops."
                 alert.message = "Something went wrong with the server and we're not quite sure why. Make yourself some mint tea and email a developer."
                 alert.addButtonWithTitle("Dismiss")
                 alert.show()
+                loginTextField.text = "" //Reset text
+                pwdTextField.text = ""
                 return //Recursive break
             }
         } else {
@@ -93,6 +97,8 @@ class LoginController: UIViewController {
             alert.message = "Something went wrong and we're not quite sure why. Make yourself some chai tea and email a developer."
             alert.addButtonWithTitle("Dismiss")
             alert.show()
+            loginTextField.text = "" //Reset text
+            pwdTextField.text = ""
             return //Recursive break
         }
     }

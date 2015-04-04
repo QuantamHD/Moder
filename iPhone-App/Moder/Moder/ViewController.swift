@@ -7,25 +7,27 @@
 //
 
 import UIKit
+import QuartzCore
 
 class ViewController: UIViewController {
-    
-    @IBOutlet var photoView : UIImageView!
+
     @IBOutlet var yesButton: UIButton!
     @IBOutlet var noButton: UIButton!
+    @IBOutlet var cardContainer : UIView!
+    @IBOutlet var bar : UINavigationBar!
     
     
     // ------ IB Actions ------ // 
     
     @IBAction func rateYes(sender : AnyObject) {
-        movePhotoFrame(true)
+        //movePhotoFrame(true)
         println("Rated yes!")
         
         //Send info to server
     }
     
     @IBAction func rateNo(sender : AnyObject) {
-        movePhotoFrame(false)
+        //movePhotoFrame(false)
         println("Rated no!")
         //Send info to server
     }
@@ -36,13 +38,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var photoTask : GetPhoto
-        photoTask = GetPhoto()
-        var photo = photoTask.getPhoto(AppDelegate.cookie.value)
+        println("Started main screen")
         
-        if (photo != nil) {
-            photoView.image = photo
-        }
+        cardContainer.layer.cornerRadius = 2;
+        cardContainer.layer.masksToBounds = true
+        UINavigationBar.appearance()
+        
     }
 
     //Called when phone is almost out of battery
@@ -54,6 +55,7 @@ class ViewController: UIViewController {
     
     // ------ Helper functions ------ //
     
+    /*
     private func movePhotoFrame(toRight: Bool) {
         //Animate after view appears
         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseOut, animations: {
@@ -70,6 +72,7 @@ class ViewController: UIViewController {
                 println("Animated!") //DEBUG only
         })
     }
+    */
     
     /**
     private func addNewPhoto() {

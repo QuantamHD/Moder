@@ -79,14 +79,22 @@ class SendLogin{
         if (code == 300) {
             let someResponse : NSHTTPURLResponse = task.response as NSHTTPURLResponse
             let responseString : String = someResponse.allHeaderFields["Set-Cookie"] as String
-            var responseStringArr = split(responseString) {$0 == ","}
-            var secondStringArr = split(responseStringArr[1]) {$0 == ";"}
-            var nameAndValueCookie = split(secondStringArr[0]) {$0 == "="}
+            var responseStringArr = split(responseString) {$0 == ","} as Array<NSString>
+            var secondStringArr : Array<String>
+            var name : String = ""
+            var value : String = ""
+            for i in 0...responseStringArr.count-1 {
+                if (responseStringArr[i].containsString("UniqueID")){
+                    var string : String = responseStringArr[i]
+                    secondStringArr = split(string) {$0 == ";"}
+                    var nameAndValueCookie = split(secondStringArr[0]) {$0 == "="}
+                    nameAndValueCookie[0] = String(filter(nameAndValueCookie[0].generate()) { $0 != " "});
+                    name = nameAndValueCookie[0]
+                    value = nameAndValueCookie[1]
+                    break; //Found it, no need to continue
+                }
+            }
             
-            nameAndValueCookie[0] = String(filter(nameAndValueCookie[0].generate()) { $0 != " "});
-    
-            let name : String = nameAndValueCookie[0]
-            let value : String = nameAndValueCookie[1]
             dictionary["Name"] = name
             dictionary["Value"] = value
         } else {

@@ -20,18 +20,19 @@ class GetPhoto {
         if (dict["Code"] as Int == 300) {
             let photoID = dict["PhotoID"] as String
     
-            let url = NSURL(fileURLWithPath: "http://moderapp.com/images/" + photoID);
+            let url = NSURL(string: "http://moderapp.com/images/" + photoID);
             var err: NSError?
-            var imageData :NSData = NSData(contentsOfURL: url!,options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)!
-            bgImage = UIImage(data:imageData)!
+            var imageData = NSData(contentsOfURL: url!)
+            
+            bgImage = UIImage(data:imageData!) as UIImage!
+           
             return bgImage
         } else {
             return nil
         }
         
     }
-    
-    private func getPhotoID(cookie : String) -> Dictionary<String, AnyObject> {
+        private func getPhotoID(cookie : String) -> Dictionary<String, AnyObject> {
     
         var code = -2 //Response code to check success, -2 is not found yet
         var photoID = "UNINITALIZED_PHOTO_ID"
@@ -69,14 +70,14 @@ class GetPhoto {
                 // Okay, the parsedJSON is here, let's get the value out of it
                     var dict : NSDictionary = json as NSDictionary
                     code = dict["ResponseCode"] as Int! //Set code for correct value
-                    dictionary["PhotoID"] = dict["PhotoID"]
+                    if (code == 300) { photoID = dict["PhotoID"] as String }
                 case is NSArray :
-                    var dict : NSArray = json as NSArray
-                    code = dict[1] as Int
-                    dictionary["PhotoID"] = dict[0] as String
+                    var array : NSArray = json as NSArray
+                    code = array[1] as Int
+                    photoID = array[0] as String
                 default:
                     code = -1
-                    dictionary["PhotoID"] = "NO-PHOTOID"
+                    photoID = "NO-PHOTOID"
             }
             
         })
@@ -88,6 +89,7 @@ class GetPhoto {
         }
         
         dictionary["Code"] = code
+        dictionary["PhotoID"] = photoID
         
         return dictionary
     }

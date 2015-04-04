@@ -15,6 +15,7 @@
 		251AA8C61A8D650400209907 /* ModerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AA8C51A8D650400209907 /* ModerTests.swift */; };
 		251EE3701A91987D005884D7 /* SendLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE36F1A91987D005884D7 /* SendLogin.swift */; };
 		25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81DBD1A8FF42A00B73E47 /* LoginController.swift */; };
+		25CBC57C1ACE35770039541B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CBC57B1ACE35770039541B /* Card.swift */; };
 		25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FC1AC90C880015E9F6 /* SendRate.swift */; };
 		25D128FF1AC910580015E9F6 /* GetPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FE1AC910580015E9F6 /* GetPhoto.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		251AA8C51A8D650400209907 /* ModerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerTests.swift; sourceTree = "<group>"; };
 		251EE36F1A91987D005884D7 /* SendLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendLogin.swift; sourceTree = "<group>"; };
 		25A81DBD1A8FF42A00B73E47 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		25CBC57B1ACE35770039541B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		25D128FC1AC90C880015E9F6 /* SendRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRate.swift; sourceTree = "<group>"; };
 		25D128FE1AC910580015E9F6 /* GetPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 				251AA8B81A8D650400209907 /* LaunchScreen.xib */,
 				251AA8AD1A8D650400209907 /* Supporting Files */,
 				25A81DBD1A8FF42A00B73E47 /* LoginController.swift */,
+				25CBC57B1ACE35770039541B /* Card.swift */,
 			);
 			path = Moder;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			files = (
 				251AA8B21A8D650400209907 /* ViewController.swift in Sources */,
 				25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */,
+				25CBC57C1ACE35770039541B /* Card.swift in Sources */,
 				251EE3701A91987D005884D7 /* SendLogin.swift in Sources */,
 				25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */,
 				251AA8B01A8D650400209907 /* AppDelegate.swift in Sources */,
