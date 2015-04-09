@@ -26,8 +26,6 @@ class LoginController: UIViewController {
         let viewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("main") as UIViewController
         // .instantiatViewControllerWithIdentifier() returns AnyObject! this must be downcast to utilize it
         
-        
-        
         self.presentViewController(viewController, animated: true, completion: nil)
     }
     
