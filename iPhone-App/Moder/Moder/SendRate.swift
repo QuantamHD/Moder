@@ -10,21 +10,15 @@ import Foundation
 
 class SendRate {
     
+    /*
     
-    
-    func sendRequest(rate : Bool, photoID: String, cookie: String) -> Int {
+    func sendRequest(rate : Bool, photoID: String, cookie: String) -> Dictionary<String, AnyObject> {
         
         var code = -2 //Response code to check success, -2 is not found yet
         
-        var url : NSURL
-        if (rate) {
-            url = NSURL(string: "http://moderapp.com/SubmitRating?photoID=" + photoID + "&choice=" + "yes")! //Where everything actually changes
-        } else {
-            url = NSURL(string: "http://moderapp.com/SubmitRating?photoID=" + photoID + "&choice=" + "no")!
-        }
-        
+        let url = NSURL(string: "http://moderapp.com/rate?photoID=" + photoID + "&choice=" + cookie) //Where everything actually changes
         var session = NSURLSession.sharedSession()
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST" //set http method as POST
         
         
@@ -34,18 +28,21 @@ class SendRate {
         
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue(cookie, forHTTPHeaderField: "UniqueID") // Probably not gonna work TODO: Make sure this actually works
+        request.addValue(cookie, forHTTPHeaderField: "UniqueID") // Probably not gonna work 'cause fuck you
         
         
         
         //create dataTask using the session object to send data to the server
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            
+            
+            
             var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
             
             var err: NSError?
             var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
             
-            println(strData)
+            
             
             // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
             if(err != nil) {
@@ -76,8 +73,9 @@ class SendRate {
             //Wait for the code to be found/task to finish
         }
 
-        return code;
+        
     }
 
+*/
     
 }

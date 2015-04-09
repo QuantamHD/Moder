@@ -11,22 +11,7 @@ import UIkit
 
 class GetPhoto {
     
-    var photosLeft : Bool
-    
-    init() {
-        self.photosLeft = false
-    }
-    
-    struct Photo {
-        var image : UIImage
-        var ID : String
-        init (image : UIImage, id : String) {
-            self.image = image
-            self.ID = id
-        }
-    }
-    
-    func getPhoto(cookie : String) -> Photo? {
+    func getPhoto(cookie : String) -> UIImage? {
         
         let dict = getPhotoID(cookie)
         
@@ -40,12 +25,9 @@ class GetPhoto {
             var imageData = NSData(contentsOfURL: url!)
             
             bgImage = UIImage(data:imageData!) as UIImage!
-            var somePhoto : Photo = Photo(image: bgImage, id: photoID)
-            self.photosLeft = true
-            
-            return somePhoto
+           
+            return bgImage
         } else {
-            self.photosLeft = false
             return nil
         }
         

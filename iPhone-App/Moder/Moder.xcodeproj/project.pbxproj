@@ -16,7 +16,6 @@
 		251EE3701A91987D005884D7 /* SendLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE36F1A91987D005884D7 /* SendLogin.swift */; };
 		25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81DBD1A8FF42A00B73E47 /* LoginController.swift */; };
 		25CBC57C1ACE35770039541B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CBC57B1ACE35770039541B /* Card.swift */; };
-		25CBC5851AD1EA430039541B /* CardStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CBC5841AD1EA430039541B /* CardStructure.swift */; };
 		25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FC1AC90C880015E9F6 /* SendRate.swift */; };
 		25D128FF1AC910580015E9F6 /* GetPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FE1AC910580015E9F6 /* GetPhoto.swift */; };
 /* End PBXBuildFile section */
@@ -45,7 +44,6 @@
 		251EE36F1A91987D005884D7 /* SendLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendLogin.swift; sourceTree = "<group>"; };
 		25A81DBD1A8FF42A00B73E47 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		25CBC57B1ACE35770039541B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		25CBC5841AD1EA430039541B /* CardStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStructure.swift; sourceTree = "<group>"; };
 		25D128FC1AC90C880015E9F6 /* SendRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRate.swift; sourceTree = "<group>"; };
 		25D128FE1AC910580015E9F6 /* GetPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,14 +87,15 @@
 		251AA8AC1A8D650400209907 /* Moder */ = {
 			isa = PBXGroup;
 			children = (
-				25CBC5831AD1EA2E0039541B /* structures */,
-				25CBC5821AD1EA280039541B /* UI */,
 				251EE36E1A91984E005884D7 /* networking */,
 				251AA8AF1A8D650400209907 /* AppDelegate.swift */,
+				251AA8B11A8D650400209907 /* ViewController.swift */,
 				251AA8B31A8D650400209907 /* Main.storyboard */,
 				251AA8B61A8D650400209907 /* Images.xcassets */,
 				251AA8B81A8D650400209907 /* LaunchScreen.xib */,
 				251AA8AD1A8D650400209907 /* Supporting Files */,
+				25A81DBD1A8FF42A00B73E47 /* LoginController.swift */,
+				25CBC57B1ACE35770039541B /* Card.swift */,
 			);
 			path = Moder;
 			sourceTree = "<group>";
@@ -134,24 +133,6 @@
 				25D128FE1AC910580015E9F6 /* GetPhoto.swift */,
 			);
 			name = networking;
-			sourceTree = "<group>";
-		};
-		25CBC5821AD1EA280039541B /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				251AA8B11A8D650400209907 /* ViewController.swift */,
-				25A81DBD1A8FF42A00B73E47 /* LoginController.swift */,
-				25CBC57B1ACE35770039541B /* Card.swift */,
-			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		25CBC5831AD1EA2E0039541B /* structures */ = {
-			isa = PBXGroup;
-			children = (
-				25CBC5841AD1EA430039541B /* CardStructure.swift */,
-			);
-			name = structures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +237,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				251AA8B21A8D650400209907 /* ViewController.swift in Sources */,
-				25CBC5851AD1EA430039541B /* CardStructure.swift in Sources */,
 				25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */,
 				25CBC57C1ACE35770039541B /* Card.swift in Sources */,
 				251EE3701A91987D005884D7 /* SendLogin.swift in Sources */,

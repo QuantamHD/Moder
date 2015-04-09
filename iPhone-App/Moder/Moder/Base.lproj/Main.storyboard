@@ -242,13 +242,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="119"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88X-pc-PFM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="40%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88X-pc-PFM">
                                 <rect key="frame" x="23" y="16" width="37" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zca-oH-v7A">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zca-oH-v7A">
                                 <rect key="frame" x="16" y="49" width="538" height="55"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -256,12 +256,12 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" placeholderIntrinsicWidth="259" placeholderIntrinsicHeight="12.5" progressViewStyle="bar" progress="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="exh-q4-0EV">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" placeholderIntrinsicWidth="259" placeholderIntrinsicHeight="12.5" progressViewStyle="bar" progress="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="exh-q4-0EV">
                                 <rect key="frame" x="68" y="24" width="457" height="3"/>
                                 <color key="backgroundColor" red="0.30196078430000001" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.30980392159999998" green="0.6588235294" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1.5" id="3kY-X7-q3l"/>
+                                    <constraint firstAttribute="height" constant="8" id="jmQ-ZH-jxC"/>
                                 </constraints>
                                 <color key="progressTintColor" red="0.30980392159999998" green="0.6588235294" blue="0.42745098040000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.30196078430000001" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -269,17 +269,17 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="88X-pc-PFM" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" constant="7" id="3m4-Me-zLs"/>
-                            <constraint firstItem="88X-pc-PFM" firstAttribute="top" secondItem="bCE-e9-ZrG" secondAttribute="bottom" constant="16" id="Foi-Yt-SqO"/>
-                            <constraint firstItem="gst-GO-tNQ" firstAttribute="top" secondItem="Zca-oH-v7A" secondAttribute="bottom" constant="15" id="GpR-MZ-iH2"/>
-                            <constraint firstItem="exh-q4-0EV" firstAttribute="top" secondItem="bCE-e9-ZrG" secondAttribute="bottom" constant="24" id="HWF-5i-oTj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Zca-oH-v7A" secondAttribute="trailing" constant="-2" id="Kfm-iT-C7h"/>
-                            <constraint firstItem="Zca-oH-v7A" firstAttribute="top" secondItem="88X-pc-PFM" secondAttribute="bottom" constant="13" id="P4x-yT-5lF"/>
-                            <constraint firstItem="exh-q4-0EV" firstAttribute="leading" secondItem="88X-pc-PFM" secondAttribute="trailing" constant="8" symbolic="YES" id="bR6-R8-73o"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="exh-q4-0EV" secondAttribute="trailing" constant="27" id="h5r-JE-dYH"/>
-                            <constraint firstItem="Zca-oH-v7A" firstAttribute="top" secondItem="exh-q4-0EV" secondAttribute="bottom" constant="23.5" id="hOJ-Tt-55F"/>
-                            <constraint firstItem="Zca-oH-v7A" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" id="mWP-YB-PFF"/>
-                            <constraint firstItem="exh-q4-0EV" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" constant="52" id="t25-xS-tqj"/>
+                            <constraint firstAttribute="bottom" secondItem="Zca-oH-v7A" secondAttribute="bottom" constant="15" id="5N5-4H-mbj"/>
+                            <constraint firstItem="Zca-oH-v7A" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" id="90N-Ta-3ry"/>
+                            <constraint firstItem="exh-q4-0EV" firstAttribute="top" secondItem="bCE-e9-ZrG" secondAttribute="bottom" constant="24" id="DZI-Sx-lGA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="exh-q4-0EV" secondAttribute="trailing" constant="27" id="FKL-zb-Xcz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zca-oH-v7A" secondAttribute="trailing" constant="-2" id="NGI-dE-1M2"/>
+                            <constraint firstItem="exh-q4-0EV" firstAttribute="leading" secondItem="88X-pc-PFM" secondAttribute="trailing" constant="8" symbolic="YES" id="PoY-Wd-Aom"/>
+                            <constraint firstItem="88X-pc-PFM" firstAttribute="top" secondItem="bCE-e9-ZrG" secondAttribute="bottom" constant="16" id="TBu-ej-mMm"/>
+                            <constraint firstItem="Zca-oH-v7A" firstAttribute="top" secondItem="88X-pc-PFM" secondAttribute="bottom" constant="13" id="TLo-LQ-7Lu"/>
+                            <constraint firstItem="88X-pc-PFM" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" constant="7" id="a0I-PE-O7n"/>
+                            <constraint firstItem="Zca-oH-v7A" firstAttribute="top" secondItem="exh-q4-0EV" secondAttribute="bottom" constant="23.5" id="ksc-X7-yMf"/>
+                            <constraint firstItem="exh-q4-0EV" firstAttribute="leading" secondItem="Grz-0d-TqJ" secondAttribute="leadingMargin" constant="52" id="rsc-v8-Ruo"/>
                         </constraints>
                     </view>
                     <toolbarItems/>

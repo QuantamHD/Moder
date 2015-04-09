@@ -11,14 +11,10 @@ import QuartzCore
 
 class ViewController: UIViewController {
 
-    
-
     @IBOutlet var yesButton: UIButton!
     @IBOutlet var noButton: UIButton!
     @IBOutlet var cardContainer : UIView!
     @IBOutlet var bar : UINavigationBar!
-    
-    var cardStructure : CardStructure?;
     
     
     // ------ IB Actions ------ // 
@@ -27,30 +23,17 @@ class ViewController: UIViewController {
         //movePhotoFrame(true)
         println("Rated yes!")
         
-        var rater : SendRate = SendRate()
-        //var card : Card = Card()
-        //rater.sendRequest(true, photoID: card.getCurrentPhotoID(), cookie: AppDelegate.cookie.value)
-        
+        //Send info to server
     }
     
     @IBAction func rateNo(sender : AnyObject) {
         //movePhotoFrame(false)
         println("Rated no!")
-        var rater : SendRate = SendRate()
-        //var card : Card = Card()
-        //rater.sendRequest(false, photoID: card.getCurrentPhotoID(), cookie: AppDelegate.cookie.value)
+        //Send info to server
     }
     
 
     // ------ Overrided actions from UIViewController ----- //
-
-
-    required init(coder aDecoder: NSCoder) {
-        //fatalError("init(coder:) has not been implemented")
-        print("Starting View Controller")
-        super.init(nibName: nil, bundle: nil);
-    }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
