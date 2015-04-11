@@ -19,7 +19,7 @@ class SendLogin{
         var code = -2 //Response code to check success, -2 is not found yet
         var cookie = "BAD-COOKIE"
         
-        let url = NSURL(string: "http://moderapp.com/login?email=" + email + "&pwd=" + pwd) //Where everything actually changes
+        let url = NSURL(string: "https://moderapp.com/login?email=" + email + "&pwd=" + pwd) //Where everything actually changes
         var session = NSURLSession.sharedSession()
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST" //set http method as POST

@@ -18,9 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static var value = "UNINITALIZED-COOKIE-VALUE"
     }
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+    
         return true
     }
 

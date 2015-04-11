@@ -11,25 +11,46 @@ import QuartzCore
 
 class ViewController: UIViewController {
 
+    required init(coder aDecoder: NSCoder) {
+        self.card = nil
+        super.init(coder: aDecoder)
+    }
+
     @IBOutlet var yesButton: UIButton!
     @IBOutlet var noButton: UIButton!
     @IBOutlet var cardContainer : UIView!
     @IBOutlet var bar : UINavigationBar!
     
+    var card: Card?
+  
+    struct CardStruct {
+        static var photoID: String = ""
+    }
     
-    // ------ IB Actions ------ // 
-    
+    // ------ IB Actions ------ //
     @IBAction func rateYes(sender : AnyObject) {
-        //movePhotoFrame(true)
         println("Rated yes!")
+        let concurrentPhotoQueue = dispatch_queue_create(
+            "com.ModerLLC.Moder.rateYes", DISPATCH_QUEUE_CONCURRENT)
+        self.changePhoto()
+        dispatch_barrier_async(concurrentPhotoQueue) {
+            let rate = SendRate()
+            let code = rate.sendRequest(true, photoID: CardStruct.photoID, cookie: AppDelegate.cookie.value)
+            println(code)
+        }
         
-        //Send info to server
     }
     
     @IBAction func rateNo(sender : AnyObject) {
-        //movePhotoFrame(false)
         println("Rated no!")
-        //Send info to server
+        let concurrentPhotoQueue = dispatch_queue_create(
+            "com.ModerLLC.Moder.rateYes", DISPATCH_QUEUE_CONCURRENT)
+        self.changePhoto()
+        dispatch_barrier_async(concurrentPhotoQueue) {
+            let rate = SendRate()
+            let code = rate.sendRequest(false, photoID: CardStruct.photoID, cookie: AppDelegate.cookie.value)
+            println(code)
+        }
     }
     
 
@@ -40,9 +61,9 @@ class ViewController: UIViewController {
         
         println("Started main screen")
         
-        cardContainer.layer.cornerRadius = 2;
-        cardContainer.layer.masksToBounds = true
-        UINavigationBar.appearance()
+        //cardContainer.view.layer.cornerRadius = 2;
+        //cardContainer.view.layer.masksToBounds = true
+        //UINavigationBar.appearance()
         
     }
 
@@ -51,41 +72,55 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+  
     
     
     // ------ Helper functions ------ //
-    
-    /*
-    private func movePhotoFrame(toRight: Bool) {
-        //Animate after view appears
+
+    //Currently not in use
+    func changePhoto() {
+        var originalPosition : CGPoint = self.cardContainer.center
+        
+            //Go down
         UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseOut, animations: {
-            //Swipe it off to the right
-            var photoFrame = self.photoView.frame; //Get the frame
-            if (toRight) {
-                photoFrame.origin.x += photoFrame.size.height
-            } else {
-                photoFrame.origin.x -= photoFrame.size.height
-            }
-            self.photoView.frame = photoFrame //Reset the frame
+            self.cardContainer.center = CGPoint(x: self.cardContainer.center.x, y: 1000)
             
             }, completion: { finished in
-                println("Animated!") //DEBUG only
+                println("Loading Animation...")
+        })
+        
+        self.attemptPhotoChange()
+        
+        UIView.animateWithDuration(0.5, delay: 1.0, options: .CurveEaseOut, animations: {
+            self.cardContainer.center = originalPosition
+            
+            }, completion: { finished in
+                println("Loading Animation...")
         })
     }
-    */
     
-    /**
-    private func addNewPhoto() {
-        let imageName = "test.jpg"
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 115, y: 93, width: 370, height: 370)
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    func attemptPhotoChange() {
+        let concurrentPhotoQueue = dispatch_queue_create(
+            "com.ModerLLC.Moder.changePhotoFromViewController", DISPATCH_QUEUE_CONCURRENT)
         
-        self.view.addSubview(imageView)
+        dispatch_barrier_async(concurrentPhotoQueue) {
+            if (self.card != nil) {
+                self.card?.attemptPhotoChange()
+            } else {
+                println("Card nil!")
+            }
+        }
     }
-**/
     
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let embeddedViewController = segue.destinationViewController as? Card
+        {
+            if (segue.identifier == "toCard") {
+                card = embeddedViewController
+            }
+        }
+    }
 
 }
 

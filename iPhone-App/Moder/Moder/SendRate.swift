@@ -10,15 +10,22 @@ import Foundation
 
 class SendRate {
     
-    /*
     
-    func sendRequest(rate : Bool, photoID: String, cookie: String) -> Dictionary<String, AnyObject> {
+    
+    func sendRequest(rate : Bool, photoID: String, cookie: String) -> Int {
         
         var code = -2 //Response code to check success, -2 is not found yet
         
-        let url = NSURL(string: "http://moderapp.com/rate?photoID=" + photoID + "&choice=" + cookie) //Where everything actually changes
+        var url :NSURL
+        
+        if (rate) {
+            url = NSURL(string: "https://moderapp.com/SubmitRating?photoID=" + photoID + "&choice=yes")! //Where everything actually changes
+        } else {
+            url = NSURL(string: "https://moderapp.com/SubmitRating?photoID=" + photoID + "&choice=no")! //Where everything actually changes
+        }
+        println(url.description)
         var session = NSURLSession.sharedSession()
-        let request = NSMutableURLRequest(URL: url!)
+        let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST" //set http method as POST
         
         
@@ -34,11 +41,10 @@ class SendRate {
         
         //create dataTask using the session object to send data to the server
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            
-            
+        
             
             var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
+            println(strData)
             var err: NSError?
             var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
             
@@ -73,9 +79,8 @@ class SendRate {
             //Wait for the code to be found/task to finish
         }
 
-        
+        return code
     }
 
-*/
     
 }
