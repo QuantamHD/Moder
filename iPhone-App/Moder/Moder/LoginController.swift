@@ -146,11 +146,18 @@ class LoginController: UIViewController {
         registerButton.layer.cornerRadius = 5
         registerButton.layer.masksToBounds = true
 
+        
+        //Queue Test
     }
     
     //Called when phone is almost out of battery
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func queueTest() {
+        
     }
 }

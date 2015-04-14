@@ -44,7 +44,6 @@ class SendLogin{
             
             // Did the JSONObjectWithData constructor return an error? If so, log the error to the console
             if(err != nil) {
-                println(err!.localizedDescription)
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
                 println("Error1 could not parse JSON: '\(jsonStr)'")
                 code = -1 //Set error code
