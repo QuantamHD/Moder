@@ -1,0 +1,163 @@
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress"
+            android:layout_marginTop="159dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <com.moderco.views.PhotoProfile
+            android:id="@+id/photoProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ilona_spencer_test" />
+
+        <RelativeLayout
+            android:id="@+id/menuBarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:background="@drawable/gradient"
+            >
+
+            <ImageButton
+                android:id="@+id/gears"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:paddingTop="10dp"
+                android:alpha="0.9"
+                android:onClick="startLoginActivity"
+                android:src="@drawable/logout" />
+
+            <ImageButton
+                android:id="@+id/profileIcon"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:src="@drawable/profile"
+                android:alpha="0.9"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:onClick="startProfileActivity"/>
+
+            <ImageButton
+                android:id="@+id/camera"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/camera"
+                android:alpha="0.9"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+        android:background="@color/background"
+        android:layout_gravity="top">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp">
+
+            <Button
+                android:id="@+id/noButton"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:background="@drawable/no_stroke_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Dislike"
+                android:textColor="@color/accentColor"
+                android:textSize="24sp"
+                android:layout_margin="10dp"
+                android:onClick="ratePhotoNo"
+               />
+
+            <Button
+                android:id="@+id/yesButton"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Like"
+                android:background="@drawable/yes_stroke_button"
+                android:textColor="@color/accentColor"
+                android:textSize="24sp"
+                android:layout_toRightOf="@+id/noButton"
+                android:layout_margin="10dp"
+                android:onClick="ratePhotoYes"
+
+                />
+        </RelativeLayout>
+        </RelativeLayout>
+
+    <View
+        android:id="@+id/mainHR"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@color/softHighLight"
+        android:layout_margin="21dp"
+        android:layout_below="@id/buttonLayout"/>
+
+    <Button
+        android:id="@+id/infoButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="More Info About This Post"
+        android:background="@drawable/rect_button"
+        android:layout_marginRight="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:layout_below="@+id/mainHR" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/fragmentContainer">
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

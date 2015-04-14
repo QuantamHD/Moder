@@ -1,0 +1,16 @@
+INDEX VERSION 1.127+/Users/Flaque/Moder/Android-App/.metadata/.plugins/org.eclipse.jdt.core
+1833009635.index
+2843731990.index
+358593503.index
+326426805.index
+2519604341.index
+3462829845.index
+1389541168.index
+2132731436.index
+476182168.index
+4062993326.index
+2956569676.index
+340545181.index
+1270315800.index
+4049516055.index
+627510642.index

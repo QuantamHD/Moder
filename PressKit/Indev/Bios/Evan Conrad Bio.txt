@@ -1,0 +1,3 @@
+Evan Conrad - Bio
+
+Hey! I’m Evan and I’m a Freshman Computer Science student at Gonzaga University. In 2014 I created Panic Pop, an app designed to help those with panic disorder. The app received incredible success for a first developer. At the peak of it’s success, it reached #2 in the French New Arcade Apps on the Android store. Currently I work on the upcoming app Moder as a front-end developer.
