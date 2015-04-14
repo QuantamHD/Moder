@@ -1,0 +1,388 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		258E41CE1ADD835A00E1C5D7 /* ModerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258E41CD1ADD835A00E1C5D7 /* ModerTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		258E41C81ADD835A00E1C5D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 258E41A81ADD835A00E1C5D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 258E41AF1ADD835A00E1C5D7;
+			remoteInfo = Moder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		258E41B01ADD835A00E1C5D7 /* Moder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		258E41B41ADD835A00E1C5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		258E41C71ADD835A00E1C5D7 /* ModerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		258E41CC1ADD835A00E1C5D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		258E41CD1ADD835A00E1C5D7 /* ModerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		258E41AD1ADD835A00E1C5D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		258E41C41ADD835A00E1C5D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		258E41A71ADD835A00E1C5D7 = {
+			isa = PBXGroup;
+			children = (
+				258E41B21ADD835A00E1C5D7 /* Moder */,
+				258E41CA1ADD835A00E1C5D7 /* ModerTests */,
+				258E41B11ADD835A00E1C5D7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		258E41B11ADD835A00E1C5D7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				258E41B01ADD835A00E1C5D7 /* Moder.app */,
+				258E41C71ADD835A00E1C5D7 /* ModerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		258E41B21ADD835A00E1C5D7 /* Moder */ = {
+			isa = PBXGroup;
+			children = (
+				258E41B31ADD835A00E1C5D7 /* Supporting Files */,
+			);
+			path = Moder;
+			sourceTree = "<group>";
+		};
+		258E41B31ADD835A00E1C5D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				258E41B41ADD835A00E1C5D7 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		258E41CA1ADD835A00E1C5D7 /* ModerTests */ = {
+			isa = PBXGroup;
+			children = (
+				258E41CD1ADD835A00E1C5D7 /* ModerTests.swift */,
+				258E41CB1ADD835A00E1C5D7 /* Supporting Files */,
+			);
+			path = ModerTests;
+			sourceTree = "<group>";
+		};
+		258E41CB1ADD835A00E1C5D7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				258E41CC1ADD835A00E1C5D7 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		258E41AF1ADD835A00E1C5D7 /* Moder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 258E41D11ADD835A00E1C5D7 /* Build configuration list for PBXNativeTarget "Moder" */;
+			buildPhases = (
+				258E41AC1ADD835A00E1C5D7 /* Sources */,
+				258E41AD1ADD835A00E1C5D7 /* Frameworks */,
+				258E41AE1ADD835A00E1C5D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Moder;
+			productName = Moder;
+			productReference = 258E41B01ADD835A00E1C5D7 /* Moder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		258E41C61ADD835A00E1C5D7 /* ModerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 258E41D41ADD835A00E1C5D7 /* Build configuration list for PBXNativeTarget "ModerTests" */;
+			buildPhases = (
+				258E41C31ADD835A00E1C5D7 /* Sources */,
+				258E41C41ADD835A00E1C5D7 /* Frameworks */,
+				258E41C51ADD835A00E1C5D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				258E41C91ADD835A00E1C5D7 /* PBXTargetDependency */,
+			);
+			name = ModerTests;
+			productName = ModerTests;
+			productReference = 258E41C71ADD835A00E1C5D7 /* ModerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		258E41A81ADD835A00E1C5D7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Evan Conrad";
+				TargetAttributes = {
+					258E41AF1ADD835A00E1C5D7 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					258E41C61ADD835A00E1C5D7 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 258E41AF1ADD835A00E1C5D7;
+					};
+				};
+			};
+			buildConfigurationList = 258E41AB1ADD835A00E1C5D7 /* Build configuration list for PBXProject "Moder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 258E41A71ADD835A00E1C5D7;
+			productRefGroup = 258E41B11ADD835A00E1C5D7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				258E41AF1ADD835A00E1C5D7 /* Moder */,
+				258E41C61ADD835A00E1C5D7 /* ModerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		258E41AE1ADD835A00E1C5D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		258E41C51ADD835A00E1C5D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		258E41AC1ADD835A00E1C5D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		258E41C31ADD835A00E1C5D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				258E41CE1ADD835A00E1C5D7 /* ModerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		258E41C91ADD835A00E1C5D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 258E41AF1ADD835A00E1C5D7 /* Moder */;
+			targetProxy = 258E41C81ADD835A00E1C5D7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		258E41CF1ADD835A00E1C5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		258E41D01ADD835A00E1C5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		258E41D21ADD835A00E1C5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Moder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Moder/Moder-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		258E41D31ADD835A00E1C5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = Moder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Moder/Moder-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		258E41D51ADD835A00E1C5D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ModerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moder.app/Moder";
+			};
+			name = Debug;
+		};
+		258E41D61ADD835A00E1C5D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ModerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moder.app/Moder";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		258E41AB1ADD835A00E1C5D7 /* Build configuration list for PBXProject "Moder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				258E41CF1ADD835A00E1C5D7 /* Debug */,
+				258E41D01ADD835A00E1C5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		258E41D11ADD835A00E1C5D7 /* Build configuration list for PBXNativeTarget "Moder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				258E41D21ADD835A00E1C5D7 /* Debug */,
+				258E41D31ADD835A00E1C5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		258E41D41ADD835A00E1C5D7 /* Build configuration list for PBXNativeTarget "ModerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				258E41D51ADD835A00E1C5D7 /* Debug */,
+				258E41D61ADD835A00E1C5D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 258E41A81ADD835A00E1C5D7 /* Project object */;
+}
