@@ -10,42 +10,11 @@ import Foundation
 import UIKit
 
 class Card : UIViewController {
-
     
     @IBOutlet var photoView : UIImageView!
     
-    var cardStruct : CardStruct
-    let photoQueue : Queue<CardStruct>
-    
-    struct CardStruct {
-        var photoID: String?
-        var photo: UIImage?
-        
-        init (id: String, photo: UIImage?) {
-            self.photoID = id
-            self.photo = photo
-        }
-    }
-    
-    var GlobalMainQueue: dispatch_queue_t {
-        return dispatch_get_main_queue()
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        self.photoQueue = Queue<CardStruct>()
-        self.cardStruct = CardStruct(id: "", photo: nil)
-        super.init(coder: aDecoder)
-    }
-    
-    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
-        self.cardStruct = CardStruct(id: "", photo: nil)
-        self.photoQueue = Queue<CardStruct>()
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        var coder : NSCoder
-    }
-
-    
     override func viewDidLoad() {
+<<<<<<< HEAD
         attemptPhotoChange()
     }
     
@@ -92,27 +61,19 @@ class Card : UIViewController {
                 }
             }
             
-        }
-    }
-    
-    private func buffer() {
-        let concurrentPhotoQueue = dispatch_queue_create("com.ModerApp.Moder.buffer", DISPATCH_QUEUE_CONCURRENT)
-        
-        dispatch_barrier_async(concurrentPhotoQueue) {
-            var photoTask : GetPhoto
-            photoTask = GetPhoto()
-            var someStruct : CardStruct? = photoTask.getCardStruct(AppDelegate.cookie.value)
-            if (someStruct != nil) {
-                self.photoQueue.enqueue(someStruct!)
-            }
-
-        }
-    }
-    
-    private func changePhoto(photo : UIImage?) {
+=======
+        var photoTask : GetPhoto
+        photoTask = GetPhoto()
+        var photo = photoTask.getPhoto(AppDelegate.cookie.value)
         if (photo != nil) {
-            photoView.image = photo
+            changePhoto(photo!)
+>>>>>>> parent of 6d67204... Rate mostly done, minor edits
         }
+        
+        
     }
-
+    
+    func changePhoto(photo : UIImage) {
+        photoView.image = photo
+    }
 }

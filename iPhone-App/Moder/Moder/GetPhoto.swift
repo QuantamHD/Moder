@@ -11,38 +11,33 @@ import UIkit
 
 class GetPhoto {
     
-    func getCardStruct(cookie : String) -> Card.CardStruct? {
+    func getPhoto(cookie : String) -> UIImage? {
         
         let dict = getPhotoID(cookie)
         
-        var bgImage : UIImage?
+        var bgImage : UIImage
         
         if (dict["Code"] as Int == 300) {
             let photoID = dict["PhotoID"] as String
-            println(photoID)
-            let url = NSURL(string: "https://moderapp.com/images/" + photoID);
-        
+    
+            let url = NSURL(string: "http://moderapp.com/images/" + photoID);
             var err: NSError?
-            if let imageData = NSData(contentsOfURL: url!) {
-                bgImage = UIImage(data:imageData)?
-                var someStruct = Card.CardStruct(id: photoID, photo: bgImage)
-                return someStruct
-            } else {
-                return nil
-            }
+            var imageData = NSData(contentsOfURL: url!)
             
+            bgImage = UIImage(data:imageData!) as UIImage!
+           
+            return bgImage
         } else {
             return nil
         }
         
     }
-    
-    private func getPhotoID(cookie : String) -> Dictionary<String, AnyObject> {
+        private func getPhotoID(cookie : String) -> Dictionary<String, AnyObject> {
     
         var code = -2 //Response code to check success, -2 is not found yet
         var photoID = "UNINITALIZED_PHOTO_ID"
         
-        let url = NSURL(string: "https://moderapp.com/getrate") //Where everything actually changes
+        let url = NSURL(string: "http://moderapp.com/getrate") //Where everything actually changes
         var session = NSURLSession.sharedSession()
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST" //set http method as POST

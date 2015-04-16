@@ -17,10 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static var name = "UNINITALIZED-COOKIE-NAME"
         static var value = "UNINITALIZED-COOKIE-VALUE"
     }
+<<<<<<< HEAD
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         
+=======
+
+
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+>>>>>>> parent of 6d67204... Rate mostly done, minor edits
         return true
     }
     
