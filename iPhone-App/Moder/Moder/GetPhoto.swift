@@ -34,6 +34,7 @@ class GetPhoto {
         } else {
             return nil
         }
+        
     }
     
     private func getPhotoID(cookie : String) -> Dictionary<String, AnyObject> {
@@ -61,6 +62,9 @@ class GetPhoto {
         var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             
             var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+            
+            println("Response: \(response)")
+            println("Body: \(strData)")
             
             
             var err: NSError?

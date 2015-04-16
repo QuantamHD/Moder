@@ -44,7 +44,7 @@ class SendRate {
         
             
             var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
+            println(strData)
             var err: NSError?
             var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
             

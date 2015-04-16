@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
 		1453739094AA57B6CD04967B /* Pods_Moder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6787AC012EE946F4B6082E26 /* Pods_Moder.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		251B00031ADDA718003F860A /* ModerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B00021ADDA718003F860A /* ModerTests.swift */; };
 		251B00121ADDA750003F860A /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B000C1ADDA750003F860A /* Card.swift */; };
@@ -30,6 +31,22 @@
 		251B004A1ADDA921003F860A /* SendRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B00421ADDA921003F860A /* SendRate.swift */; };
 		251BFFED1ADDA718003F860A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251BFFEC1ADDA718003F860A /* AppDelegate.swift */; };
 		251BFFEF1ADDA718003F860A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251BFFEE1ADDA718003F860A /* ViewController.swift */; };
+=======
+		251AA8B01A8D650400209907 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AA8AF1A8D650400209907 /* AppDelegate.swift */; };
+		251AA8B21A8D650400209907 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AA8B11A8D650400209907 /* ViewController.swift */; };
+		251AA8B51A8D650400209907 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 251AA8B31A8D650400209907 /* Main.storyboard */; };
+		251AA8B71A8D650400209907 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 251AA8B61A8D650400209907 /* Images.xcassets */; };
+		251AA8BA1A8D650400209907 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 251AA8B81A8D650400209907 /* LaunchScreen.xib */; };
+		251AA8C61A8D650400209907 /* ModerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AA8C51A8D650400209907 /* ModerTests.swift */; };
+		251EE3701A91987D005884D7 /* SendLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE36F1A91987D005884D7 /* SendLogin.swift */; };
+		25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A81DBD1A8FF42A00B73E47 /* LoginController.swift */; };
+		25BA27861AD9C16200FE37BF /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA27851AD9C16200FE37BF /* Profile.swift */; };
+		25BA27881AD9CFCC00FE37BF /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA27871AD9CFCC00FE37BF /* Queue.swift */; };
+		25BA278C1AD9D01100FE37BF /* QueueElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BA278B1AD9D01100FE37BF /* QueueElement.swift */; };
+		25CBC57C1ACE35770039541B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CBC57B1ACE35770039541B /* Card.swift */; };
+		25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FC1AC90C880015E9F6 /* SendRate.swift */; };
+		25D128FF1AC910580015E9F6 /* GetPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D128FE1AC910580015E9F6 /* GetPhoto.swift */; };
+>>>>>>> parent of 5b38af8... Somewhat Broken
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		251B00011ADDA718003F860A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		251B00021ADDA718003F860A /* ModerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerTests.swift; sourceTree = "<group>"; };
 		251B000C1ADDA750003F860A /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -72,6 +90,26 @@
 		6787AC012EE946F4B6082E26 /* Pods_Moder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Moder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D547F824E049F70CA4AAF6E0 /* Pods-Moder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moder.release.xcconfig"; path = "Pods/Target Support Files/Pods-Moder/Pods-Moder.release.xcconfig"; sourceTree = "<group>"; };
 		F889B10DB55B3F720E0A27EE /* Pods-Moder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Moder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Moder/Pods-Moder.debug.xcconfig"; sourceTree = "<group>"; };
+=======
+		251AA8AA1A8D650400209907 /* Moder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		251AA8AE1A8D650400209907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		251AA8AF1A8D650400209907 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		251AA8B11A8D650400209907 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		251AA8B41A8D650400209907 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		251AA8B61A8D650400209907 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		251AA8B91A8D650400209907 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		251AA8BF1A8D650400209907 /* ModerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		251AA8C41A8D650400209907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		251AA8C51A8D650400209907 /* ModerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModerTests.swift; sourceTree = "<group>"; };
+		251EE36F1A91987D005884D7 /* SendLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendLogin.swift; sourceTree = "<group>"; };
+		25A81DBD1A8FF42A00B73E47 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		25BA27851AD9C16200FE37BF /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		25BA27871AD9CFCC00FE37BF /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		25BA278B1AD9D01100FE37BF /* QueueElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueElement.swift; sourceTree = "<group>"; };
+		25CBC57B1ACE35770039541B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		25D128FC1AC90C880015E9F6 /* SendRate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRate.swift; sourceTree = "<group>"; };
+		25D128FE1AC910580015E9F6 /* GetPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetPhoto.swift; sourceTree = "<group>"; };
+>>>>>>> parent of 5b38af8... Somewhat Broken
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +117,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				1453739094AA57B6CD04967B /* Pods_Moder.framework in Frameworks */,
+=======
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,8 +137,14 @@
 		03CD654F3BB29CEE442CC3BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				F889B10DB55B3F720E0A27EE /* Pods-Moder.debug.xcconfig */,
 				D547F824E049F70CA4AAF6E0 /* Pods-Moder.release.xcconfig */,
+=======
+				251AA8AC1A8D650400209907 /* Moder */,
+				251AA8C21A8D650400209907 /* ModerTests */,
+				251AA8AB1A8D650400209907 /* Products */,
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -133,10 +180,29 @@
 		251BFFE81ADDA718003F860A /* Products */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				251BFFE71ADDA718003F860A /* Moder.app */,
 				251BFFFC1ADDA718003F860A /* ModerTests.xctest */,
 			);
 			name = Products;
+=======
+				251EE36F1A91987D005884D7 /* SendLogin.swift */,
+				25D128FC1AC90C880015E9F6 /* SendRate.swift */,
+				25D128FE1AC910580015E9F6 /* GetPhoto.swift */,
+			);
+			name = networking;
+			sourceTree = "<group>";
+		};
+		25BA27841AD9C11100FE37BF /* userInterface */ = {
+			isa = PBXGroup;
+			children = (
+				25A81DBD1A8FF42A00B73E47 /* LoginController.swift */,
+				251AA8B11A8D650400209907 /* ViewController.swift */,
+				25CBC57B1ACE35770039541B /* Card.swift */,
+				25BA27851AD9C16200FE37BF /* Profile.swift */,
+			);
+			name = userInterface;
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			sourceTree = "<group>";
 		};
 		251BFFE91ADDA718003F860A /* Moder */ = {
@@ -170,11 +236,17 @@
 		251BFFEA1ADDA718003F860A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				251BFFEB1ADDA718003F860A /* Info.plist */,
+=======
+				25BA27871AD9CFCC00FE37BF /* Queue.swift */,
+				25BA278B1AD9D01100FE37BF /* QueueElement.swift */,
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		251BFFFF1ADDA718003F860A /* ModerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +264,8 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> parent of 5b38af8... Somewhat Broken
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -199,12 +273,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 251B00061ADDA718003F860A /* Build configuration list for PBXNativeTarget "Moder" */;
 			buildPhases = (
+<<<<<<< HEAD
 				74CBACB8F62F6FB0918F10E1 /* Check Pods Manifest.lock */,
 				251BFFE31ADDA718003F860A /* Sources */,
 				251BFFE41ADDA718003F860A /* Frameworks */,
 				251BFFE51ADDA718003F860A /* Resources */,
 				399AFA02DB362E361B4BF2BF /* Embed Pods Frameworks */,
 				C346632489DC4BF4E59104BC /* Copy Pods Resources */,
+=======
+				251AA8A61A8D650400209907 /* Sources */,
+				251AA8A71A8D650400209907 /* Frameworks */,
+				251AA8A81A8D650400209907 /* Resources */,
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			buildRules = (
 			);
@@ -219,9 +299,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 251B00091ADDA718003F860A /* Build configuration list for PBXNativeTarget "ModerTests" */;
 			buildPhases = (
+<<<<<<< HEAD
 				251BFFF81ADDA718003F860A /* Sources */,
 				251BFFF91ADDA718003F860A /* Frameworks */,
 				251BFFFA1ADDA718003F860A /* Resources */,
+=======
+				251AA8BB1A8D650400209907 /* Sources */,
+				251AA8BC1A8D650400209907 /* Frameworks */,
+				251AA8BD1A8D650400209907 /* Resources */,
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			buildRules = (
 			);
@@ -292,6 +378,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+<<<<<<< HEAD
 /* Begin PBXShellScriptBuildPhase section */
 		399AFA02DB362E361B4BF2BF /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -340,11 +427,14 @@
 		};
 /* End PBXShellScriptBuildPhase section */
 
+=======
+>>>>>>> parent of 5b38af8... Somewhat Broken
 /* Begin PBXSourcesBuildPhase section */
 		251BFFE31ADDA718003F860A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				251B00171ADDA750003F860A /* GetPhotoSkeets.swift in Sources */,
 				251BFFEF1ADDA718003F860A /* ViewController.swift in Sources */,
 				251B00161ADDA750003F860A /* GetPhoto.swift in Sources */,
@@ -361,6 +451,18 @@
 				251B00151ADDA750003F860A /* Cell.swift in Sources */,
 				251B00491ADDA921003F860A /* SendLogin.swift in Sources */,
 				251B004A1ADDA921003F860A /* SendRate.swift in Sources */,
+=======
+				251AA8B21A8D650400209907 /* ViewController.swift in Sources */,
+				25BA27861AD9C16200FE37BF /* Profile.swift in Sources */,
+				25BA278C1AD9D01100FE37BF /* QueueElement.swift in Sources */,
+				25D128FD1AC90C880015E9F6 /* SendRate.swift in Sources */,
+				25CBC57C1ACE35770039541B /* Card.swift in Sources */,
+				251EE3701A91987D005884D7 /* SendLogin.swift in Sources */,
+				25A81DBE1A8FF42A00B73E47 /* LoginController.swift in Sources */,
+				251AA8B01A8D650400209907 /* AppDelegate.swift in Sources */,
+				25BA27881AD9CFCC00FE37BF /* Queue.swift in Sources */,
+				25D128FF1AC910580015E9F6 /* GetPhoto.swift in Sources */,
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,7 +539,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+>>>>>>> parent of 5b38af8... Somewhat Broken
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -476,7 +582,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+>>>>>>> parent of 5b38af8... Somewhat Broken
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
@@ -487,10 +597,17 @@
 		};
 		251B00071ADDA718003F860A /* Debug */ = {
 			isa = XCBuildConfiguration;
+<<<<<<< HEAD
 			baseConfigurationReference = F889B10DB55B3F720E0A27EE /* Pods-Moder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+=======
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+>>>>>>> parent of 5b38af8... Somewhat Broken
 				INFOPLIST_FILE = Moder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -499,10 +616,17 @@
 		};
 		251B00081ADDA718003F860A /* Release */ = {
 			isa = XCBuildConfiguration;
+<<<<<<< HEAD
 			baseConfigurationReference = D547F824E049F70CA4AAF6E0 /* Pods-Moder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				HEADER_SEARCH_PATHS = "$(inherited)";
+=======
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+>>>>>>> parent of 5b38af8... Somewhat Broken
 				INFOPLIST_FILE = Moder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -511,7 +635,10 @@
 		};
 		251B000A1ADDA718003F860A /* Debug */ = {
 			isa = XCBuildConfiguration;
+<<<<<<< HEAD
 			baseConfigurationReference = F889B10DB55B3F720E0A27EE /* Pods-Moder.debug.xcconfig */;
+=======
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -531,7 +658,10 @@
 		};
 		251B000B1ADDA718003F860A /* Release */ = {
 			isa = XCBuildConfiguration;
+<<<<<<< HEAD
 			baseConfigurationReference = F889B10DB55B3F720E0A27EE /* Pods-Moder.debug.xcconfig */;
+=======
+>>>>>>> parent of 5b38af8... Somewhat Broken
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

@@ -15,19 +15,7 @@ class Card : UIViewController {
     @IBOutlet var photoView : UIImageView!
     
     var cardStruct : CardStruct
-    var photoQueue : Queue<CardStruct>
-    var photoIDDefaults : Array<String>! {
-        get {
-            if let photoIDDefaults : AnyObject! = NSUserDefaults.standardUserDefaults().objectForKey("photoIDs") {
-                return photoIDDefaults as Array<String>!
-            } else {
-                return nil
-            }
-        } set {
-            NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: "photoIDs")
-            NSUserDefaults.standardUserDefaults().synchronize()
-        }
-    }
+    let photoQueue : Queue<CardStruct>
     
     struct CardStruct {
         var photoID: String?
@@ -61,10 +49,10 @@ class Card : UIViewController {
         attemptPhotoChange()
     }
     
-    
     func attemptPhotoChange(){
         let concurrentPhotoQueue = dispatch_queue_create("com.ModerApp.Moder.photoQueue", DISPATCH_QUEUE_CONCURRENT)
         
+<<<<<<< HEAD
         dispatch_barrier_async(concurrentPhotoQueue) {
             var photoTask : GetPhoto
             photoTask = GetPhoto()
@@ -86,26 +74,26 @@ class Card : UIViewController {
     /*
     func attemptPhotoChange(){
         let concurrentPhotoQueue = dispatch_queue_create("com.ModerApp.Moder.photoQueue", DISPATCH_QUEUE_CONCURRENT)
+=======
+        
+>>>>>>> parent of 5b38af8... Somewhat Broken
         
         dispatch_barrier_async(concurrentPhotoQueue) {
             if (self.photoQueue.isEmpty()) {
-                println("Empty photoQueue!")
                 for i in 1...5 {
                     self.buffer() //Add 5 more photos
                 }
             } else {
-                println("Photo queue not empty!")
-                dispatch_async(dispatch_get_main_queue()) {
-                    var photo : UIImage? = self.photoQueue.dequeue()?.photo
-                    if (photo != nil) {
-                        self.changePhoto(photo!)
-                        ViewController.CardStruct.photoID = self.cardStruct.photoID!
-                        println("Changed photo!")
-                    }
+                var photo : UIImage? = self.photoQueue.dequeue()?.photo
+                if (photo != nil) {
+                    self.changePhoto(photo!)
+                    ViewController.CardStruct.photoID = self.cardStruct.photoID!
+                    println("Changed photo!")
                 }
             }
+            
         }
-    } */
+    }
     
     private func buffer() {
         let concurrentPhotoQueue = dispatch_queue_create("com.ModerApp.Moder.buffer", DISPATCH_QUEUE_CONCURRENT)
@@ -117,6 +105,7 @@ class Card : UIViewController {
             if (someStruct != nil) {
                 self.photoQueue.enqueue(someStruct!)
             }
+
         }
     }
     

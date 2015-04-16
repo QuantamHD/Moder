@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0620"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,49 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "251AA8A91A8D650400209907"
+               BlueprintIdentifier = "E9F3C48317AB0B1B5451868F"
+               BuildableName = "Pods_Moder.framework"
+               BlueprintName = "Pods-Moder"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "01FC669809A281A563993B50"
+               BuildableName = "Skeets.framework"
+               BlueprintName = "Pods-Moder-Skeets"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F0AA559628FC44F59795CB9B"
+               BuildableName = "SwiftHTTP.framework"
+               BlueprintName = "Pods-Moder-SwiftHTTP"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "251BFFE61ADDA718003F860A"
                BuildableName = "Moder.app"
                BlueprintName = "Moder"
                ReferencedContainer = "container:Moder.xcodeproj">
@@ -28,7 +70,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "251AA8BE1A8D650400209907"
+               BlueprintIdentifier = "251BFFFB1ADDA718003F860A"
                BuildableName = "ModerTests.xctest"
                BlueprintName = "ModerTests"
                ReferencedContainer = "container:Moder.xcodeproj">
@@ -46,7 +88,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "251AA8BE1A8D650400209907"
+               BlueprintIdentifier = "251BFFFB1ADDA718003F860A"
                BuildableName = "ModerTests.xctest"
                BlueprintName = "ModerTests"
                ReferencedContainer = "container:Moder.xcodeproj">
@@ -56,7 +98,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "251AA8A91A8D650400209907"
+            BlueprintIdentifier = "251BFFE61ADDA718003F860A"
             BuildableName = "Moder.app"
             BlueprintName = "Moder"
             ReferencedContainer = "container:Moder.xcodeproj">
@@ -76,19 +118,12 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "251AA8A91A8D650400209907"
+            BlueprintIdentifier = "251BFFE61ADDA718003F860A"
             BuildableName = "Moder.app"
             BlueprintName = "Moder"
             ReferencedContainer = "container:Moder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "NSZombieEnabled"
-            value = "YES"
-            isEnabled = "NO">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -102,7 +137,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "251AA8A91A8D650400209907"
+            BlueprintIdentifier = "251BFFE61ADDA718003F860A"
             BuildableName = "Moder.app"
             BlueprintName = "Moder"
             ReferencedContainer = "container:Moder.xcodeproj">
