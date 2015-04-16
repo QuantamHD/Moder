@@ -1,0 +1,60 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "Pods-Swift.h",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods.framework/Headers/Pods-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "Pods-umbrella.h",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Pods/Target Support Files/Pods/Pods-umbrella.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods.framework/Modules/module.modulemap"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods/SwiftHTTP.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "Pods-SwiftHTTP-umbrella.h",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Pods/Target Support Files/Pods-SwiftHTTP/Pods-SwiftHTTP-umbrella.h"
+        },
+        {
+          'type': 'file',
+          'name': "SwiftHTTP-Swift.h",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods/SwiftHTTP.framework/Headers/SwiftHTTP-Swift.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods/SwiftHTTP.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/Flaque/Moder/Test/Test/Build/Products/Debug-iphonesimulator/Pods/SwiftHTTP.framework/Modules/module.modulemap"
+        }
+      ]
+    }
+  ]
+}

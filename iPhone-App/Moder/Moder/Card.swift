@@ -65,7 +65,6 @@ class Card : UIViewController {
     func attemptPhotoChange(){
         let concurrentPhotoQueue = dispatch_queue_create("com.ModerApp.Moder.photoQueue", DISPATCH_QUEUE_CONCURRENT)
         
-        
         dispatch_barrier_async(concurrentPhotoQueue) {
             var photoTask : GetPhoto
             photoTask = GetPhoto()
@@ -75,7 +74,7 @@ class Card : UIViewController {
                     var photo : UIImage? = someStruct?.photo
                     if (photo != nil) {
                         self.changePhoto(photo!)
-                        ViewController.CardStruct.photoID = self.cardStruct.photoID!
+                        //ViewController.CardStruct.photoID = self.cardStruct.photoID!
                         println("Changed photo!")
                     }
                 }

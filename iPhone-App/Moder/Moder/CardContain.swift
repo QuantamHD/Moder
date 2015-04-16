@@ -14,7 +14,5 @@ class CardContain : UIView {
     
     var card : Card?
     
-    override func prepareForSegue(segue: UIStoryboardSegue) {
-        
-    }
+    
 }
