@@ -16,25 +16,33 @@ class ViewController: UIViewController {
     @IBOutlet var cardContainer : UIView!
     @IBOutlet var bar : UINavigationBar!
     
+    var card: Card?
     
     // ------ IB Actions ------ // 
     
     @IBAction func rateYes(sender : AnyObject) {
-        //movePhotoFrame(true)
         println("Rated yes!")
+        var rater : SendRate = SendRate()
+        if (card != nil) {
+            println("Sent rate!")
+            rater.send(true, id: card!.currentPhotoID!)
+            card!.attemptPhotoChange()
+        }
         
-        //Send info to server
     }
     
     @IBAction func rateNo(sender : AnyObject) {
-        //movePhotoFrame(false)
         println("Rated no!")
-        //Send info to server
+        var rater : SendRate = SendRate()
+        if (card != nil) {
+            println("Sent rate!")
+            rater.send(false, id: card!.currentPhotoID!)
+            card!.attemptPhotoChange()
+        }
     }
-    
 
-    // ------ Overrided actions from UIViewController ----- //
     
+    // ------ Overrided actions from UIViewController ----- //
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,39 +60,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    // ------ Helper functions ------ //
-    
-    /*
-    private func movePhotoFrame(toRight: Bool) {
-        //Animate after view appears
-        UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseOut, animations: {
-            //Swipe it off to the right
-            var photoFrame = self.photoView.frame; //Get the frame
-            if (toRight) {
-                photoFrame.origin.x += photoFrame.size.height
-            } else {
-                photoFrame.origin.x -= photoFrame.size.height
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let embeddedViewController = segue.destinationViewController as? Card
+        {
+            if (segue.identifier == "toCard") {
+                card = embeddedViewController
             }
-            self.photoView.frame = photoFrame //Reset the frame
-            
-            }, completion: { finished in
-                println("Animated!") //DEBUG only
-        })
+        }
     }
-    */
-    
-    /**
-    private func addNewPhoto() {
-        let imageName = "test.jpg"
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 115, y: 93, width: 370, height: 370)
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        
-        self.view.addSubview(imageView)
-    }
-**/
     
 
 }

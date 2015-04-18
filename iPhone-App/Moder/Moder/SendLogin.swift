@@ -54,7 +54,7 @@ class SendLogin{
                 // check and make sure that json has a value using optional binding.
                 if let parseJSON = json {
                     // Okay, the parsedJSON is here, let's get the value for 'success' out of it
-                    code = parseJSON["ResponseCode"] as Int! //Set code for correct value
+                    code = parseJSON["ResponseCode"] as! Int! //Set code for correct value
                     
                 }
                 else {
@@ -77,15 +77,15 @@ class SendLogin{
         var dictionary = [String: AnyObject]()
         
         if (code == 300) {
-            let someResponse : NSHTTPURLResponse = task.response as NSHTTPURLResponse
-            let responseString : String = someResponse.allHeaderFields["Set-Cookie"] as String
+            let someResponse : NSHTTPURLResponse = task.response as! NSHTTPURLResponse
+            let responseString : String = someResponse.allHeaderFields["Set-Cookie"] as! String
             var responseStringArr = split(responseString) {$0 == ","} as Array<NSString>
             var secondStringArr : Array<String>
             var name : String = ""
             var value : String = ""
             for i in 0...responseStringArr.count-1 {
                 if (responseStringArr[i].containsString("UniqueID")){
-                    var string : String = responseStringArr[i]
+                    var string : String = responseStringArr[i] as String
                     secondStringArr = split(string) {$0 == ";"}
                     var nameAndValueCookie = split(secondStringArr[0]) {$0 == "="}
                     nameAndValueCookie[0] = String(filter(nameAndValueCookie[0].generate()) { $0 != " "});

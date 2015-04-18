@@ -1,0 +1,19 @@
+PODS:
+  - AwesomeCache (1.0)
+  - JSONJoy-Swift (0.9.2)
+  - Skeets (0.9.4):
+    - SwiftHTTP (~> 0.9.3)
+  - SwiftHTTP (0.9.3)
+
+DEPENDENCIES:
+  - AwesomeCache (~> 1.0)
+  - JSONJoy-Swift (~> 0.9.1)
+  - Skeets (~> 0.9.2)
+
+SPEC CHECKSUMS:
+  AwesomeCache: 31250987360b132d4e4424c7a372d38d5ebbbd5a
+  JSONJoy-Swift: d51bde1053047c623db602e778f068414dd788e4
+  Skeets: 01ea1927761b68d42940a7a2f74521b9a3ed588c
+  SwiftHTTP: 8330d887c0eae4f732df0f2899b61e497e7ea1d0
+
+COCOAPODS: 0.36.4
