@@ -1,5 +1,6 @@
 package com.moderco.moder;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.provider.Telephony;
@@ -25,6 +26,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,6 +81,40 @@ public class RatingContactAdapter extends RecyclerView.Adapter<RatingContactAdap
                 public void onClick(View v) {
 
                     if(!a.cardDataSet.isEmpty() && !isLoading){
+                        String json = a.prefs.getString("rateq",null);
+                        if(json!=null){
+                            try {
+                                JSONObject object = new JSONObject(json);
+                                JSONObject object2 = new JSONObject();
+                                JSONArray one = object.getJSONArray("photoIDs");
+                                JSONArray two = object.getJSONArray("descriptions");
+                                JSONArray three = new JSONArray();
+                                JSONArray four = new JSONArray();
+
+
+                                for(int i = 0; i < one.length(); i++){
+                                    RateCardInformation information = new RateCardInformation(one.getString(i));
+                                    information.setDescription(two.getString(i));
+                                    a.cardDataSet.add(information);
+                                    if(information.getId().equals(a.cardDataSet.peek().getId())){
+
+                                        continue;
+                                    }
+                                    three.put(information.getId());
+                                    four.put(information.getDescription());
+                                }
+
+                                object2.put("photoIDs",three);
+                                object2.put("descriptions",four);
+                                SharedPreferences.Editor editor =  a.prefs.edit();
+                                editor.putString("rateq",object2.toString());
+                                editor.commit();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         img2.setAnimation(null);
                         img2.setVisibility(View.GONE);
                         tview.setVisibility(View.GONE);
@@ -132,6 +168,40 @@ public class RatingContactAdapter extends RecyclerView.Adapter<RatingContactAdap
                 public void onClick(View v) {
 
                     if(!a.cardDataSet.isEmpty() && !isLoading){
+                        String json = a.prefs.getString("rateq",null);
+                        if(json!=null){
+                            try {
+                                JSONObject object = new JSONObject(json);
+                                JSONObject object2 = new JSONObject();
+                                JSONArray one = object.getJSONArray("photoIDs");
+                                JSONArray two = object.getJSONArray("descriptions");
+                                JSONArray three = new JSONArray();
+                                JSONArray four = new JSONArray();
+
+
+                                for(int i = 0; i < one.length(); i++){
+                                    RateCardInformation information = new RateCardInformation(one.getString(i));
+                                    information.setDescription(two.getString(i));
+                                    a.cardDataSet.add(information);
+                                    if(information.getId().equals(a.cardDataSet.peek().getId())){
+
+                                        continue;
+                                    }
+                                    three.put(information.getId());
+                                    four.put(information.getDescription());
+                                }
+
+                                object2.put("photoIDs",three);
+                                object2.put("descriptions",four);
+                                SharedPreferences.Editor editor =  a.prefs.edit();
+                                editor.putString("rateq",object2.toString());
+                                editor.commit();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         img2.setAnimation(null);
                         img2.setVisibility(View.GONE);
                         tview.setVisibility(View.GONE);
@@ -191,13 +261,36 @@ public class RatingContactAdapter extends RecyclerView.Adapter<RatingContactAdap
     private ImageLoader imageLoader;
     public ArrayList<Object> a;
     private AsyncHttpClient client;
-
+    final SharedPreferences prefs = Moder.getPrefs();
     public RatingContactAdapter(){
+
+
         a = new ArrayList<>();
         imageLoader = Moder.getImageLoader();
         client = Moder.getClient();
         cardDataSet = new LinkedBlockingDeque<>();
-        loadImages(20);
+
+        String json = prefs.getString("rateq",null);
+        if(json!=null){
+            try {
+                JSONObject object = new JSONObject(json);
+                JSONArray one = object.getJSONArray("photoIDs");
+                JSONArray two = object.getJSONArray("descriptions");
+
+
+                for(int i = 0; i < one.length(); i++){
+                    RateCardInformation information = new RateCardInformation(one.getString(i));
+                    information.setDescription(two.getString(i));
+                    cardDataSet.add(information);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if(cardDataSet.size() < 30) {
+            loadImages(20);
+        }
 
     }
 
@@ -305,6 +398,48 @@ public class RatingContactAdapter extends RecyclerView.Adapter<RatingContactAdap
                                 init(v);
                             }
                         });
+                    }else if(responseCode == 202){
+                        final SharedPreferences prefs = Moder.getPrefs();
+                        RequestParams params = new RequestParams();
+                        params.add("email", prefs.getString("email", null));
+                        params.add("pwd", prefs.getString("pwd", null));
+                        client.get("https://www.moderapp.com/login", params, new AsyncHttpResponseHandler() {
+
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                                String s = new String(response);
+                                try {
+                                    JSONObject object = new JSONObject(s);
+                                    int responseCode = object.getInt("ResponseCode");
+                                    switch (responseCode) {
+                                        case 300: {
+                                            loadImages(1);
+                                            break;
+                                        }
+                                        case 100: {
+                                            break;
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                            }
+
+                            @Override
+                            public void onRetry(int retryNo) {
+
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -361,6 +496,29 @@ public class RatingContactAdapter extends RecyclerView.Adapter<RatingContactAdap
                                 @Override
                                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                     Log.v("Loading" , cardDataSet.size()+"");
+                                    String json = prefs.getString("rateq","{\"photoIDs\":[],\"descriptions\":[]}");
+                                    if(true){
+                                        try {
+                                            JSONObject old = new JSONObject(json);
+                                            JSONArray one = old.getJSONArray("photoIDs");
+                                            JSONArray two = old.getJSONArray("descriptions");
+                                            one.put(cardInformation.getId());
+                                            two.put(cardInformation.getDescription());
+
+
+                                            JSONObject neww = new JSONObject();
+                                            neww.put("photoIDs",one);
+                                            neww.put("descriptions", two);
+
+                                            SharedPreferences.Editor editor =  prefs.edit();
+                                            editor.putString("rateq",neww.toString());
+                                            editor.commit();
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
                                     cardDataSet.add(cardInformation);
                                 }
 

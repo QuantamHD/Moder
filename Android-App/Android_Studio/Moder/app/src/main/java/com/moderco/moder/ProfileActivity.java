@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Rect;
@@ -30,6 +31,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.moderco.network.GetProfileTask;
 import com.moderco.utility.CookieHandler;
 import com.moderco.utility.Moder;
@@ -38,6 +42,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-public class ProfileActivity extends FragmentActivity{
+public class ProfileActivity extends FragmentActivity {
 
     private String cookie;
     private ViewGroup group;
@@ -59,7 +64,7 @@ public class ProfileActivity extends FragmentActivity{
     public void setupUI(View view) {
 
         //Set up touch listener for non-text box views to hide keyboard.
-        if(!(view instanceof EditText)) {
+        if (!(view instanceof EditText)) {
 
             view.setOnTouchListener(new View.OnTouchListener() {
 
@@ -85,8 +90,53 @@ public class ProfileActivity extends FragmentActivity{
 
 
     ViewPager pager;
-	@Override
-	 protected void onCreate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        AsyncHttpClient client = Moder.client;
+        final SharedPreferences prefs = Moder.getPrefs();
+        RequestParams params = new RequestParams();
+        params.add("email", prefs.getString("email", null));
+        params.add("pwd", prefs.getString("pwd", null));
+        client.get("https://www.moderapp.com/login", params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                String s = new String(response);
+                try {
+                    JSONObject object = new JSONObject(s);
+                    int responseCode = object.getInt("ResponseCode");
+                    switch (responseCode) {
+                        case 300: {
+                            break;
+                        }
+                        case 100: {
+                            break;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+            }
+
+            @Override
+            public void onRetry(int retryNo) {
+
+            }
+        });
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Moder.setupImageLoader(this);
@@ -95,7 +145,7 @@ public class ProfileActivity extends FragmentActivity{
         contactAdapter = new ProfileFragmentPageAdapter(getSupportFragmentManager());
         pager.setAdapter(contactAdapter);
 
-        final AlphaAnimation anim = new AlphaAnimation(1,0);
+        final AlphaAnimation anim = new AlphaAnimation(1, 0);
         anim.setDuration(50);
         ImageLoader loader = ImageLoader.getInstance();
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -106,10 +156,10 @@ public class ProfileActivity extends FragmentActivity{
         photoButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     vibrator.vibrate(28);
                     photoButton.setBackgroundColor(35195);
-                }else if (event.getAction() == MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     mCurrentFile = dispatchTakePictureIntent();
                     photoButton.setBackgroundColor(49061);
                 }
@@ -118,9 +168,8 @@ public class ProfileActivity extends FragmentActivity{
         });
 
 
-
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        final TextView title =(TextView) findViewById(R.id.tabName);
+        final TextView title = (TextView) findViewById(R.id.tabName);
         tabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -129,10 +178,10 @@ public class ProfileActivity extends FragmentActivity{
 
             @Override
             public void onPageSelected(int position) {
-                if(position==0){
-                    title.setText("Profile");
-                }else if(position == 1){
+                if (position == 0) {
                     title.setText("Rate");
+                } else if (position == 1) {
+                    title.setText("Profile");
                 }
             }
 
@@ -149,15 +198,15 @@ public class ProfileActivity extends FragmentActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode== RESULT_OK){
-            pager.setCurrentItem(0, true);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            pager.setCurrentItem(1);
             contactAdapter.setNewLocalFileProfile(mCurrentFile);
         }
     }
 
-    public  void hideSoftKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if(this.getCurrentFocus() != null)
+    public void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (this.getCurrentFocus() != null)
             inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
     }
 

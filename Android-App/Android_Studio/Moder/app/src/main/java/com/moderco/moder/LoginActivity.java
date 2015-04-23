@@ -3,6 +3,7 @@ package com.moderco.moder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -78,10 +79,10 @@ public class LoginActivity extends Activity {
         myCookieStore.clearExpired(new Date());
         Moder.setClient(client);
         List<Cookie> cookieList =myCookieStore.getCookies();
-        for(Cookie cookie:cookieList){
-            if(cookie.getName().equals("Unique_ID")){
-                //goToProfile();
-            }
+        final SharedPreferences prefs = getSharedPreferences("LoginDets",0);
+        Moder.setPrefs(prefs);
+        if(prefs.getString("email",null) != null && prefs.getString("pwd",null) != null){
+            goToProfile();
         }
 
         final EditText email = (EditText) findViewById(R.id.email_text_login);
@@ -99,8 +100,8 @@ public class LoginActivity extends Activity {
                     moderLogo.setAnimation(a);
                     vibrator.vibrate(28);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    String emailTextU = email.getText().toString();
-                    String passwordTextU = password.getText().toString();
+                    final String emailTextU = email.getText().toString();
+                    final String passwordTextU = password.getText().toString();
 
                     RequestParams params = new RequestParams();
                     params.add("email", emailTextU);
@@ -121,6 +122,10 @@ public class LoginActivity extends Activity {
                                 int responseCode = object.getInt("ResponseCode");
                                 switch (responseCode){
                                     case 300:{
+                                        SharedPreferences.Editor editor= prefs.edit();
+                                        editor.putString("email",emailTextU);
+                                        editor.putString("pwd",passwordTextU);
+                                        editor.commit();
                                         goToProfile();
                                         break;}
                                     case 100:{
@@ -189,12 +194,13 @@ public class LoginActivity extends Activity {
         Log.v("LoginActivity", "Switching To Registration Page");
         Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void goToProfile() {
         Log.v("LoginActivity", "Switching To Profile Page");
         Intent intent = new Intent(this, ProfileActivity.class);
-
         startActivity(intent);
+        finish();
     }
 }

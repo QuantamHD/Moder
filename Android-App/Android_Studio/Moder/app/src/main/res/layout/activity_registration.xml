@@ -4,19 +4,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="#37474f"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
-
-    <ImageView
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/test4"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="false" />
+    android:id="@+id/main_register">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,16 +12,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Registration"
         android:fontFamily="sans-serif-light"
-        android:textSize="40sp"
+        android:textSize="36sp"
         android:id="@+id/textView2"
-        android:layout_below="@+id/imageView"
+        android:layout_above="@+id/age_field"
         android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="300dp"
-        android:layout_height="53dp"
-        android:hint="Enter email address"
-        android:inputType="textEmailAddress"
+        android:layout_height="52dp"
+        android:hint="Enter Age"
+        android:inputType="number"
         android:ems="10"
         android:fontFamily="sans-serif-light"
         android:id="@+id/emailText"
@@ -42,16 +30,16 @@
         android:textColor="#9E9E9E"
         android:paddingLeft="8dp"
         android:textCursorDrawable="@null"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/accept_tos"
-        android:layout_alignStart="@+id/accept_tos"
-        android:layout_marginTop="10dp" />
+        android:layout_above="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
     <EditText
         android:layout_width="300dp"
-        android:layout_height="53dp"
+        android:layout_height="52dp"
         android:inputType="textPassword"
         android:ems="10"
-        android:hint="Enter Password"
+        android:hint="Confirm Password"
         android:textSize="19sp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/passwordText"
@@ -59,16 +47,15 @@
         android:textCursorDrawable="@null"
         android:textColor="#9E9E9E"
         android:paddingLeft="8dp"
-        android:layout_below="@+id/emailText"
-        android:layout_alignLeft="@+id/emailText"
-        android:layout_alignStart="@+id/emailText"
-        android:layout_marginTop="8dp" />
+        android:layout_above="@+id/emailText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
     <EditText
         android:layout_width="300dp"
-        android:layout_height="53dp"
+        android:layout_height="52dp"
         android:inputType="textPassword"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:hint="Enter Password"
         android:textSize="19sp"
         android:fontFamily="sans-serif-light"
         android:id="@+id/passwordConfirm"
@@ -76,22 +63,78 @@
         android:textCursorDrawable="@null"
         android:textColor="#9E9E9E"
         android:paddingLeft="8dp"
-        android:layout_below="@+id/passwordText"
-        android:layout_alignLeft="@+id/passwordText"
-        android:layout_alignStart="@+id/passwordText"
-        android:layout_marginTop="8dp" />
+        android:layout_above="@+id/passwordText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="52dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:fontFamily="sans-serif-light"
+        android:textSize="19sp"
+        android:id="@+id/age_field"
+        android:background="@drawable/rounded_corners"
+        android:textCursorDrawable="@null"
+        android:hint="Enter Email"
+        android:textColor="#9E9E9E"
+        android:paddingLeft="8sp"
+        android:layout_above="@+id/passwordConfirm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <Spinner
+        android:layout_width="300dp"
+        android:layout_height="52dp"
+        android:id="@+id/spinner"
+        android:fontFamily="sans-serif-light"
+        android:entries="@array/gender_values"
+        android:background="@drawable/rounded_corners"
+        android:spinnerMode="dropdown"
+        android:dropDownWidth="300dp"
+        android:layout_above="@+id/Signup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:transitionGroup="true"
+        android:layout_alignParentStart="false" />
 
     <Button
         android:layout_width="300dp"
         android:layout_height="52dp"
         android:text="Sign up"
-        android:id="@+id/accept_tos"
+        android:id="@+id/Signup"
         android:fontFamily="sans-serif-light"
         android:background="@drawable/teal_button_selector"
         android:textSize="23sp"
         android:clickable="true"
-        android:layout_below="@+id/passwordConfirm"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/spinner"
+        android:layout_alignStart="@+id/spinner"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:id="@+id/imageView3"
+        android:layout_above="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:background="@drawable/log"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/error_text_register"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/age_field"
+        android:layout_alignStart="@+id/age_field"
+        android:layout_marginTop="18dp"
+        android:layout_alignRight="@+id/age_field"
+        android:layout_alignEnd="@+id/age_field"
+        android:textColor="#FF1744"
+        android:gravity="center" />
 
 </RelativeLayout>

@@ -75,7 +75,7 @@
         android:clickable="true"
         android:layout_above="@+id/real_register_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="16dp" />
 
     <Button
         android:layout_width="300dp"
@@ -89,7 +89,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/accept_tos"
         android:layout_alignStart="@+id/accept_tos"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="5dp" />
 
     <TextView

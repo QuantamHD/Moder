@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,10 +35,44 @@ public class RegistrationActivity extends Activity {
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+
+    public void setupUI(View view) {
+
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
+
+            view.setOnTouchListener(new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard();
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                View innerView = ((ViewGroup) view).getChildAt(i);
+
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public  void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        setupUI(findViewById(R.id.main_register));
 
         pattern = Pattern.compile(EMAIL_PATTERN);
 
@@ -60,8 +96,8 @@ public class RegistrationActivity extends Activity {
 
                     String emailText = email.getText().toString();
                     String ageText = age.getText().toString();
-                    String passwordText = email.getText().toString();
-                    String passwordConfirmText = email.getText().toString();
+                    String passwordText = password.getText().toString();
+                    String passwordConfirmText = confirmPassword.getText().toString();
                     String gender = spinner.getSelectedItem().toString();
                     Log.v("Gender",gender);
 
@@ -115,6 +151,7 @@ public class RegistrationActivity extends Activity {
         Intent intent = new Intent(this, TermsOfService.class);
         intent.putExtra(GET_REGISTRATION_INFO,information);
         startActivity(intent);
+        finish();
     }
 
 

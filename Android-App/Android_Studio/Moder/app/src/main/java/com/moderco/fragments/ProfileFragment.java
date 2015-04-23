@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment {
         recList.setLayoutManager(llm);
         FadeInAnimator animator = new FadeInAnimator();
         recList.setItemAnimator(animator);
-        ca = new ProfileContactAdapter(recList);
+        ca = new ProfileContactAdapter(recList,v);
         recList.stopScroll();
         ca.notifyItemInserted(ca.getItemCount());
         recList.setOnScrollListener(new MyOnScrollListner(Moder.getImageLoader(),true,true));

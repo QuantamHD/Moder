@@ -32,7 +32,7 @@
             android:visibility="gone"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/ilona_spencer_test" />
+             />
 
         <RelativeLayout
             android:id="@+id/menuBarLayout"

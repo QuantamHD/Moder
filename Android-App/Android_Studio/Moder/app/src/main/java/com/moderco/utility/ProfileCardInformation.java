@@ -18,10 +18,14 @@ public class ProfileCardInformation {
     private boolean submited = true;
 
     public ProfileCardInformation() {
+        description = "";
+        id = null;
+
     }
 
     public ProfileCardInformation(String id, int rateUp, int rateDown) {
         this.id = id;
+        description = "";
         this.rateUp = rateUp;
         this.rateDown = rateDown;
     }

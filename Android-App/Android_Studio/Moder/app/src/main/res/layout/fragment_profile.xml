@@ -21,4 +21,18 @@
         />
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="You don&apos;t have any profile photos yet click the camera to take one."
+        android:id="@+id/tester_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginLeft="16dp"
+        android:visibility="gone" />
+
 </RelativeLayout>

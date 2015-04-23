@@ -1,6 +1,7 @@
 package com.moderco.utility;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.moderco.network.NutraBaseImageDecoder;
@@ -16,6 +17,7 @@ public class Moder {
     public static AsyncHttpClient client;
     private static ImageLoader imageLoader;
     private static boolean imageLoaderinit =false;
+    private static SharedPreferences prefs;
 
     public static void setupImageLoader(Activity activity){
         if(!imageLoaderinit){
@@ -31,6 +33,13 @@ public class Moder {
         return imageLoader;
     }
 
+    public static SharedPreferences getPrefs(){
+        return prefs;
+    }
+
+    public static void setPrefs(SharedPreferences a){
+        prefs =a;
+    }
 
     public static AsyncHttpClient getClient() {
         return client;

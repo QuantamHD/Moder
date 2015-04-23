@@ -26,9 +26,9 @@ public class ProfileFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position == 0)
-            return profileFragment;
-        else
             return rateFragment;
+        else
+            return profileFragment;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class ProfileFragmentPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position)
     {
-        if(position == 1) return "Rate";
-        return "Profile";
+        if(position == 1) return "Profile";
+        return "Rate";
     }
 
     public void setNewLocalFileProfile(File file){

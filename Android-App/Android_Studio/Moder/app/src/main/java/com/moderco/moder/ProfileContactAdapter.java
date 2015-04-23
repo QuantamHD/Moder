@@ -1,12 +1,15 @@
 package com.moderco.moder;
 
 import android.app.DownloadManager;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,13 +85,21 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
             percentText = (TextView) v.findViewById(R.id.text_percent_profile);
             Button submitButton = (Button) v.findViewById(R.id.submit_profile);
 
-            descriptonEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            descriptonEdit.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(hasFocus){
-                        Log.v("Just Ran","Running");
-                        adapter.view3.smoothScrollBy(0,600);
-                    }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    adapte1r.cardDataSet.get(getPosition()).setDescription(s.toString());
                 }
             });
 
@@ -116,14 +127,9 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
 
         }
 
-        public void setDescriptionText(String s){
-            descriptionText.setText(s);
-        }
-
         public void revealSubmitSettings(){
             progressBar.setVisibility(View.GONE);
             percentText.setVisibility(View.GONE);
-            descriptionText.setVisibility(View.GONE);
             viewedBy.setVisibility(View.GONE);
             descriptonEdit.setVisibility(View.VISIBLE);
             buttons.setVisibility(View.VISIBLE);
@@ -131,9 +137,6 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
         }
 
         public void defaultSettings(){
-            Log.v("Description Edit Text",descriptonEdit.getText().toString());
-            adapter.cardDataSet.get(getPosition()).setDescription(descriptonEdit.getText().toString());
-            descriptonEdit.setText("");
             progressBar.setVisibility(View.VISIBLE);
             percentText.setVisibility(View.VISIBLE);
             viewedBy.setVisibility(View.VISIBLE);
@@ -143,25 +146,22 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
         }
 
         public void hidSubmitSettings(){
-
-            descriptonEdit.clearComposingText();
             progressBar.setVisibility(View.VISIBLE);
             percentText.setVisibility(View.VISIBLE);
+            viewedBy.setVisibility(View.VISIBLE);
             descriptionText.setVisibility(View.VISIBLE);
-            info.setDescription(descriptonEdit.getText().toString());
-            descriptionText.setText(descriptonEdit.getText());
-            descriptionText.clearComposingText();
-            descriptonEdit.clearFocus();
+            descriptionText.setText(adapter.cardDataSet.get(getPosition()).getDescription());
             descriptonEdit.setVisibility(View.GONE);
             buttons.setVisibility(View.GONE);
-            info.setSubmited(true);
+            adapter.cardDataSet.get(getPosition()).setSubmited(true);
             final RequestParams params = new RequestParams();
+            final int pos = getPosition();
 
-
-            Moder.getImageLoader().loadImage(info.getLocalURI().toString(), new ImageLoadingListener() {
+            Moder.getImageLoader().loadImage(adapter.cardDataSet.get(getPosition()).getLocalURI().toString(), new ImageLoadingListener() {
+                int pos2;
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
-
+                    pos2 = pos;
                 }
 
                 @Override
@@ -176,7 +176,7 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
                     byte[] bitmapdata = bos.toByteArray();
                     ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
                     params.put("file", bs);
-                    params.put("description", info.getDescription());
+                    params.put("description", adapter.cardDataSet.get(pos2).getDescription());
                     client.post("https://www.moderapp.com/submitphoto", params, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -184,7 +184,7 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
                             try {
                                 JSONObject object = new JSONObject(s);
                                 String id = object.getString("file");
-                                adapter.cardDataSet.get(getPosition()).setId(id);
+                                adapter.cardDataSet.get(pos2).setId(id);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -193,7 +193,6 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.v("Failed", new String(responseBody));
                         }
                     });
                 }
@@ -214,12 +213,14 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
 
     public final List<ProfileCardInformation> cardDataSet;
     public RecyclerView view3;
-    public ProfileContactAdapter(RecyclerView v){
+    public View viewp;
+    public ProfileContactAdapter(RecyclerView v,final View b1){
         client = Moder.getClient();
         loader = Moder.getImageLoader();
         cardDataSet = new Vector<>();
         handle = new Handler();
         view3 = v;
+        viewp = b1;
 
         client.get("https://www.moderapp.com/profile", new AsyncHttpResponseHandler() {
             @Override
@@ -237,6 +238,8 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
                         JSONArray descriptions   = object.getJSONArray("Descriptions");
                         if(photoList.length() == 0){
                             allLoaded = true;
+                            TextView t = (TextView) b1.findViewById(R.id.tester_text);
+                            t.setVisibility(View.VISIBLE);
                         }
                         for(int i = 0; i < photoList.length(); i++){
                             ProfileCardInformation card = new ProfileCardInformation(photoList.getString(i),rateUps.getInt(i),rateDowns.getInt(i));
@@ -274,7 +277,8 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
                             JSONArray photoList = object.getJSONArray("UUID_Photo");
                             JSONArray rateDowns = object.getJSONArray("Rate_Downs");
                             JSONArray rateUps   = object.getJSONArray("Rate_Ups");
-                            JSONArray descriptions   = object.getJSONArray("Descriptions");
+
+                            JSONArray descriptions = object.getJSONArray("Descriptions");
                             if(photoList.length() == 0){
                                 allLoaded = true;
                             }
@@ -288,11 +292,54 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
                                     if(cardDataSet.get(z).getId().equals(card.getId())){
                                         cardDataSet.get(z).setRateDown(card.getRateDown());
                                         cardDataSet.get(z).setRateUp(card.getRateUp());
+                                        cardDataSet.get(z).setDescription(card.getDescription());
                                     }
                                 }
                             }
                             layout.setRefreshing(false);
                             notifyItemRangeChanged(0, cardDataSet.size());
+                        }else if(responseCode == 202){
+                            final SharedPreferences prefs = Moder.getPrefs();
+                            RequestParams params = new RequestParams();
+                            params.add("email", prefs.getString("email", null));
+                            params.add("pwd", prefs.getString("pwd", null));
+                            client.get("https://www.moderapp.com/login", params, new AsyncHttpResponseHandler() {
+
+                                @Override
+                                public void onStart() {
+
+                                }
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                                    String s = new String(response);
+                                    try {
+                                        JSONObject object = new JSONObject(s);
+                                        int responseCode = object.getInt("ResponseCode");
+                                        switch (responseCode) {
+                                            case 300: {
+                                                updateCardInfo(layout);
+                                                break;
+                                            }
+                                            case 100: {
+                                                break;
+                                            }
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                                    // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                                }
+
+                                @Override
+                                public void onRetry(int retryNo) {
+
+                                }
+                            });
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -315,6 +362,8 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
         notifyItemInserted(0);
         view3.smoothScrollToPosition(0);
         view3.smoothScrollToPosition(0);
+        TextView t = (TextView) viewp.findViewById(R.id.tester_text);
+        t.setVisibility(View.GONE);
     }
 
     @Override
@@ -363,42 +412,47 @@ public class ProfileContactAdapter extends RecyclerView.Adapter<ProfileContactAd
         }
 
         ProfileCardInformation card = cardDataSet.get(position);
-        holder.info = card;
-
-        if(cardDataSet.get(position).getId() != null) {
+        if(cardDataSet.get(position).getId() != null) {//NON-FILE PHOTOS
             loader.displayImage(card.getURL(), holder.getMainImg());
-            holder.setDescriptionText(card.getDescription());
             holder.defaultSettings();
+            holder.descriptionText.setText(cardDataSet.get(position).getDescription());
             holder.progressBar.setProgress(cardDataSet.get(position).getPercent());
             holder.percentText.setText(cardDataSet.get(position).getPercent() + "%");
             holder.viewedBy.setText((cardDataSet.get(position).getRateDown()+cardDataSet.get(position).getRateUp()) + " people rated your outfit");
         }
-        else{
+        else{//FILE PHOTOS
 
             if(!cardDataSet.get(position).isSubmited()){
                 holder.revealSubmitSettings();
                 holder.position = position;
+                holder.descriptonEdit.setText(cardDataSet.get(position).getDescription());
+                holder.descriptionText.setText(cardDataSet.get(position).getDescription());
+                holder.percentText.setText(cardDataSet.get(position).getPercent() + "%");
+                holder.viewedBy.setText((cardDataSet.get(position).getRateDown()+cardDataSet.get(position).getRateUp()) + " people rated your outfit");
+                holder.progressBar.setProgress(cardDataSet.get(position).getPercent());
+            }else{
+                holder.defaultSettings();
+                holder.descriptionText.setText(cardDataSet.get(position).getDescription());
+                holder.percentText.setText(cardDataSet.get(position).getPercent() + "%");
+                holder.viewedBy.setText((cardDataSet.get(position).getRateDown()+cardDataSet.get(position).getRateUp()) + " people rated your outfit");
+                holder.progressBar.setProgress(cardDataSet.get(position).getPercent());
             }
             loader.displayImage(cardDataSet.get(position).getLocalURI().toString(),holder.getMainImg(),new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
-                    Log.v("Loading Picture","Started");
                 }
 
                 @Override
                 public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    Log.v("Loading Picture","Failed");
                 }
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    Log.v("Loading Picture","Completed");
 
                 }
 
                 @Override
                 public void onLoadingCancelled(String imageUri, View view) {
-                    Log.v("Loading Picture","Cancelled");
                 }
             });
         }
