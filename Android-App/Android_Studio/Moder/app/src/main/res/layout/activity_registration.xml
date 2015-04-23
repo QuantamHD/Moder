@@ -43,8 +43,8 @@
         android:paddingLeft="8dp"
         android:textCursorDrawable="@null"
         android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/LoginButton"
-        android:layout_alignStart="@+id/LoginButton"
+        android:layout_alignLeft="@+id/accept_tos"
+        android:layout_alignStart="@+id/accept_tos"
         android:layout_marginTop="10dp" />
     <EditText
         android:layout_width="300dp"
@@ -85,7 +85,7 @@
         android:layout_width="300dp"
         android:layout_height="52dp"
         android:text="Sign up"
-        android:id="@+id/LoginButton"
+        android:id="@+id/accept_tos"
         android:fontFamily="sans-serif-light"
         android:background="@drawable/teal_button_selector"
         android:textSize="23sp"

@@ -52,7 +52,9 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".PhotoEditActivity"
             android:label="@string/title_activity_photo_edit" >

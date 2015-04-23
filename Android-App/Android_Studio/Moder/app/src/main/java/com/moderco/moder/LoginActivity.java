@@ -3,187 +3,175 @@ package com.moderco.moder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.moderco.network.ThreadedLogin;
-import com.moderco.utility.CookieHandler;
-import com.moderco.network.LoginTask;
-import com.moderco.network.RegistrationTask;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.PersistentCookieStore;
+import com.loopj.android.http.RequestParams;
+import com.moderco.utility.Moder;
 
-import java.util.concurrent.ExecutionException;
+import org.apache.http.Header;
+import org.apache.http.cookie.Cookie;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.SocketTimeoutException;
+import java.util.Date;
+import java.util.List;
+
 
 public class LoginActivity extends Activity {
+    private String userEmail;
+    private String userPassword;
+    private AsyncHttpClient client;
 
+    public void setupUI(View view) {
 
-    /* login page */
-    private boolean loginPageShown = false;
-    private Button loginExpansionButton;
-    private RelativeLayout loginExpansionLayout;
-    private EditText username;
-    private EditText password;
-    private Button submitButton; // Logs in
-    private Button registerButton; // Brings up register page
-    private static int requiredPasswordLength = 8;
-    private Context context; // For keeping track and stuff
-    private TextView moderLogo;
-    private ImageView ribbonOne;
-    private ImageView ribbonTwo;
-    private Animation twirl;
-    private Animation hover;
-    private final int MAX_LOGIN_TRYS = 5;
+        //Set up touch listener for non-text box views to hide keyboard.
+        if(!(view instanceof EditText)) {
 
+            view.setOnTouchListener(new View.OnTouchListener() {
 
-    /* registration page */
-    private boolean registrationPageShown = false;
-    View paper; // Background to registration page
-    private EditText usernameRegistration;
-    private EditText passwordRegistration;
-    private EditText passwordCheckRegistration; // Should match passwordRegistration
-    private Button confirmRegistrationButton; // Sends registration info to server
-    Button cancelRegistrationButton; // Destroys register page, goes back to
-    // login
-    private ProgressBar submitSpinner;
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard();
+                    return false;
+                }
 
-    /* Possible error codes */
-    private final int PASSWORD_FINE = 0;
-    private final int PASSWORDS_NOT_IDENTICAL = 1;
-    private final int PASSWORD_TOO_SHORT = 2;
+            });
+        }
 
-    /* Prefs */
-    private static final String USER_PREF = "com.moderco.moder.user";
-    private static final String PASS_PREF = "com.moderco.moder.pass";
-    public static final String AUTO_LOGIN_PREF = "com.moderco.moder.autologin";
-    private static final String FIRST_TIME_USER = "com.moderco.moder.firsttimer";
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
 
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
 
-    /* Toasts */
-    private static final String ACCOUNT_CREATED = "Welcome to Moder!";
-    private static final String ERROR = "Oops! We're not sure what went wrong. Try using a different network connection.";
-    private static final String PASSWORDS_NOT_SAME = "Your passwords do not match!";
-    private static final String PASSWORD_TOO_SHORT_TOAST = "Your password needs to be " + Integer.toString(requiredPasswordLength) + " or longer!";
-    private static final String LOGIN_INFO_INCORRECT = "Either your password or your email is incorrect!";
-    private static final String LOST_CONNECTION = "It appears you lost connection";
+                View innerView = ((ViewGroup) view).getChildAt(i);
 
-    /**
-     * Sets up essentially the whole page.
-     */
+                setupUI(innerView);
+            }
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        client = new AsyncHttpClient();
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        AsyncHttpClient.allowRetryExceptionClass(SocketTimeoutException.class);
         setContentView(R.layout.activity_login);
+        final PersistentCookieStore myCookieStore = new PersistentCookieStore(this);
+        client.setCookieStore(myCookieStore);
+        myCookieStore.clearExpired(new Date());
+        Moder.setClient(client);
+        List<Cookie> cookieList =myCookieStore.getCookies();
+        for(Cookie cookie:cookieList){
+            if(cookie.getName().equals("Unique_ID")){
+                //goToProfile();
+            }
+        }
 
-        Button loginButton = (Button) findViewById(R.id.LoginButton);
+        final EditText email = (EditText) findViewById(R.id.email_text_login);
+        final EditText password = (EditText) findViewById(R.id.password_text_login);
+        final TextView errorText = (TextView) findViewById(R.id.error_text_login);
+        final ImageView moderLogo = (ImageView) findViewById(R.id.moder_logo_login);
+        Button loginButton = (Button) findViewById(R.id.accept_tos);
+        setupUI(findViewById(R.id.main_parent_login));
+        final Animation a = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_img);
         loginButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    errorText.setText("");
+                    moderLogo.setAnimation(a);
                     vibrator.vibrate(28);
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    goToProfile();
+                    String emailTextU = email.getText().toString();
+                    String passwordTextU = password.getText().toString();
+
+                    RequestParams params = new RequestParams();
+                    params.add("email", emailTextU);
+                    params.add("pwd", passwordTextU);
+                    client.get("https://www.moderapp.com/login", params, new AsyncHttpResponseHandler() {
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                            String s = new String(response);
+                            moderLogo.setAnimation(null);
+                            try {
+                                JSONObject object = new JSONObject(s);
+                                int responseCode = object.getInt("ResponseCode");
+                                switch (responseCode){
+                                    case 300:{
+                                        goToProfile();
+                                        break;}
+                                    case 100:{
+                                        errorText.setText("Your Email and Password combination is incorrect");
+                                        vibrator.vibrate(100);
+                                        break;
+                                    }
+                                }
+                                Log.v("Output",myCookieStore.getCookies().toString());
+                                Log.v("Output", s);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                            // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                        }
+
+                        @Override
+                        public void onRetry(int retryNo) {
+
+                        }
+                    });
+
                 }
                 return false;
             }
         });
 
-        final Button registerButton = (Button) findViewById(R.id.register_button);
+        final Button registerButton = (Button) findViewById(R.id.real_register_button);
         registerButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    registerButton.setText(R.string.register_now_u);
                     vibrator.vibrate(28);
+
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    registerButton.setText(R.string.register_now);
                     goToRegistration();
                 }
                 return false;
             }
         });
+
+
     }
 
-
-    /**
-     * Executes a client side check to see if the passwords work. Basically
-     * making sure they put a password in and that their password and their
-     * retyped passwords are the same.
-     *
-     * @param pwd1 - The editText version
-     * @param pwd2 - The editText version
-     * @return error codes defined above
-     */
-    int passwordCheck(EditText pwd1, EditText pwd2) {
-        String pwd1Text = pwd1.getText().toString();
-        String pwd2Text = pwd2.getText().toString();
-
-
-        if (!pwd1Text.equals(pwd2Text))
-            return PASSWORDS_NOT_IDENTICAL;
-        else if (pwd1Text.length() < requiredPasswordLength)
-            return PASSWORD_TOO_SHORT;
-        else
-            return PASSWORD_FINE;
-    }
-
-    int loginAttempts = 0;
-
-    /**
-     * Handles codes and calls switchScreen if code correct
-     */
-    void login(String user, String pass) {
-        Log.v("LoginActivity", "Attempting Login...");
-
-        loginAttempts++;
-
-        LoginTask task = new LoginTask(user, pass);
-        int code = -1;
-        new Thread(new ThreadedLogin(user, pass)).start();
-        try {
-            code = task.execute().get();
-
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        if (code == LoginTask.SUCCESS_CODE) { //Breaks the recursive loop
-            Log.v("LoginCookieRaw", task.cookie.getValue());
-            switchScreen(CookieHandler.formatCookie(task.cookie)); //Only gets the cookie if successful
-            setLoginCreds(user, pass);
-        } else if (code == LoginTask.INFO_MISSING_CODE) {
-            Log.v("LoginActivity", "Incorrect info.");
-            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
-            Toast.makeText(getApplicationContext(), LOGIN_INFO_INCORRECT, Toast.LENGTH_SHORT).show();
-        } else if (code == LoginTask.CONNECTION_FAILED_CODE) {
-            Log.v("LoginActivity", "Connection failed on login attempt");
-            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
-            Toast.makeText(getApplicationContext(), LOST_CONNECTION, Toast.LENGTH_SHORT).show();
-        } else {
-            Log.v("LoginActivity",
-                    "Unknown Error Code: "
-                            + Integer.toString(code)
-                            + "Check LoginTask.java or LoginActivity.java in Moder Client");
-            if (loginAttempts <= MAX_LOGIN_TRYS) login(user, pass);
-            Toast.makeText(getApplicationContext(), ERROR, Toast.LENGTH_SHORT).show(); //This shouldn't happen. Hopefully.
-        }
-
-
+    public  void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
     }
 
     /**
@@ -195,10 +183,6 @@ public class LoginActivity extends Activity {
      * @param cookie
      */
     private void switchScreen(String cookie) {
-        Log.v("LoginCookieAFTER", cookie);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(CookieHandler.COOKIE, cookie);
-        startActivity(intent);
     }
 
     private void goToRegistration() {
@@ -210,30 +194,7 @@ public class LoginActivity extends Activity {
     private void goToProfile() {
         Log.v("LoginActivity", "Switching To Profile Page");
         Intent intent = new Intent(this, ProfileActivity.class);
+
         startActivity(intent);
     }
-
-    private void setLoginCreds(String user, String pass) {
-        //Save info
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(USER_PREF, user);
-        editor.putString(PASS_PREF, pass);
-        editor.putBoolean(AUTO_LOGIN_PREF, true);
-        editor.apply();
-        editor.commit();
-    }
-
-    private void loginCheck() {
-        Log.v("LoginActivity", "Starting preactivity check");
-        SharedPreferences prefs = getSharedPreferences("Login", Context.MODE_PRIVATE);
-        if (prefs.contains(USER_PREF) && prefs.contains(PASS_PREF)) {
-            Log.v("LoginActivity", "Previous login info found, starting login...");
-            String user = prefs.getString(USER_PREF, "-1");
-            String pass = prefs.getString(PASS_PREF, "-1");
-
-            login(user, pass);
-        }
-    }
-
 }

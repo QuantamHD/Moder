@@ -9,13 +9,13 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_height="55dp"
+        android:layout_height="56dp"
         android:layout_width="match_parent"
         android:id="@+id/top_bar"
         android:background="#00bfa5">
 
         <TextView
-            android:id="@+id/Logo"
+            android:id="@+id/tabName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
@@ -24,18 +24,35 @@
             android:layout_marginLeft="18dp"
             android:layout_marginStart="27dp"
             android:layout_centerVertical="true"
-            android:textSize="19sp" />
+            android:textSize="19sp"
+            android:fontFamily="sans-serif-light" />
 
-        <ImageButton
+
+
+            <ImageButton
+                android:layout_width="39dp"
+                android:layout_height="35.81dp"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_marginRight="16dp"
+                android:id="@+id/takePicture"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="true"
+                android:padding="25dip"
+                android:cropToPadding="false"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true" />
+
+        <ImageView
             android:layout_width="25dp"
             android:layout_height="21.81dp"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_marginRight="16dp"
+            android:id="@+id/imageView2"
             android:background="@drawable/camera_icon"
-            android:id="@+id/imageButton2"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/tabName"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="24dp" />
+
 
     </RelativeLayout>
 
@@ -44,15 +61,20 @@
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-light"
+        app:pstsDividerColor="#E0F2F1"
+        app:pstsIndicatorColor="#E0F2F1"
+        app:pstsUnderlineColor="#00695C"
+        android:textColor="#E0F2F1"
         android:background ="#00897B"
         >
     </com.astuetz.PagerSlidingTabStrip>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:background="#37474f"
     />
 

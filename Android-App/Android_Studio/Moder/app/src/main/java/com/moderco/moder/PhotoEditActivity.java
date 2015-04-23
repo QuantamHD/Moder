@@ -119,9 +119,6 @@ public class PhotoEditActivity extends Activity {
     }
 
     public void switchToMain(View v){
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(CookieHandler.COOKIE, cookie);
-        startActivity(intent);
     }
 
     @Override

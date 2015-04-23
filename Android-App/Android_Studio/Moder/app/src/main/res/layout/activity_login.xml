@@ -5,16 +5,16 @@
     android:animateLayoutChanges="true"
     android:background="#37474f"
     android:clickable="false"
+    android:id="@+id/main_parent_login"
     >
 
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/test4"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:id="@+id/moder_logo_login"
+        android:background="@drawable/log"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,8 +24,8 @@
         android:id="@+id/textView"
         android:textColor="#fafafa"
         android:fontFamily="sans-serif-light"
-        android:textSize="37sp"
-        android:layout_below="@+id/imageView"
+        android:textSize="30sp"
+        android:layout_above="@+id/error_text_login"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -35,16 +35,15 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:fontFamily="sans-serif-light"
-        android:id="@+id/emailText"
+        android:id="@+id/email_text_login"
         android:textSize="19sp"
         android:background="@drawable/rounded_corners"
         android:textColor="#9E9E9E"
         android:paddingLeft="8dp"
-        android:layout_marginTop="30dp"
         android:textCursorDrawable="@null"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/passwordText"
-        android:layout_alignStart="@+id/passwordText" />
+        android:layout_above="@+id/accept_tos"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp" />
 
     <EditText
         android:layout_width="300dp"
@@ -54,40 +53,56 @@
         android:hint="Password"
         android:textSize="19sp"
         android:fontFamily="sans-serif-light"
-        android:id="@+id/passwordText"
-        android:layout_marginTop="61dp"
+        android:id="@+id/password_text_login"
         android:background="@drawable/rounded_corners"
         android:textCursorDrawable="@null"
         android:textColor="#9E9E9E"
         android:paddingLeft="8dp"
-        android:layout_alignTop="@+id/emailText"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/email_text_login"
+        android:layout_alignLeft="@+id/error_text_login"
+        android:layout_alignStart="@+id/error_text_login"
+        android:layout_marginTop="3dp" />
 
     <Button
         android:layout_width="300dp"
         android:layout_height="52dp"
         android:text="Log in"
-        android:id="@+id/LoginButton"
+        android:id="@+id/accept_tos"
         android:fontFamily="sans-serif-light"
         android:background="@drawable/teal_button_selector"
         android:textSize="23sp"
         android:clickable="true"
-        android:layout_marginTop="45dp"
-        android:layout_below="@+id/passwordText"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/real_register_button"
+        android:layout_alignLeft="@+id/real_register_button"
+        android:layout_alignStart="@+id/real_register_button"
+        android:layout_marginTop="24dp" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_width="300dp"
+        android:layout_height="52dp"
+        android:text="Register"
+        android:id="@+id/real_register_button"
         android:fontFamily="sans-serif-light"
-        android:text="@string/register_now"
-        android:id="@+id/register_button"
-        android:textColor="#fafafa"
-        android:background="#00ffffff"
-        android:textSize="13sp"
+        android:background="@drawable/teal_button_selector"
+        android:textSize="23sp"
         android:clickable="true"
-        android:layout_marginTop="9dp"
-        android:layout_below="@+id/LoginButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/error_text_login"
+        android:textColor="#FF1744"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_above="@+id/password_text_login"
+        android:layout_alignLeft="@+id/email_text_login"
+        android:layout_alignStart="@+id/email_text_login"
+        android:layout_alignRight="@+id/email_text_login"
+        android:layout_alignEnd="@+id/email_text_login" />
 
 </RelativeLayout>
