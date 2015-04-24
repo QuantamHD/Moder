@@ -3,6 +3,7 @@ package com.moderco.moder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -71,7 +72,13 @@ public class TermsOfService extends Activity {
                                         JSONObject object2 = new JSONObject(json2);
                                         Log.v("Response Code", object2.getInt("ResponseCode") + "");
                                         if (object2.getInt("ResponseCode") == 300) {
+                                            SharedPreferences.Editor editor= Moder.getPrefs().edit();
+                                            editor.putString("email",info.getEmail());
+                                            editor.putString("pwd",info.getPassword());
+                                            editor.commit();
+
                                             goToProfile();
+
                                         } else {
                                         }
                                     } catch (JSONException e) {

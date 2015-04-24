@@ -113,7 +113,9 @@ public class ProfileFragment extends Fragment {
     }
 
     public void addNewCardByFile(File file){
-        ca.uploadNewCardLayout(file);
+        if(ca != null) {
+            ca.uploadNewCardLayout(file);
+        }
     }
 
     public void notifyContactAdapter(SwipeRefreshLayout swipeRefreshLayout, ProfileContactAdapter pd){

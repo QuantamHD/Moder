@@ -22,6 +22,7 @@ import com.moderco.utility.RegistrationInformation;
 
 import org.w3c.dom.Text;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

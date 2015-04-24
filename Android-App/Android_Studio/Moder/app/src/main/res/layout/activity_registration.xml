@@ -92,6 +92,7 @@
         android:entries="@array/gender_values"
         android:background="@drawable/rounded_corners"
         android:spinnerMode="dropdown"
+        android:theme="@style/moder_spinner"
         android:dropDownWidth="300dp"
         android:layout_above="@+id/Signup"
         android:layout_centerHorizontal="true"
